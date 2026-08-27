@@ -1,0 +1,315 @@
+/* --- KEYFRAMES --- */
+@keyframes riseAndExplode {
+  0% { transform: translateY(0) scale(0.3); opacity: 1; }
+  50% { transform: translateY(-90vh) scale(1); opacity: 1; }
+  100% { transform: translateY(-90vh) scale(0); opacity: 0; }
+}
+
+@keyframes gradient-pan {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+
+/* --- PAGE & BACKGROUND --- */
+.past-events-page {
+  background-color: #000;
+  color: #d1d5db;
+  font-family: 'Poppins', 'Inter', sans-serif;
+  padding-top: 6rem;
+  overflow-x: hidden;
+}
+
+.firecrackers-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.firecracker {
+  position: absolute;
+  bottom: 0;
+  background: radial-gradient(circle, #0056c7, #02206b);
+  border-radius: 50%;
+  animation-name: riseAndExplode;
+  animation-timing-function: ease-out;
+  animation-iteration-count: infinite;
+}
+
+
+/* --- CONTAINER & MAIN TITLE --- */
+.past-events-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem;
+}
+
+.past-events-main-title {
+  font-family: 'Poppins', 'Inter', sans-serif;
+  font-size: 3rem;
+  font-weight: 800;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 5rem;
+  color: #f3f4f6;
+  z-index: 10;
+  background-color: rgb(226, 225, 225);
+  /* background: linear-gradient(90deg, #111e32, #01143f); */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.past-events-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 8rem;
+  align-items: center;
+}
+
+
+/* --- CARD WRAPPER & ENTRANCE ANIMATION --- */
+.past-events-card-wrapper {
+  position: relative;
+  width: 73%;
+  opacity: 0;
+  transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.6s ease-out;
+}
+
+.card-pos-left {
+  transform: translateX(-150px);
+}
+.card-pos-right {
+  transform: translateX(150px);
+}
+
+.past-events-card-wrapper.is-visible {
+  opacity: 1;
+  transform: translateX(0); /* Final position for mobile */
+}
+
+
+/* --- RECTANGULAR BACKGROUND & BLUE GLOW --- */
+.past-events-card-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #0a0a0a;
+  border: 1px solid #2d2d2d;
+  z-index: 1;
+  transform: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 50px 15px rgba(30, 144, 255, 0); 
+  transition: box-shadow 0.6s ease-in-out, border-color 0.4s ease;
+}
+
+.past-events-card-wrapper.is-visible::before {
+  box-shadow: 0 0 50px 15px rgb(0, 54, 109);
+}
+
+/* .past-events-card-wrapper:hover::before {
+  box-shadow: 0 0 60px 20px rgb(0, 128, 255);
+} */
+
+
+/* --- MAIN CARD STYLING (Rectangular) --- */
+.past-events-card {
+  background: rgba(18, 18, 18, 0.75);
+  border: 1px solid #444;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: relative;
+  z-index: 2;
+  transform: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(71, 85, 105, 0);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.event-text-content,
+.event-text-content .card-content-unskew,
+.event-text-content .event-details {
+  display: contents;
+}
+
+.event-title-box { order: 1; }
+.event-image-container { order: 2; }
+.event-description-main { order: 3; }
+.event-description-sub { order: 4; }
+
+.past-events-card-wrapper:hover .past-events-card {
+  border-color: #87ceeb;
+  box-shadow: 0 0 25px rgba(0, 128, 255, 0.3);
+}
+
+.card-content-unskew {
+  transform: none;
+  height: 100%;
+}
+
+
+/* --- CARD CONTENT (IMAGE & TEXT) --- */
+.event-image-container {
+  margin: 1rem;
+  display: block;
+  overflow: hidden;
+  height: 100%;
+  width: 100%; 
+  border-radius: 1rem;
+  padding: 1rem;
+}
+
+.event-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.past-events-card-wrapper.card-pos-left .event-image-container img {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.past-events-card-wrapper.card-pos-right .event-image-container img {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.past-events-card-wrapper.is-visible .event-image-container img {
+  transform: translateX(0) scale(1.1);
+  opacity: 1;
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s, opacity 0.6s ease-out 0.3s;
+}
+
+.past-events-card-wrapper:hover img {
+  transform: scale(1);
+}
+
+.event-text-content {
+  width: 100%; 
+}
+
+
+/* --- MODERNIZED EVENT TITLE BOX --- */
+.event-title-box {
+  display: inline-block;
+  padding: 0.6rem 1.25rem;
+  margin: 1.5rem 1.5rem 0;
+  background: linear-gradient(90deg, rgba(21, 25, 47, 0.8), rgba(1, 24, 58, 0.8));
+  background-size: 300% 100%;
+  /* border-left: 3px solid #9b9d9e; */
+  border-radius: 0.4rem;
+  animation: gradient-pan 3s ease-in-out infinite;
+  box-shadow: 0 0 12px rgba(2, 131, 245, 0.6);
+  backdrop-filter: blur(6px);
+}
+
+.event-title {
+  font-family: "Abril Fatface", serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+}
+
+.event-description-main {
+  font-family: 'cursive';
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.75;
+  color: #cbd5e1;
+  margin: 1.25rem 1.5rem 0.75rem;
+}
+
+.event-description-sub {
+  font-family: 'Roboto', 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: #9ca3af;
+  padding-bottom: 3rem;
+  margin: 0 1.5rem;
+}
+
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+@media (min-width: 768px) {
+  .past-events-card {
+    display: flex;
+    flex-direction: row; 
+  }
+.event-description-main {
+  font-family: 'cursive';
+  font-size: 1.1rem;
+  font-weight: 400;
+  line-height: 1.75;
+  color: #cbd5e1;
+  margin: 1.25rem 1.5rem 0.75rem;
+}
+  .event-text-content,
+  .event-text-content .card-content-unskew,
+  .event-text-content .event-details {
+    display: block;
+  }
+  
+  .event-text-content {
+    flex-grow: 1;
+    position: relative;
+    padding: 2.5rem;
+  }
+  .event-title {
+  font-family: "Abril Fatface", serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+}
+  .event-title-box { margin: 0 0 1.25rem 0; }
+  .event-description-main { margin: 0 0 0.75rem 0; }
+  .event-description-sub { margin: 0; padding-bottom: 3rem; }
+
+  .past-events-cards .past-events-card-wrapper:nth-child(2) .past-events-card {
+    flex-direction: row-reverse;
+  }
+
+  .event-image-container {
+    width: 40%;
+    flex-shrink: 0;
+  }
+  .event-text-content {
+    width: 60%;
+  }
+}
+
+/* ✨ THIS IS THE UPDATED SECTION FOR OFF-CENTER ALIGNMENT ON DESKTOP */
+@media (min-width: 1024px) {
+  .card-pos-left.is-visible {
+    transform: translateX(20%); /* Shift left card to the left */
+  }
+  .card-pos-right.is-visible {
+    transform: translateX(-20%); /* Shift right card to the right */
+  }
+  .event-title {
+  font-family: "Abril Fatface", serif;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+}
+}

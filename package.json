@@ -1,0 +1,75 @@
+{
+  "name": "udghosh-23",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
+    "@gsap/react": "^2.1.1",
+    "@react-spring/parallax": "^10.0.3",
+    "@react-three/drei": "^9.86.3",
+    "@react-three/fiber": "^8.14.4",
+    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/three": "^0.156.0",
+    "axiom": "^0.20.0",
+    "axios": "^1.12.2",
+    "body-parser": "^1.20.2",
+    "cloudinary": "^2.10.0",
+    "firebase": "^10.14.1",
+    "framer-motion": "^12.23.12",
+    "gsap": "^3.12.5",
+    "lenis": "^1.3.26",
+    "lucide-react": "^0.539.0",
+    "nvm": "0.0.4",
+    "ogl": "^1.0.11",
+    "package-name": "^0.1.0",
+    "react": "^18.3.1",
+    "react-countup": "^6.4.2",
+    "react-dom": "^18.3.1",
+    "react-fontawesome": "^1.7.1",
+    "react-hot-toast": "^2.4.1",
+    "react-html5video": "^2.5.1",
+    "react-icons": "^5.3.0",
+    "react-plx": "^2.1.2",
+    "react-responsive": "^9.0.2",
+    "react-router": "^6.16.0",
+    "react-router-dom": "^6.26.2",
+    "react-scripts": "^5.0.0",
+    "react-scroll": "^1.9.0",
+    "react-scroll-trigger": "^0.6.14",
+    "react-slick": "^0.29.0",
+    "remixicon": "^4.3.0",
+    "slick-carousel": "^1.8.1",
+    "swiper": "^11.1.14",
+    "three": "^0.157.0",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.3.3"
+  }
+}

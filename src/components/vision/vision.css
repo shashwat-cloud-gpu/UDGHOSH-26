@@ -1,0 +1,135 @@
+.pageBanner {
+    background: url(https://www.capacitywebsolutions.com/wp-content/uploads/2017/12/Our_Mission_and_Vision_banner.jpg) repeat 50% 0;
+}
+.pageBanner {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50%;
+    padding-top: 160px;
+    min-height: 300px;
+    text-align: center;
+}
+.pageBanner h1.pageTitle {
+    margin: 0px;
+}
+h1.pageTitle {
+    color: #fff;
+    font-size: 60px;
+    font-weight: 400;
+    line-height: 70px;
+    letter-spacing: -1px;
+    margin: 0 0 25px;
+    text-shadow: 1px 1px 1px rgba(0,0,0,.3);
+}
+.vision-wrapper{
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: row;
+    margin: 5px 0px;
+    padding: 50px;
+    /* position: relative; */
+}
+.mission{
+    height: auto;
+    
+    margin: 10px;
+    padding: 10px;
+}
+.vision{
+   height: auto;
+ 
+    margin-right:100px;
+    padding: 5px;
+}
+.bullseye{
+    
+    width: 60px;
+    margin: 5px;
+}
+.eye{
+    
+    width: 100px;
+    margin: 5px;
+}
+.wrapp{
+    display: flex;
+    flex-direction: row;
+    margin: 0px 20px;
+     height: auto;
+    justify-content:stretch;
+    align-items: center;
+    
+
+}
+.mis{
+    width: 170px;
+    font-weight: 400;
+    font-size: 27px;
+}
+.scene {
+    background-image: url('https://www.capacitywebsolutions.com/wp-content/themes/cws/images/bodydesign.jpg');
+   
+   background-repeat: no-repeat;
+   background-size: cover;
+}
+
+
+.tex{
+  padding: 0px 30px 0px 50px ;
+
+  text-align: left;
+
+}
+
+@media (max-width: 780px) {
+    .scene{
+        height: fit-content;
+    }
+    .vision-wrapper{
+        height: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        flex-direction: column;
+        margin: 0px 0px;
+        padding: 30px;
+       /* position: absolute; */
+    }
+    .vision{
+        /* height: auto; */
+       margin-top: 5px;
+         margin-right:0px;
+         padding: 5px;
+     }
+     .mission{
+        /* height: auto; */
+         
+         margin-right:0px;
+         padding: 5px;
+     }
+     .wrapp{
+        display: flex;
+        flex-direction: row;
+        margin: 0px 0px;
+         height: auto;
+        justify-content: flex-start;
+        align-items: center;
+        
+    
+    }
+    .mis{
+        width: 150px;
+        font-weight: 400;
+        font-size: 27px;
+    }
+    .eye{
+    
+       
+    margin: 3px;
+    }
+   .pageBanner h1.pageTitle {
+    margin: -50px 40px;
+}
+}

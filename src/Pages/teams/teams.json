@@ -1,0 +1,264 @@
+{
+    "teams": [
+        {
+            "id": "teams-about-hospi",
+            "title": "Head, HOSPITALITY",
+            "members": [
+                {
+                    "name": "Abhishek",
+                    "photo": "https://live.staticflickr.com/65535/55426699563_f4d0e1fee3_b.jpg",
+                    "linkedin": "",
+                    "phone": "9927860926",
+                    "email": "sabhishekk23@iitk.ac.in",
+                    "instagram": ""
+                },
+                {
+                    "name": "Suresh",
+                    "photo": "https://live.staticflickr.com/65535/55426555533_1db42ce5e9_b.jpg",
+                    "linkedin": "",
+                    "phone": "7817940441",
+                    "email": "skmeena23@iitk.ac.in",
+                    "instagram": ""
+                }
+            ]
+        },
+        {
+            "id": "teams-about-enc",
+            "title": "Head, EVENTS & COMPETITIONS",
+            "members": [
+                {
+                    "name": "Amlan",
+                    "photo": "https://live.staticflickr.com/65535/55426825400_f88fb37810_b.jpg",
+                    "linkedin": "",
+                    "phone": "7377093140",
+                    "email": "amlancd23@iitk.ac.in",
+                    "instagram": "",
+                    "imageStyle": {
+                        "objectPosition": "bottom center",
+                        "transform": "scale(2)"
+                    }
+                },
+                {
+                    "name": "Anshika",
+                    "photo": "https://live.staticflickr.com/65535/55426597179_27bfaa359d_b.jpg",
+                    "linkedin": "",
+                    "phone": "6395485144",
+                    "email": "anshikam23@iitk.ac.in",
+                    "instagram": "",
+                    "imageStyle": {
+                        "objectPosition": "bottom center",
+                        "transform": "scale(2) translateY(-10%)"
+                    }
+                },
+                {
+                    "name": "Yuvraj",
+                    "photo": "https://live.staticflickr.com/65535/55426466966_faa2c383fe_z.jpg",
+                    "linkedin": "",
+                    "phone": "8177001974",
+                    "email": "yuvraj23@iitk.ac.in",
+                    "instagram": ""
+                }
+            ]
+        },
+        {
+            "id": "teams-about-mark",
+            "title": "Head, MARKETING",
+            "members": [
+                {
+                    "name": "Aryan",
+                    "photo": "https://live.staticflickr.com/65535/55426597114_1d9a99ec13_b.jpg",
+                    "linkedin": "",
+                    "phone": "8273695084",
+                    "email": "aryans23@iitk.ac.in",
+                    "instagram": ""
+                },
+                {
+                    "name": "Amey",
+                    "photo": "https://live.staticflickr.com/65535/55426725814_14b2900efc_b.jpg",
+                    "linkedin": "",
+                    "phone": "6387465054",
+                    "email": "",
+                    "instagram": ""
+                },
+                {
+                    "name": "Darshan",
+                    "photo": "https://live.staticflickr.com/65535/55426555643_4b55927d7d_b.jpg",
+                    "linkedin": "",
+                    "phone": "9777751168",
+                    "email": "darshann23@iitk.ac.in",
+                    "instagram": "",
+                    "imageStyle": {
+                        "objectPosition": "bottom center",
+                        "transform": "scale(2)"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "teams-about-pr",
+            "title": "Head, PUBLIC RELATIONS",
+            "members": [
+                {
+                    "name": "Khush Maheshwari",
+                    "photo": "https://live.staticflickr.com/65535/55465572983_c985c897cd_b.jpg",
+                    "linkedin": "https://www.linkedin.com/in/khush-maheshwari-031187274/",
+                    "phone": "8949036446",
+                    "email": "khushmahes23@itk.ac.in",
+                    "instagram": "https://www.instagram.com/_maheshwari_khush_/"
+                },
+                {
+                    "name": "Divyanshi",
+                    "photo": "https://live.staticflickr.com/65535/55426427051_70c289814a_b.jpg",
+                    "linkedin": "https://www.linkedin.com/in/divyanshi-porwal-163b012b1",
+                    "phone": "9454030437",
+                    "email": "divyanshi23@iitk.ac.in",
+                    "instagram": "",
+                    "imageStyle": {
+                        "objectPosition": "50% 50%",
+                        "transform": "scale(1.5) translateY(-10%)"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "teams-about-wna",
+            "title": "Head, WEB&APP",
+            "members": [
+                {
+                    "name": "Yash",
+                    "photo": "https://live.staticflickr.com/65535/55426584153_83e73f789a_b.jpg",
+                    "linkedin": "",
+                    "phone": "6262486147",
+                    "email": "yashd24@iitk.ac.in",
+                    "instagram": ""
+                },
+                {
+                    "name": "Chirag Gupta",
+                    "photo": "https://live.staticflickr.com/65535/55426555633_6da4c9a6f7_b.jpg",
+                    "linkedin": "",
+                    "phone": "8630969755",
+                    "email": "chiragg24@iitk.ac.in",
+                    "instagram": "",
+                    "imageStyle": {
+                        "objectPosition": "center 20%"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "teams-about-design",
+            "title": "Head, DESIGN",
+            "members": [
+                {
+                    "name": "Om",
+                    "photo": "https://live.staticflickr.com/65535/54820124016_f82dd1a8f2_w.jpg",
+                    "linkedin": "",
+                    "phone": "",
+                    "email": "",
+                    "instagram": ""
+                }
+            ]
+        },
+        {
+            "id": "teams-about-mnp",
+            "title": "Head, MEDIA & PUBLICITY",
+            "members": [
+                {
+                    "name": "Suyash",
+                    "photo": "https://live.staticflickr.com/65535/55426597069_edaa1704c8_b.jpg",
+                    "linkedin": "",
+                    "phone": "8989409477",
+                    "email": "psuyash23@iitk.ac.in",
+                    "instagram": ""
+                },
+                {
+                    "name": "Muskan",
+                    "photo": "https://live.staticflickr.com/65535/55425651397_345a5b2184_z.jpg",
+                    "linkedin": "https://www.linkedin.com/in/muskan-gupta-284065261",
+                    "phone": "9024692887",
+                    "email": "kmuskan23@iitk.ac.in",
+                    "instagram": "",
+                    "imageStyle": {
+                        "objectPosition": "10% 0%"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "teams-about-sm",
+            "title": "Head, SHOW MANAGEMENT",
+            "members": [
+                {
+                    "name": "Lokesh",
+                    "photo": "https://live.staticflickr.com/65535/55426597004_c5084bfa8a_b.jpg",
+                    "linkedin": "",
+                    "phone": "7673921276",
+                    "email": "glokesh23@iitk.ac.in",
+                    "instagram": ""
+                },
+                {
+                    "name": "Mohith varma",
+                    "photo": "https://live.staticflickr.com/65535/55425457037_bd600d294d_b.jpg",
+                    "linkedin": "",
+                    "phone": "8328520134",
+                    "email": "mohithv23@iitk.ac.in",
+                    "instagram": ""
+                },
+                {
+                    "name": "Raghubir kumar",
+                    "photo": "https://live.staticflickr.com/65535/55426596979_232220763b_b.jpg",
+                    "linkedin": "",
+                    "phone": "6205929998",
+                    "email": "raghubirk23@iitk.ac.in",
+                    "instagram": ""
+                }
+            ]
+        },
+        {
+            "id": "teams-about-fin",
+            "title": "Head, FINANCE",
+            "members": [
+                {
+                    "name": "Ayush Rajput",
+                    "photo": "https://live.staticflickr.com/65535/55426555573_fec5851826_b.jpg",
+                    "linkedin": "",
+                    "phone": "7024812198",
+                    "email": "arajput23@iitk.ac.in",
+                    "instagram": ""
+                }
+            ]
+        },
+        {
+            "id": "teams-about-sec",
+            "title": "Head, SECURITY",
+            "members": [
+                {
+                    "name": "Harshavardan",
+                    "photo": "https://live.staticflickr.com/65535/55425457052_23b1e0d599_b.jpg",
+                    "linkedin": "https://www.linkedin.com/in/harshavardan-yadav-037130282?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+                    "phone": "9369567314",
+                    "email": "harshabs23@iitk.ac.in",
+                    "instagram": "",
+                    "imageStyle": {
+                        "objectPosition": "50% 50%",
+                        "transform": "scale(2)"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "teams-about-fc",
+            "title": "FESTIVAL COORDINATORS",
+            "members": [
+                {
+                    "name": "Sparsh",
+                    "photo": "https://live.staticflickr.com/65535/55426427001_488fc2aaf4_b.jpg",
+                    "linkedin": "",
+                    "phone": "9140599972",
+                    "email": "sparshg23@iitk.ac.in",
+                    "instagram": ""
+                }
+            ]
+        }
+    ]
+}

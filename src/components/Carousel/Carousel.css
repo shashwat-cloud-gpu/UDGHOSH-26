@@ -1,0 +1,162 @@
+.carousel {
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: white;
+  margin: 0;
+  padding-top: 2rem;
+  padding-bottom: 15rem;
+  height: 110vh;
+  pointer-events: none;
+}
+
+/* Card_1 container */
+.carousel .card_1 {
+  position: relative;
+  width: 70vw;
+  height: 77vw;
+  max-width: 450px;
+  max-height: 600px;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  cursor: pointer;
+  transform: scale(0.60);
+  transition: transform 0.3s ease;
+  pointer-events: auto;
+}
+.carousel .card_1:hover {
+  transform: scale(0.62);
+  transition: transform 0.3s ease;
+}
+
+/* Fix: make sure no white lines appear around images */
+.carousel .card_1 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: none;
+  outline: none;
+  display: block;
+  transform: scale(1.10);
+}
+
+/* Perspective container */
+.carousel #carousel-container {
+  perspective: 2000px;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* Wrapper */
+.carousel .carousel-card_1-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
+  opacity 0.6s ease-out;
+  pointer-events: none;
+  padding-top: 15rem;
+}
+
+/* Overlay */
+.carousel .card_1-overlay {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+    to top,
+    rgba(0,0,0,0.8),
+    rgba(0,0,0,0.3),
+    transparent
+  );
+  pointer-events: none;
+}
+
+/* Content */
+.carousel .card_1-content {
+  position: absolute;
+  inset: 0;
+  padding: 1.5rem;
+  pointer-events: none;
+}
+
+.carousel .card_1-number {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  font-size: 4.5rem;
+  font-weight: 200;
+  letter-spacing: -0.05em;
+  mix-blend-mode: difference;
+}
+
+.carousel .card_1-arrow {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+}
+
+.carousel .card_1-arrow svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+.carousel .card_1-title {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.carousel .card_1-title h2 {
+  font-size: 1.875rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+}
+
+/* ✨ --- START OF RESPONSIVE CHANGES --- ✨ */
+@media (max-width: 768px) {
+  .carousel {
+    padding-top: 5rem;
+    padding-bottom: 15rem;
+  }
+
+  .carousel #carousel-container {
+    height: 80vh;
+  }
+
+  .carousel .card_1 {
+    width:400px;
+    height:600px;
+  }
+
+  .carousel .card_1:hover {
+    transform: scale(0.60);
+  }
+
+  .carousel .card_1-number {
+    font-size: 3rem;
+  }
+
+  .carousel .card_1-title h2 {
+    font-size: 1.8rem;
+  }
+  
+  .carousel .card_1-content {
+    padding: 1rem;
+  }
+}
+/* ✨ --- END OF RESPONSIVE CHANGES --- ✨ */

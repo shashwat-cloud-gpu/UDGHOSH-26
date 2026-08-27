@@ -1,0 +1,66 @@
+/* --- Base Styles & Scoped Setup for the React Component --- */
+.helical-carousel-component {
+  position: relative;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  color: #fff;
+}
+
+/* This is the element that will be pinned to the center of the screen */
+.helical-carousel-component .carousel-scene {
+  /* Default (Desktop) Card Dimensions */
+  --card-width: 500px;
+  --card-height: 312.5px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  
+  position: relative;
+  perspective: 4000px;
+}
+
+.helical-carousel-component .carousel {
+  width: var(--card-width);
+  height: var(--card-height);
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+/* --- Individual Cards --- */
+.helical-carousel-component .carousel-card {
+  --card-bg-color: #16213e;
+  --border-color: rgba(167, 199, 231, 0.4);
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--card-width);
+  height: var(--card-height);
+  border-radius: 12px;
+  overflow: hidden;
+  backface-visibility: hidden;
+  background-color: var(--card-bg-color);
+  border: 2px solid var(--border-color);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  user-select: none;
+}
+
+/* --- Image Styling --- */
+.helical-carousel-component .carousel-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* --- ✨ PHONE RESPONSIVENESS --- */
+@media (max-width: 768px) {
+  .helical-carousel-component .carousel-scene {
+    /* Override card dimensions for smaller screens */
+    --card-width: 80vw;
+    --card-height: 50vw; /* (maintaining the 1.6 aspect ratio) */
+  }
+}

@@ -1,0 +1,313 @@
+{
+
+    "Heritage Partner":{
+        "links":
+        [
+            {
+                "name": "UPT",
+                "redirect": "#",
+                "img": "/sponsors/1.png"
+            }
+        ]
+    },
+    "Official Energy Partner":{
+        "links":
+        [
+            {
+                "name": "UPNEDA",
+                "redirect": "#",
+                "img": "/sponsors/2.png"
+            }
+        ]
+    },
+    "Official Grooming Partner":{
+        "links":
+        [
+            {
+                "name": "Beardo",
+                "redirect": "#",
+                "img": "/sponsors/3.png"
+            }
+        ]
+    },
+    "Technology Partner":{
+        "links":
+        [
+            {
+                "name": "HireMee",
+                "redirect": "#",
+                "img": "/sponsors/4.png"
+            }
+        ]
+    },
+    "Energy Drink Partner":{
+        "links":
+        [
+            {
+                "name": "RockIt",
+                "redirect": "#",
+                "img": "/sponsors/5.png"
+            }
+        ]
+    },
+    "Insurance Partner":{
+        "links":
+        [
+            {
+                "name": "LIC",
+                "redirect": "#",
+                "img": "/sponsors/6.png"
+            }
+        ]
+    },
+    "Health Care Partner":{
+        "links":
+        [
+            {
+                "name": "Apollo Spectra",
+                "redirect": "#",
+                "img": "/sponsors/7.png"
+            }
+        ]
+    },
+    "Sports Equipment Partner":{
+        "links":
+        [
+            {
+                "name": "Cosco",
+                "redirect": "#",
+                "img": "/sponsors/8.png"
+            }
+        ]
+    },
+    "Banking Partner":{
+        "links":
+        [
+            {
+                "name": "SBI",
+                "redirect": "#",
+                "img": "/sponsors/9.png"
+            }
+        ]
+    },
+    "Mechatronics Partner":{
+        "links":
+        [
+            {
+                "name": "Simactricals",
+                "redirect": "#",
+                "img": "/sponsors/10.png"
+            }
+        ]
+    },
+    "Refreshment Partner":{
+        "links":
+        [
+            {
+                "name": "Epigamia",
+                "redirect": "#",
+                "img": "/sponsors/11.png"
+            }
+        ]
+    },
+    " ":{
+        "links":
+        [
+            {
+                "name": "TIME",
+                "redirect": "#",
+                "img": "/sponsors/12.png"
+            }
+        ]
+    },
+    "Hydration Partner":{
+        "links":
+        [
+            {
+                "name": "Bisleri",
+                "redirect": "#",
+                "img": "/sponsors/13.png"
+            }
+        ]
+    },
+    "Fragrance Partner":{
+        "links":
+        [
+            {
+                "name": "Layer'r",
+                "redirect": "#",
+                "img": "/sponsors/14.png"
+            }
+        ]
+    },
+    "Official Species Partner":{
+        "links":
+        [
+            {
+                "name": "Goldiee",
+                "redirect": "#",
+                "img": "/sponsors/15.png"
+            }
+        ]
+    },
+    "":{
+        "links":
+        [
+            {
+                "name": "NASO",
+                "redirect": "#",
+                "img": "/sponsors/16.png"
+            }
+        ]
+    },
+    "  ":{
+        "links":
+        [
+            {
+                "name": "NextIAS",
+                "redirect": "#",
+                "img": "/sponsors/17.png"
+            }
+        ]
+    },
+    "Digital Media Partner" :{
+        "links" :
+        [
+            {
+                "name": "ABP Live",
+                "redirect" : "https://news.abplive.com/",
+                "img" : "/sponsors/abplive.jpeg"
+    
+            },
+                        {
+                "name" : "Knowafest",
+                "redirect" : "https://www.knowafest.com/explore/events",
+                "img" : "/sponsors/knowafest.jpeg"
+            }
+    
+        ]
+    },
+    "Official Cinema Partner" :{
+        "links" :
+        [
+            {
+                "name" : "Movie Time",
+                "redirect" : "https://movietimecinemas.in/",
+                "img" : "/sponsors/movie time.jpg"
+            }
+
+        ]
+    },
+    "Media Partner" :{
+        "links" :
+        [
+            {
+                "name" : "Inext Live",
+                "redirect" : "https://www.inextlive.com/about-inext.html",
+                "img" : "/sponsors/inext.png"
+            }
+    
+
+        ]
+    },
+    "Digital Marketplace Partner" :{
+        "links" :
+        [
+            {
+                "name" : "BXI",
+                "redirect" : "https://bxiworld.com/",
+                "img" : "/sponsors/bxi.png"
+            }
+
+        ]
+    },
+    "Official Radio Partner" :{
+        "links" :
+        [   
+            {
+                "name" : "Radio Mirchi",
+                "redirect" : "https://mirchi.in/",
+                "img" : "/sponsors/radiomirchi.png"
+            }
+
+        ]
+    },
+    "Magazine Partner" :{
+        "links" :
+        [   
+            {
+                "name": "Silicon India",
+                "redirect" : "https://www.siliconindia.com/",
+                "img" : "/sponsors/silicon india.jpg"
+
+            },
+            {
+                "name" : "Sugar Times",
+                "redirect" : "https://sugartimes.co.in/",
+                "img" : "/sponsors/sugar times.jpg"
+            },
+            {
+                "name" : "Itvoice",
+                "redirect" : "https://www.itvoice.in/category/itvoice-magazine/it-magazine",
+                "img" : "/sponsors/itvoice.png"
+            },
+            {
+                "name" : "Education World",
+                "redirect" : "https://www.educationworld.in/educationworld-current-issue/educationworld-august-2023/",
+                "img" : "/sponsors/Education world.jpg"
+            }
+
+        ]
+    },
+    "Branding Partner" :{
+        "links" :
+        [
+
+            {
+                "name" : "Neete",
+                "redirect" : "https://theneete.com/",
+                "img" : "/sponsors/neete.png"
+            }
+
+        ]
+    },
+    "NewsChannel Partner" :{
+        "links" :
+        [
+
+            {
+                "name" : "Knews",
+                "redirect" : "https://knewsindia.in/",
+                "img" : "/sponsors/knews.png"
+            }
+
+        ]
+    },
+    "Print Media Partner" :{
+        "links" :
+        [
+            {
+                "name": "ABP Live",
+                "redirect" : "https://news.abplive.com/",
+                "img" : "/sponsors/abplive.png"
+
+            },
+            {
+                "name" : "Soochna Sansar",
+                "redirect" : "#",
+                "img" : "/sponsors/soochna sansar.png"
+            },
+            {
+                "name" : "Deshratn",
+                "redirect" : "#",
+                "img" : "/sponsors/deshratn.png"
+            }
+
+        ]
+    }
+
+
+
+
+    
+}
