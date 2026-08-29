@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import GateAtmosphere from "./GateAtmosphere";
+import GroundStormTransition from "./GroundStormTransition";
 
 const GATES = [
   {
@@ -83,6 +84,8 @@ export default function SectionGate({ dwellProgress = 0 }) {
   const [hovered, setHovered] = useState(null);
   const [enteringGate, setEnteringGate] = useState(null);
   const [zoomActive, setZoomActive] = useState(false);
+  const [isIgnited, setIsIgnited] = useState(false);
+  const [flash, setFlash] = useState(false);
   const opacity = trapezoid(dwellProgress);
   const navigate = useNavigate();
 
@@ -206,8 +209,32 @@ export default function SectionGate({ dwellProgress = 0 }) {
     return () => cancelAnimationFrame(fireRafRef.current);
   }, []);
 
+  const [cursorPos, setCursorPos] = useState({ x: 50, y: 50 });
+
+  const handleMouseMove = (e) => {
+    // Only track if not entering a gate and not ignited yet
+    if (enteringGate || isIgnited) return;
+    const { clientX, clientY, currentTarget } = e;
+    const { left, top, width, height } = currentTarget.getBoundingClientRect();
+    const x = ((clientX - left) / width) * 100;
+    const y = ((clientY - top) / height) * 100;
+    setCursorPos({ x, y });
+  };
+
+  const handleIgnite = () => {
+    if (isIgnited) return;
+    setIsIgnited(true);
+    setFlash(true);
+    // Remove auto-navigation so the storm can be explored interactively
+  };
+
+  const handleCloseStorm = () => {
+    setIsIgnited(false);
+    setFlash(false);
+  };
+
   const handleClick = (gate) => {
-    if (enteringGate) return;
+    if (enteringGate || isIgnited) return;
 
     // Calculate focal center for camera zoom into the archway
     const parsePct = (str) => parseFloat(str) || 0;
@@ -234,13 +261,17 @@ export default function SectionGate({ dwellProgress = 0 }) {
   };
 
   return (
-    <div style={{
+    <div 
+      onMouseMove={handleMouseMove}
+      style={{
       position: "absolute", inset: 0,
       opacity,
       pointerEvents: opacity > 0.15 && !enteringGate ? "auto" : "none",
       fontFamily: "'Cinzel', serif",
       overflow: "hidden",
     }}>
+
+      {isIgnited && <GroundStormTransition onClose={handleCloseStorm} />}
 
       {/* Camera Zoom-In Wrapper */}
       <div style={{
@@ -414,7 +445,9 @@ export default function SectionGate({ dwellProgress = 0 }) {
           <canvas ref={fireCanvasRef} width={220} height={240}
             style={{ position: "absolute", top: "-64px", pointerEvents: "none", zIndex: 3 }}
           />
-          <div style={{
+          <div 
+            onClick={handleIgnite}
+            style={{
             position: "relative",
             width: "clamp(80px,7vw,112px)",
             height: "clamp(112px,9.8vw,160px)",
@@ -422,6 +455,7 @@ export default function SectionGate({ dwellProgress = 0 }) {
             zIndex: 2,
             filter: "drop-shadow(0 0 15px rgba(56,189,248,0.7))",
             animation: "patronusFlameGlow 7s infinite ease-in-out",
+            cursor: "pointer",
           }}>
             <img src="/images/logo.png" alt="Udghosh"
               style={{ width: "100%", height: "100%", objectFit: "contain" }}
@@ -462,6 +496,48 @@ export default function SectionGate({ dwellProgress = 0 }) {
         background: "radial-gradient(circle at center, rgba(56,189,248,0.2) 0%, rgba(0,0,0,0.92) 75%, #000000 100%)",
         opacity: zoomActive ? 1 : 0,
         transition: "opacity 0.75s cubic-bezier(0.4, 0, 0.2, 1)",
+      }} />
+
+      <style>
+        {`
+          @keyframes windBurst {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+            100% { transform: translate(-50%, -50%) scale(150); opacity: 0; }
+          }
+        `}
+      </style>
+
+      {/* Wind Shockwave Effect on Enter */}
+      {enteringGate && (
+        <div style={{
+          position: "absolute",
+          left: `${enteringGate.originX}%`,
+          top: `${enteringGate.originY}%`,
+          width: "50px", height: "50px",
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%)",
+          animation: "windBurst 0.75s ease-out forwards",
+          pointerEvents: "none", zIndex: 11
+        }} />
+      )}
+
+      {/* Interactive Torchlit Discovery Overlay */}
+      <div style={{
+        position: "absolute", inset: 0,
+        pointerEvents: "none", zIndex: 9,
+        background: isIgnited 
+          ? "transparent" 
+          : `radial-gradient(circle 350px at ${cursorPos.x}% ${cursorPos.y}%, rgba(255,200,100,0.15) 0%, transparent 35%, rgba(0,0,0,0.98) 100%)`,
+        transition: "background 1.5s cubic-bezier(0.4, 0, 0.2, 1)",
+      }} />
+
+      {/* White flash when ignited */}
+      <div style={{
+        position: "absolute", inset: 0,
+        pointerEvents: "none", zIndex: 11,
+        background: "white",
+        opacity: flash ? 1 : 0,
+        transition: flash ? "none" : "opacity 2s ease",
       }} />
     </div>
   );

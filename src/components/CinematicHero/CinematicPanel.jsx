@@ -16,12 +16,15 @@ export default function CinematicPanel({
   outroStart = 0.85,
   children,
   onEnterDwell,
+  extendPinVh = null,
+  hideBeforePin = false,
 }) {
   const wrapperRef = useRef(null);
   const pinRef = useRef(null);
   const canvasRef = useRef(null);
   const staticImgRef = useRef(null);
   const outroImgRef = useRef(null);
+  const placeholderImgRef = useRef(null);
   const framesRef = useRef([]);
   const currentFrameRef = useRef(0);
   const rafRef = useRef(null);
@@ -110,14 +113,31 @@ export default function CinematicPanel({
       ScrollTrigger.create({
         trigger: wrapperRef.current,
         start: "top top",
-        end: "bottom bottom",
+        end: extendPinVh ? `bottom+=${extendPinVh} bottom` : "bottom bottom",
         scrub: 0.5,
         pin: pinRef.current,
         pinSpacing: false,
         anticipatePin: 1,
+        onToggle: (self) => {
+          if (hideBeforePin && pinRef.current) {
+            pinRef.current.style.opacity = self.isActive ? "1" : "0";
+          }
+        },
         onUpdate: (self) => {
           const total = self.progress;
           const ready = isReadyRef.current;
+
+          // Fade out the placeholder organically during the first 5% of scroll
+          if (placeholderImgRef.current) {
+            const fadeOutEnd = 0.05;
+            let pOpacity = 1;
+            if (total > fadeOutEnd) {
+              pOpacity = 0;
+            } else {
+              pOpacity = 1 - (total / fadeOutEnd);
+            }
+            placeholderImgRef.current.style.opacity = String(pOpacity);
+          }
 
           if (total <= scrubRatio) {
             const scrubProgress = scrubRatio > 0 ? total / scrubRatio : 1;
@@ -185,16 +205,20 @@ export default function CinematicPanel({
         style={{
           position: "relative", height: "100vh", width: "100%",
           overflow: "hidden", backgroundColor: "#000",
+          opacity: hideBeforePin ? 0 : 1,
         }}
       >
-        {placeholderSrc && !isReady && (
+        {placeholderSrc && (
           <img
+            ref={placeholderImgRef}
             src={placeholderSrc}
             alt=""
             style={{
               position: "absolute", inset: 0,
               width: "100%", height: "100%",
-              objectFit: "cover", zIndex: 0,
+              objectFit: "cover", zIndex: 2, // Above canvas
+              opacity: 1,
+              transition: "opacity 0.1s ease",
             }}
           />
         )}

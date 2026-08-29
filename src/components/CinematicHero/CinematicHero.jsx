@@ -25,6 +25,7 @@ export default function CinematicHero() {
           staticBgSrc="/images/gate.jpg"
           outroBgSrc="/images/gate.jpg"
           outroStart={0.85}
+          extendPinVh="800vh"
         >
           {(dwellProgress) => (
             <>
@@ -58,20 +59,23 @@ export default function CinematicHero() {
         </div>
       </div>
 
-      <CinematicPanel
-        framesPath="/frames/transition2/frame_"
-        frameCount={192}
-        frameExt="jpg"
-        scrubVh="500vh"
-        dwellVh="300vh"
-        placeholderSrc="/images/gate.jpg"
-        staticBgSrc="/images/hall.jpg"
-        outroBgSrc="/images/next_hall.jpg"
-        outroStart={0.85}
-        onEnterDwell={() => setNavbarVisible(true)}
-      >
-        {(dwellProgress) => <SectionGate dwellProgress={dwellProgress} />}
-      </CinematicPanel>
+      <div style={{ position: "relative", zIndex: 2 }}>
+        <CinematicPanel
+          framesPath="/frames/transition2/frame_"
+          frameCount={192}
+          frameExt="jpg"
+          scrubVh="500vh"
+          dwellVh="300vh"
+          placeholderSrc="/images/gate.jpg"
+          staticBgSrc="/images/hall.jpg"
+          outroBgSrc="/images/next_hall.jpg"
+          outroStart={0.85}
+          hideBeforePin={true}
+          onEnterDwell={() => setNavbarVisible(true)}
+        >
+          {(dwellProgress) => <SectionGate dwellProgress={dwellProgress} />}
+        </CinematicPanel>
+      </div>
 
     </div>
   );

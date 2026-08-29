@@ -29,3 +29,5 @@ public\video.mp4
 
 # Unused components/assets
 unused/
+
+.env
