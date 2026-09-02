@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import GateAtmosphere from "./GateAtmosphere";
 import GroundStormTransition from "./GroundStormTransition";
+import AncientTableGate from "./AncientTableGate";
 
 const GATES = [
   {
@@ -81,11 +82,25 @@ function trapezoid(t) {
 }
 
 export default function SectionGate({ dwellProgress = 0 }) {
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === "undefined") return false;
+    const urlParams = new URLSearchParams(window.location.search);
+    return window.innerWidth < 820 || urlParams.get("mobile") === "table";
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      setIsMobile(window.innerWidth < 820 || urlParams.get("mobile") === "table");
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const [hovered, setHovered] = useState(null);
   const [enteringGate, setEnteringGate] = useState(null);
   const [zoomActive, setZoomActive] = useState(false);
   const [isIgnited, setIsIgnited] = useState(false);
-  const [flash, setFlash] = useState(false);
   const opacity = trapezoid(dwellProgress);
   const navigate = useNavigate();
 
@@ -209,28 +224,13 @@ export default function SectionGate({ dwellProgress = 0 }) {
     return () => cancelAnimationFrame(fireRafRef.current);
   }, []);
 
-  const [cursorPos, setCursorPos] = useState({ x: 50, y: 50 });
-
-  const handleMouseMove = (e) => {
-    // Only track if not entering a gate and not ignited yet
-    if (enteringGate || isIgnited) return;
-    const { clientX, clientY, currentTarget } = e;
-    const { left, top, width, height } = currentTarget.getBoundingClientRect();
-    const x = ((clientX - left) / width) * 100;
-    const y = ((clientY - top) / height) * 100;
-    setCursorPos({ x, y });
-  };
-
   const handleIgnite = () => {
     if (isIgnited) return;
     setIsIgnited(true);
-    setFlash(true);
-    // Remove auto-navigation so the storm can be explored interactively
   };
 
   const handleCloseStorm = () => {
     setIsIgnited(false);
-    setFlash(false);
   };
 
   const handleClick = (gate) => {
@@ -260,9 +260,21 @@ export default function SectionGate({ dwellProgress = 0 }) {
     }, 750);
   };
 
+  if (isMobile) {
+    return (
+      <div style={{
+        position: "absolute", inset: 0,
+        opacity,
+        pointerEvents: opacity > 0.15 ? "auto" : "none",
+        zIndex: 20,
+      }}>
+        <AncientTableGate dwellProgress={dwellProgress} />
+      </div>
+    );
+  }
+
   return (
     <div 
-      onMouseMove={handleMouseMove}
       style={{
       position: "absolute", inset: 0,
       opacity,
@@ -286,7 +298,7 @@ export default function SectionGate({ dwellProgress = 0 }) {
         {/* Backdrop for seamless sync when zooming */}
         {enteringGate && (
           <img
-            src="/images/hall.jpg"
+            src="/images/hall.webp"
             alt=""
             style={{
               position: "absolute", inset: 0,
@@ -521,24 +533,6 @@ export default function SectionGate({ dwellProgress = 0 }) {
         }} />
       )}
 
-      {/* Interactive Torchlit Discovery Overlay */}
-      <div style={{
-        position: "absolute", inset: 0,
-        pointerEvents: "none", zIndex: 9,
-        background: isIgnited 
-          ? "transparent" 
-          : `radial-gradient(circle 350px at ${cursorPos.x}% ${cursorPos.y}%, rgba(255,200,100,0.15) 0%, transparent 35%, rgba(0,0,0,0.98) 100%)`,
-        transition: "background 1.5s cubic-bezier(0.4, 0, 0.2, 1)",
-      }} />
-
-      {/* White flash when ignited */}
-      <div style={{
-        position: "absolute", inset: 0,
-        pointerEvents: "none", zIndex: 11,
-        background: "white",
-        opacity: flash ? 1 : 0,
-        transition: flash ? "none" : "opacity 2s ease",
-      }} />
     </div>
   );
 }

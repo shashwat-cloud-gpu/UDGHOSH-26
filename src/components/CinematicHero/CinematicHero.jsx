@@ -7,6 +7,7 @@ import CastleAtmosphere from "./CastleAtmosphere";
 
 export default function CinematicHero() {
   const [navbarVisible, setNavbarVisible] = useState(false);
+  const [loadSecondPanel, setLoadSecondPanel] = useState(false);
 
   return (
     <div style={{ position: "relative", backgroundColor: "#000" }}>
@@ -21,11 +22,16 @@ export default function CinematicHero() {
           frameExt="jpg"
           scrubVh="550vh"
           dwellVh="320vh"
-          placeholderSrc="/images/landing_page.png"
-          staticBgSrc="/images/gate.jpg"
-          outroBgSrc="/images/gate.jpg"
+          placeholderSrc="/images/landing_page.webp"
+          staticBgSrc="/images/gate.webp"
+          outroBgSrc="/images/gate.webp"
           outroStart={0.85}
-          extendPinVh="800vh"
+          onProgress={(progress) => {
+            // Lazy-load second panel only when user scrolls down first panel
+            if (progress > 0.25 && !loadSecondPanel) {
+              setLoadSecondPanel(true);
+            }
+          }}
         >
           {(dwellProgress) => (
             <>
@@ -59,23 +65,21 @@ export default function CinematicHero() {
         </div>
       </div>
 
-      <div style={{ position: "relative", zIndex: 2 }}>
-        <CinematicPanel
-          framesPath="/frames/transition2/frame_"
-          frameCount={192}
-          frameExt="jpg"
-          scrubVh="500vh"
-          dwellVh="300vh"
-          placeholderSrc="/images/gate.jpg"
-          staticBgSrc="/images/hall.jpg"
-          outroBgSrc="/images/next_hall.jpg"
-          outroStart={0.85}
-          hideBeforePin={true}
-          onEnterDwell={() => setNavbarVisible(true)}
-        >
-          {(dwellProgress) => <SectionGate dwellProgress={dwellProgress} />}
-        </CinematicPanel>
-      </div>
+      <CinematicPanel
+        framesPath="/frames/transition2/frame_"
+        frameCount={192}
+        frameExt="jpg"
+        scrubVh="500vh"
+        dwellVh="300vh"
+        placeholderSrc="/images/gate.webp"
+        staticBgSrc="/images/hall.webp"
+        outroBgSrc="/images/next_hall.webp"
+        outroStart={0.85}
+        enabled={loadSecondPanel}
+        onEnterDwell={() => setNavbarVisible(true)}
+      >
+        {(dwellProgress) => <SectionGate dwellProgress={dwellProgress} />}
+      </CinematicPanel>
 
     </div>
   );
