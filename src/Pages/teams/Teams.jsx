@@ -85,7 +85,7 @@ const TeamScroll = forwardRef(({ teams, onSectionChange }, ref) => {
           <section className="scroll-section" key={team.id}>
             <h2 className="team-title">{team.title}</h2>
             <div className="members-container">
-              {team.members.map((member) => (
+              {team.members.filter(member => !member.hidden).map((member) => (
                 <div className="member-card" key={member.id || member.name}>
                   <img src={member.photo || 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/udghoshlogo?_a=BAMAPqcg0'} alt={member.name} className="member-photo" style={member.imageStyle || {}} />
                   <div className="member-info">
