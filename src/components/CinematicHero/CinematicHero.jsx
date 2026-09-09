@@ -41,9 +41,7 @@ export default function CinematicHero() {
 
       <div style={{ position: "relative" }}>
         <CinematicPanel
-          framesPath="/frames/transition1/frame_"
-          frameCount={192}
-          frameExt="jpg"
+          videoSrc="/videos/transition1.mp4"
           scrubVh="550vh"
           dwellVh="320vh"
           placeholderSrc={isMobile ? "/images/landing_page_mobile.webp" : "/images/landing_page.png"}
@@ -88,9 +86,7 @@ export default function CinematicHero() {
         <div style={{ position: "relative", zIndex: 2 }}>
           <CinematicPanel
             key="mobile-gate-panel"
-            framesPath="/frames/transition2/frame_"
-            frameCount={75}
-            frameExt="jpg"
+            videoSrc="/videos/transition2.mp4"
             scrubVh="280vh"
             dwellVh="300vh"
             placeholderSrc="/images/gate.jpg"
@@ -107,9 +103,7 @@ export default function CinematicHero() {
         <div style={{ position: "relative", zIndex: 2 }}>
           <CinematicPanel
             key="desktop-gate-panel"
-            framesPath="/frames/transition2/frame_"
-            frameCount={192}
-            frameExt="jpg"
+            videoSrc="/videos/transition2.mp4"
             scrubVh="500vh"
             dwellVh="300vh"
             placeholderSrc="/images/gate.jpg"

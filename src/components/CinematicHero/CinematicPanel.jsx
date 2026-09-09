@@ -5,9 +5,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function CinematicPanel({
-  framesPath,
-  frameCount,
-  frameExt = "jpg",
+  videoSrc,
   scrubVh = "500vh",
   dwellVh = "150vh",
   placeholderSrc = null,
@@ -24,211 +22,97 @@ export default function CinematicPanel({
 }) {
   const wrapperRef = useRef(null);
   const pinRef = useRef(null);
-  const canvasRef = useRef(null);
+  const videoRef = useRef(null);
   const staticImgRef = useRef(null);
   const outroImgRef = useRef(null);
   const placeholderImgRef = useRef(null);
-  const framesRef = useRef([]);
-  const currentFrameRef = useRef(0);
-  const targetFrameRef = useRef(0);
-  const currentRenderedFrameRef = useRef(0);
-  const frameLoopRef = useRef(null);
   const enteredDwellRef = useRef(false);
+  // Desired video position, expressed as 0–1 progress through the clip.
+  // Written cheaply by ScrollTrigger's onUpdate; consumed by a separate
+  // rAF loop below so seeking is paced to the browser's paint cycle
+  // instead of the raw scroll-event rate.
+  const targetProgressRef = useRef(0);
 
-  const [loadProgress, setLoadProgress] = useState(0);
-  const [isReady, setIsReady] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
   const [dwellProgress, setDwellProgress] = useState(0);
   const [inDwell, setInDwell] = useState(false);
 
-  const isReadyRef = useRef(false);
+  const videoReadyRef = useRef(false);
   useEffect(() => {
-    isReadyRef.current = isReady;
-  }, [isReady]);
+    videoReadyRef.current = videoReady;
+  }, [videoReady]);
+
+  // If the video is already buffered (e.g. bfcache / instant cache hit),
+  // `canPlayThrough` may never fire again — catch that case on mount.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video && video.readyState >= 3) {
+      setVideoReady(true);
+      videoReadyRef.current = true;
+    }
+  }, [videoSrc]);
+
+  // As soon as the video becomes ready, force GSAP to re-run onUpdate so the
+  // placeholder/video swap immediately, even if the user isn't actively
+  // scrolling right when the video finishes buffering.
+  useEffect(() => {
+    if (videoReady) {
+      ScrollTrigger.update();
+    }
+  }, [videoReady]);
+
+  // Dedicated seek loop, ticking on requestAnimationFrame.
+  // Why not just set video.currentTime inside ScrollTrigger's onUpdate?
+  // Because onUpdate can fire faster than the video element can actually
+  // service a seek, especially with sparsely-keyframed footage — issuing a
+  // new seek before the previous one resolves piles them up and the video
+  // visibly lags/stutters behind the scroll. This loop:
+  //  - only ever issues one seek per animation frame,
+  //  - skips entirely while a previous seek is still in flight
+  //    (video.seeking === true), letting the backlog drain instead of grow,
+  //  - skips no-op seeks smaller than roughly one frame's worth of time,
+  //  - uses fastSeek() where available for cheaper mid-scrub seeking, but
+  //    always falls back to precise currentTime at the very start/end of
+  //    the clip so it lands exactly on frame 0 (matching the placeholder)
+  //    and the true last frame (matching the dwell background) for a
+  //    seamless crossfade.
+  useEffect(() => {
+    let rafId;
+
+    const tick = () => {
+      const video = videoRef.current;
+      if (
+        video &&
+        videoReadyRef.current &&
+        video.duration &&
+        isFinite(video.duration) &&
+        !video.seeking
+      ) {
+        const progress = Math.min(Math.max(targetProgressRef.current, 0), 1);
+        const safeDuration = Math.max(video.duration - 0.03, 0);
+        const targetTime = Math.min(progress * video.duration, safeDuration);
+        const delta = Math.abs(video.currentTime - targetTime);
+
+        // Roughly one frame at 60fps — anything smaller isn't worth a seek.
+        if (delta > 1 / 60) {
+          const atEdge = progress <= 0.001 || progress >= 0.999;
+          if (!atEdge && typeof video.fastSeek === "function") {
+            video.fastSeek(targetTime);
+          } else {
+            video.currentTime = targetTime;
+          }
+        }
+      }
+      rafId = requestAnimationFrame(tick);
+    };
+
+    rafId = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafId);
+  }, []);
 
   const scrubNum = parseFloat(scrubVh);
   const dwellNum = parseFloat(dwellVh);
   const scrubRatio = scrubNum / (scrubNum + dwellNum);
-
-  const drawFrame = (index) => {
-    const canvas = canvasRef.current;
-    const frames = framesRef.current;
-    if (!canvas || !frames || frames.length === 0) return;
-
-    let img = frames[index];
-    // If targeted frame isn't loaded yet, smoothly find nearest available frame
-    if (!img || !img.complete) {
-      let closest = null;
-      let minDiff = 9999;
-      for (let i = 0; i < frames.length; i++) {
-        if (frames[i] && frames[i].complete) {
-          const diff = Math.abs(i - index);
-          if (diff < minDiff) {
-            minDiff = diff;
-            closest = frames[i];
-          }
-        }
-      }
-      img = closest;
-    }
-
-    if (!img || !img.complete) return;
-    const ctx = canvas.getContext("2d");
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = "high";
-    const cw = canvas.width, ch = canvas.height;
-    const iw = img.naturalWidth, ih = img.naturalHeight;
-    if (!iw || !ih) return;
-    const scale = Math.max(cw / iw, ch / ih);
-    const sw = iw * scale, sh = ih * scale;
-    const sx = (cw - sw) / 2, sy = (ch - sh) / 2;
-    ctx.clearRect(0, 0, cw, ch);
-    ctx.drawImage(img, sx, sy, sw, sh);
-  };
-
-  useEffect(() => {
-    const handleResize = () => {
-      const canvas = canvasRef.current;
-      if (!canvas) return;
-      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${window.innerHeight}px`;
-      drawFrame(currentFrameRef.current);
-    };
-    window.addEventListener("resize", handleResize);
-    handleResize();
-    return () => window.removeEventListener("resize", handleResize);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // Adaptive Progressive Frame Loading Engine
-  useEffect(() => {
-    if (!framesPath || !frameCount || !enabled) return;
-
-    // Detect network speed and screen size to minimize initial bandwidth
-    let step = 2; // Default: 96 frames (50% bandwidth cut, silky smooth)
-    if (typeof navigator !== "undefined") {
-      const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-      if (conn && (conn.saveData || conn.effectiveType === "slow-2g" || conn.effectiveType === "2g")) {
-        step = 4; // Ultra-light: 48 frames (75% bandwidth cut)
-      } else if (conn && conn.effectiveType === "3g") {
-        step = 3; // Light: 64 frames (67% bandwidth cut)
-      }
-    }
-    if (typeof window !== "undefined" && window.innerWidth < 768) {
-      step = Math.max(step, 3); // Mobile: 64 frames (67% bandwidth cut)
-    }
-
-    const frames = new Array(frameCount);
-    framesRef.current = frames;
-
-    let isCancelled = false;
-    let loadedCount = 0;
-
-    // Build the list of keyframe indices to fetch
-    const targetIndices = [];
-    for (let i = 0; i < frameCount; i += step) {
-      targetIndices.push(i);
-    }
-    if (targetIndices[targetIndices.length - 1] !== frameCount - 1) {
-      targetIndices.push(frameCount - 1);
-    }
-    const totalToLoad = targetIndices.length;
-
-    // Fast-path: Load Frame 1 immediately so the canvas renders within milliseconds
-    const firstImg = new Image();
-    const firstPadded = "0001";
-    firstImg.src = `${framesPath}${firstPadded}.${frameExt}`;
-    firstImg.onload = () => {
-      if (isCancelled) return;
-      frames[0] = firstImg;
-      loadedCount += 1;
-      setLoadProgress(Math.round((loadedCount / totalToLoad) * 100));
-      setIsReady(true);
-      isReadyRef.current = true;
-      drawFrame(0);
-      startQueue();
-    };
-    firstImg.onerror = () => {
-      if (isCancelled) return;
-      startQueue();
-    };
-    frames[0] = firstImg;
-
-    // Controlled concurrent batch loader to prevent network saturation
-    const startQueue = () => {
-      const remaining = targetIndices.filter((idx) => idx !== 0);
-      const BATCH_SIZE = 4;
-      let currentIndex = 0;
-
-      const loadNext = () => {
-        if (isCancelled || currentIndex >= remaining.length) return;
-        const frameIdx = remaining[currentIndex++];
-        const padded = String(frameIdx + 1).padStart(4, "0");
-        const img = new Image();
-        img.src = `${framesPath}${padded}.${frameExt}`;
-        img.onload = () => {
-          if (isCancelled) return;
-          frames[frameIdx] = img;
-          loadedCount += 1;
-          setLoadProgress(Math.round((loadedCount / totalToLoad) * 100));
-          drawFrame(currentFrameRef.current);
-          loadNext();
-        };
-        img.onerror = () => {
-          if (isCancelled) return;
-          loadNext();
-        };
-        frames[frameIdx] = img;
-      };
-
-      for (let b = 0; b < Math.min(BATCH_SIZE, remaining.length); b++) {
-        loadNext();
-      }
-    };
-
-    return () => {
-      isCancelled = true;
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [framesPath, frameCount, frameExt, enabled]);
-
-  // Capped Speed & Continuous Frame Interpolation Engine
-  useEffect(() => {
-    let lastTime = performance.now();
-
-    function tick(now) {
-      const deltaMs = Math.min(now - lastTime, 100);
-      lastTime = now;
-
-      // Rate limit: max ~75 frames per second speed cap
-      // Even under extreme user scroll bursts, graphics scrub smoothly without frame drops
-      const target = targetFrameRef.current;
-      const current = currentRenderedFrameRef.current;
-      const diff = target - current;
-
-      if (Math.abs(diff) > 0.001) {
-        const maxStep = (75 / 1000) * deltaMs;
-        const step = Math.sign(diff) * Math.min(Math.abs(diff) * 0.18, maxStep);
-
-        currentRenderedFrameRef.current += step;
-        const frameToDraw = Math.min(Math.max(Math.round(currentRenderedFrameRef.current), 0), (frameCount || 1) - 1);
-
-        if (frameToDraw !== currentFrameRef.current) {
-          currentFrameRef.current = frameToDraw;
-          drawFrame(frameToDraw);
-        }
-      }
-
-      frameLoopRef.current = requestAnimationFrame(tick);
-    }
-
-    frameLoopRef.current = requestAnimationFrame(tick);
-    return () => {
-      if (frameLoopRef.current) cancelAnimationFrame(frameLoopRef.current);
-    };
-  }, [frameCount]);
 
   // GSAP ScrollTrigger
   useEffect(() => {
@@ -248,31 +132,34 @@ export default function CinematicPanel({
         },
         onUpdate: (self) => {
           const total = self.progress;
+          const video = videoRef.current;
+          const ready = videoReadyRef.current;
           if (onProgress) onProgress(total);
-          const ready = isReadyRef.current;
 
-          // Fade out the placeholder organically during the first 5% of scroll
+          // Fade placeholder during the first 5% of scroll — but only once the
+          // video is actually ready to show. This prevents a black flash if the
+          // user scrolls (in either direction) before the video has buffered:
+          // the placeholder (which is the same image as the video's first
+          // frame) stays put as a safe fallback until playback is possible.
           if (placeholderImgRef.current) {
             const fadeOutEnd = 0.05;
-            let pOpacity = 1;
-            if (total > fadeOutEnd) {
-              pOpacity = 0;
+            if (total <= scrubRatio && !ready) {
+              placeholderImgRef.current.style.opacity = "1";
             } else {
-              pOpacity = 1 - (total / fadeOutEnd);
+              placeholderImgRef.current.style.opacity =
+                total > fadeOutEnd ? "0" : String(1 - total / fadeOutEnd);
             }
-            placeholderImgRef.current.style.opacity = String(pOpacity);
           }
 
           if (total <= scrubRatio) {
+            // SCRUB PHASE — target progress is a pure function of scroll
+            // position, so this scrubs correctly whether the user scrolls
+            // down or up, and simply stops wherever the user stops
+            // scrolling. The actual seek happens in the rAF loop above.
             const scrubProgress = scrubRatio > 0 ? total / scrubRatio : 1;
-            targetFrameRef.current = Math.min(
-              Math.floor(scrubProgress * (frameCount - 1)),
-              frameCount - 1
-            );
+            targetProgressRef.current = Math.min(Math.max(scrubProgress, 0), 1);
 
-            if (canvasRef.current) {
-              canvasRef.current.style.opacity = ready ? "1" : "0";
-            }
+            if (videoRef.current) videoRef.current.style.opacity = ready ? "1" : "0";
             if (staticImgRef.current) staticImgRef.current.style.opacity = "0";
             if (outroImgRef.current) outroImgRef.current.style.opacity = "0";
             if (enteredDwellRef.current) {
@@ -282,10 +169,10 @@ export default function CinematicPanel({
             }
             setDwellProgress(0);
           } else {
-            // Once scrub finishes, lock to last frame
-            targetFrameRef.current = frameCount - 1;
-
-            if (canvasRef.current) canvasRef.current.style.opacity = "0";
+            // DWELL PHASE — lock the target to the very last frame; the rAF
+            // loop seeks to it once and then skips further no-op seeks.
+            targetProgressRef.current = 1;
+            if (video) video.style.opacity = "0";
             if (staticImgRef.current) staticImgRef.current.style.opacity = "1";
 
             const dp = scrubRatio < 1 ? (total - scrubRatio) / (1 - scrubRatio) : 1;
@@ -295,9 +182,7 @@ export default function CinematicPanel({
             if (outroImgRef.current) {
               if (outroBgSrc && clampedDp > outroStart && outroStart < 1) {
                 const outroProgress = (clampedDp - outroStart) / (1 - outroStart);
-                outroImgRef.current.style.opacity = String(
-                  Math.min(Math.max(outroProgress, 0), 1)
-                );
+                outroImgRef.current.style.opacity = String(Math.min(Math.max(outroProgress, 0), 1));
               } else {
                 outroImgRef.current.style.opacity = "0";
               }
@@ -316,7 +201,7 @@ export default function CinematicPanel({
       ctx.revert();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [frameCount, scrubRatio, outroStart, outroBgSrc, extendPinVh, hideBeforePin]);
+  }, [scrubRatio, outroStart, outroBgSrc, extendPinVh, hideBeforePin]);
 
   return (
     <div
@@ -337,7 +222,7 @@ export default function CinematicPanel({
           overflow: "hidden",
         }}
       >
-        {/* Placeholder image (visible before frames load) */}
+        {/* Placeholder image (visible before video loads) */}
         {placeholderSrc && (
           <img
             ref={placeholderImgRef}
@@ -350,15 +235,23 @@ export default function CinematicPanel({
               height: "100%",
               objectFit: "cover",
               zIndex: 0,
-              opacity: isReady ? 0 : 1,
+              opacity: videoReady ? 0 : 1,
               transition: "opacity 0.6s ease",
+              willChange: "opacity",
+              transform: "translateZ(0)",
             }}
           />
         )}
 
-        {/* Scrub frame canvas */}
-        <canvas
-          ref={canvasRef}
+        {/* Scrub video */}
+        <video
+          ref={videoRef}
+          src={videoSrc}
+          muted
+          playsInline
+          preload="auto"
+          disablePictureInPicture
+          disableRemotePlayback
           style={{
             position: "absolute",
             inset: 0,
@@ -366,8 +259,14 @@ export default function CinematicPanel({
             height: "100%",
             objectFit: "cover",
             zIndex: 0,
-            opacity: 0,
+            opacity: videoReady ? 1 : 0,
             transition: "opacity 0.3s ease",
+            willChange: "opacity",
+            transform: "translateZ(0)",
+          }}
+          onCanPlayThrough={() => {
+            setVideoReady(true);
+            videoReadyRef.current = true;
           }}
         />
 
@@ -386,6 +285,8 @@ export default function CinematicPanel({
               zIndex: 1,
               opacity: 0,
               transition: "opacity 0.5s ease",
+              willChange: "opacity",
+              transform: "translateZ(0)",
             }}
           />
         )}
@@ -405,12 +306,14 @@ export default function CinematicPanel({
               zIndex: 1,
               opacity: 0,
               transition: "opacity 0.4s ease",
+              willChange: "opacity",
+              transform: "translateZ(0)",
             }}
           />
         )}
 
-        {/* Loading overlay indicator */}
-        {!isReady && framesPath && (
+        {/* Loading indicator */}
+        {!videoReady && videoSrc && (
           <div
             style={{
               position: "absolute",
@@ -426,26 +329,7 @@ export default function CinematicPanel({
               pointerEvents: "none",
             }}
           >
-            <div
-              style={{
-                width: "120px",
-                height: "2px",
-                background: "rgba(255,255,255,0.2)",
-                borderRadius: "2px",
-                margin: "0 auto 0.5rem",
-                overflow: "hidden",
-              }}
-            >
-              <div
-                style={{
-                  width: `${loadProgress}%`,
-                  height: "100%",
-                  background: "#38BDF8",
-                  transition: "width 0.1s linear",
-                }}
-              />
-            </div>
-            <span>{loadProgress}%</span>
+            <span>Loading video...</span>
           </div>
         )}
 
