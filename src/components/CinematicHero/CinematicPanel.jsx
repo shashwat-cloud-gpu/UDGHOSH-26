@@ -110,9 +110,23 @@ export default function CinematicPanel({
     return () => cancelAnimationFrame(rafId);
   }, []);
 
+  // extendPinVh adds extra *dwell* time (holding the final frame longer)
+  // without touching how long the video takes to scrub. Critically, this
+  // extra distance must be baked into the wrapper's real DOM height (see
+  // totalHeight below) — not just into the ScrollTrigger "end" position —
+  // otherwise the next panel in the document sits right after this panel's
+  // un-extended height and starts activating while this one is still
+  // pinned, producing two panels visible/fixed at once (a hard seam/split
+  // screen). Making the wrapper's actual height match the full pin
+  // duration means the next panel physically can't begin until this one's
+  // pin has truly finished.
   const scrubNum = parseFloat(scrubVh);
   const dwellNum = parseFloat(dwellVh);
-  const scrubRatio = scrubNum / (scrubNum + dwellNum);
+  const extendNum = extendPinVh ? parseFloat(extendPinVh) : 0;
+  const scrubRatio = scrubNum / (scrubNum + dwellNum + extendNum);
+  const totalHeight = extendPinVh
+    ? `calc(${scrubVh} + ${dwellVh} + ${extendPinVh})`
+    : `calc(${scrubVh} + ${dwellVh})`;
 
   // GSAP ScrollTrigger
   useEffect(() => {
@@ -120,7 +134,7 @@ export default function CinematicPanel({
       ScrollTrigger.create({
         trigger: wrapperRef.current,
         start: "top top",
-        end: extendPinVh ? `bottom+=${extendPinVh} bottom` : "bottom bottom",
+        end: "bottom bottom",
         scrub: 0.8, // Smooth GSAP tracking
         pin: pinRef.current,
         pinSpacing: false,
@@ -201,14 +215,14 @@ export default function CinematicPanel({
       ctx.revert();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scrubRatio, outroStart, outroBgSrc, extendPinVh, hideBeforePin]);
+  }, [scrubRatio, outroStart, outroBgSrc, hideBeforePin]);
 
   return (
     <div
       ref={wrapperRef}
       style={{
         position: "relative",
-        height: `calc(${scrubVh} + ${dwellVh})`,
+        height: totalHeight,
       }}
     >
       <div
@@ -220,6 +234,10 @@ export default function CinematicPanel({
           width: "100%",
           height: "100vh",
           overflow: "hidden",
+          // Start hidden (matches GSAP's first onToggle call) so there's no
+          // flash of this panel's content before its own pin is reached.
+          opacity: hideBeforePin ? 0 : 1,
+          transition: hideBeforePin ? "opacity 0.15s ease" : undefined,
         }}
       >
         {/* Placeholder image (visible before video loads) */}

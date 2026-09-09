@@ -8,6 +8,11 @@ import CastleAtmosphere from "./CastleAtmosphere";
 
 export default function CinematicHero() {
   const [navbarVisible, setNavbarVisible] = useState(false);
+  // The floating "scroll" cue is position:fixed, so with no visibility
+  // logic it stays on screen forever — including over the About Us dwell
+  // and beyond, which reads as a second, unrelated scene bleeding through.
+  // Tie it to the hero panel's own dwell state instead.
+  const [scrollCueVisible, setScrollCueVisible] = useState(true);
   const [isMobile, setIsMobile] = useState(() => {
     if (typeof window === "undefined") return false;
     const urlParams = new URLSearchParams(window.location.search);
@@ -49,6 +54,8 @@ export default function CinematicHero() {
           outroBgSrc="/images/gate.jpg"
           outroStart={0.85}
           extendPinVh="800vh"
+          onEnterDwell={() => setScrollCueVisible(false)}
+          onLeaveDwell={() => setScrollCueVisible(true)}
         >
           {(dwellProgress) => (
             <>
@@ -58,14 +65,21 @@ export default function CinematicHero() {
           )}
         </CinematicPanel>
 
-        {/* Floating scroll cue (fixed so it overlays the pinned panel) */}
+        {/* Floating scroll cue (fixed so it overlays the pinned panel).
+            Opacity fade lives on this outer div; the bounce animation
+            lives on the inner div, so the two don't fight over the same
+            CSS property. */}
         <div aria-hidden="true" style={{
           position: "fixed", bottom: "2.5rem", left: 0, right: 0,
           display: "flex", justifyContent: "center",
           zIndex: 5, pointerEvents: "none",
-          animation: "cineScrollBounce 1.9s ease-in-out infinite",
+          opacity: scrollCueVisible ? 1 : 0,
+          transition: "opacity 0.4s ease",
         }}>
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: ".5rem" }}>
+          <div style={{
+            display: "flex", flexDirection: "column", alignItems: "center", gap: ".5rem",
+            animation: "cineScrollBounce 1.9s ease-in-out infinite",
+          }}>
             <svg width="22" height="34" viewBox="0 0 22 34" fill="none">
               <rect x="1" y="1" width="20" height="32" rx="10"
                 stroke="rgba(255,255,255,0.35)" strokeWidth="1.5" />
