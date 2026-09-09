@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import GateAtmosphere from "./GateAtmosphere";
 import GroundStormTransition from "./GroundStormTransition";
+import MobileDeskGate from "./MobileDeskGate";
 
 const GATES = [
   {
@@ -80,7 +81,7 @@ function trapezoid(t) {
   return 1 - (t - 0.85) / 0.15;
 }
 
-export default function SectionGate({ dwellProgress = 0 }) {
+function DesktopCastleGate({ dwellProgress = 0 }) {
   const [hovered, setHovered] = useState(null);
   const [enteringGate, setEnteringGate] = useState(null);
   const [zoomActive, setZoomActive] = useState(false);
@@ -521,15 +522,6 @@ export default function SectionGate({ dwellProgress = 0 }) {
         }} />
       )}
 
-      {/* Interactive Torchlit Discovery Overlay */}
-      <div style={{
-        position: "absolute", inset: 0,
-        pointerEvents: "none", zIndex: 9,
-        background: isIgnited 
-          ? "transparent" 
-          : `radial-gradient(circle 350px at ${cursorPos.x}% ${cursorPos.y}%, rgba(255,200,100,0.15) 0%, transparent 35%, rgba(0,0,0,0.98) 100%)`,
-        transition: "background 1.5s cubic-bezier(0.4, 0, 0.2, 1)",
-      }} />
 
       {/* White flash when ignited */}
       <div style={{
@@ -541,4 +533,36 @@ export default function SectionGate({ dwellProgress = 0 }) {
       }} />
     </div>
   );
+}
+
+export default function SectionGate(props) {
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === "undefined") return false;
+    const urlParams = new URLSearchParams(window.location.search);
+    return (
+      window.innerWidth < 820 ||
+      urlParams.get("mobile") === "desk" ||
+      urlParams.get("mobile") === "table" ||
+      urlParams.get("mobile") === "1"
+    );
+  });
+
+  useEffect(() => {
+    const checkMobile = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      setIsMobile(
+        window.innerWidth < 820 ||
+        urlParams.get("mobile") === "desk" ||
+        urlParams.get("mobile") === "table" ||
+        urlParams.get("mobile") === "1"
+      );
+    };
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  if (isMobile) {
+    return <MobileDeskGate {...props} />;
+  }
+  return <DesktopCastleGate {...props} />;
 }

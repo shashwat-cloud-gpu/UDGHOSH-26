@@ -1,6 +1,5 @@
 import React, { useRef, useMemo, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Html } from "@react-three/drei";
 import * as THREE from "three";
 
 // Simulated Live Data API
@@ -12,9 +11,8 @@ const MOCK_LIVE_DATA = [
   { id: 5, title: "Swimming Heats", color: "#4ade80", status: "UPCOMING", url: "https://events.udghosh.org.in/" },
 ];
 
-function LiveEventCores({ data, timeScaleRef }) {
+function LiveEventCores({ data, timeScaleRef, onHoverCore }) {
   const meshRef = useRef();
-  const [hoveredIdx, setHoveredIdx] = useState(null);
 
   // Distribute cores inside the storm
   const dummy = useMemo(() => new THREE.Object3D(), []);
@@ -39,19 +37,17 @@ function LiveEventCores({ data, timeScaleRef }) {
     return arr;
   }, [data]);
 
-  useFrame((state, delta) => {
+  useFrame((state) => {
     if (!meshRef.current) return;
     const time = state.clock.getElapsedTime();
-    // Swirl the cores along with the storm, but slower
     corePositions.forEach((pos, i) => {
-      const angle = Math.atan2(pos.z + 10, pos.x) + delta * timeScaleRef.current * 0.5;
-      const r = Math.sqrt(pos.x * pos.x + (pos.z + 10) * (pos.z + 10));
+      const angle = (i / data.length) * Math.PI * 2 + time * 0.2 * timeScaleRef.current;
+      const r = 5.0;
       pos.x = r * Math.cos(angle);
       pos.z = r * Math.sin(angle) - 10;
-      pos.y += Math.sin(time * 2 + i) * 0.02 * timeScaleRef.current; // bobbing
-      
+      pos.y += Math.sin(time * 2 + i) * 0.02 * timeScaleRef.current;
+
       dummy.position.copy(pos);
-      // Pulsate scale slightly
       const s = 1.0 + Math.sin(time * 5 + i) * 0.2;
       dummy.scale.set(s, s, s);
       dummy.updateMatrix();
@@ -61,62 +57,26 @@ function LiveEventCores({ data, timeScaleRef }) {
   });
 
   return (
-    <>
-      <instancedMesh
-        ref={meshRef}
-        args={[null, null, data.length]}
-        onPointerOver={(e) => {
-          e.stopPropagation();
-          setHoveredIdx(e.instanceId);
-          document.body.style.cursor = 'pointer';
-        }}
-        onPointerOut={() => {
-          setHoveredIdx(null);
-          document.body.style.cursor = 'auto';
-        }}
-      >
-        <sphereGeometry args={[0.4, 16, 16]}>
-          <instancedBufferAttribute attach="attributes-color" args={[coreColors, 3]} />
-        </sphereGeometry>
-        <meshBasicMaterial vertexColors toneMapped={false} />
-      </instancedMesh>
-      
-      {/* HTML Tooltip for hovered core */}
-      {hoveredIdx !== null && (
-        <Html position={corePositions[hoveredIdx]} center zIndexRange={[100, 0]}>
-          <div style={{
-            background: "rgba(0,0,0,0.8)",
-            border: `1px solid ${data[hoveredIdx].color}`,
-            borderRadius: "8px",
-            padding: "12px",
-            color: "white",
-            width: "max-content",
-            pointerEvents: "auto",
-            fontFamily: "sans-serif",
-            backdropFilter: "blur(4px)",
-            transform: "translateY(-40px)",
-            boxShadow: `0 0 15px ${data[hoveredIdx].color}44`
-          }}>
-            <div style={{ fontSize: "0.7rem", color: data[hoveredIdx].color, fontWeight: "bold", letterSpacing: "1px" }}>
-              {data[hoveredIdx].status}
-            </div>
-            <div style={{ fontSize: "1rem", margin: "4px 0 12px 0", fontWeight: "bold" }}>
-              {data[hoveredIdx].title}
-            </div>
-            <a 
-              href={data[hoveredIdx].url}
-              style={{
-                display: "inline-block", background: data[hoveredIdx].color,
-                color: "#000", padding: "4px 12px", borderRadius: "4px",
-                textDecoration: "none", fontSize: "0.8rem", fontWeight: "bold"
-              }}
-            >
-              REGISTER
-            </a>
-          </div>
-        </Html>
-      )}
-    </>
+    <instancedMesh
+      ref={meshRef}
+      args={[null, null, data.length]}
+      onPointerOver={(e) => {
+        e.stopPropagation();
+        if (onHoverCore && e.instanceId !== undefined && data[e.instanceId]) {
+          onHoverCore(data[e.instanceId]);
+        }
+        document.body.style.cursor = 'pointer';
+      }}
+      onPointerOut={() => {
+        if (onHoverCore) onHoverCore(null);
+        document.body.style.cursor = 'auto';
+      }}
+    >
+      <sphereGeometry args={[0.4, 16, 16]}>
+        <instancedBufferAttribute attach="attributes-color" args={[coreColors, 3]} />
+      </sphereGeometry>
+      <meshBasicMaterial vertexColors toneMapped={false} />
+    </instancedMesh>
   );
 }
 
@@ -202,7 +162,7 @@ function Particles({ timeScaleRef }) {
   );
 }
 
-function Scene({ data }) {
+function Scene({ data, onHoverCore }) {
   const timeScaleRef = useRef(1.0);
   const targetTimeScale = useRef(1.0);
 
@@ -217,13 +177,14 @@ function Scene({ data }) {
       onPointerOut={() => { targetTimeScale.current = 1.0; }}
     >
       <Particles timeScaleRef={timeScaleRef} />
-      <LiveEventCores data={data} timeScaleRef={timeScaleRef} />
+      <LiveEventCores data={data} timeScaleRef={timeScaleRef} onHoverCore={onHoverCore} />
     </group>
   );
 }
 
 export default function GroundStormTransition({ onClose }) {
   const [data, setData] = useState([]);
+  const [hoveredEvent, setHoveredEvent] = useState(null);
 
   useEffect(() => {
     // Simulate API fetch delay
@@ -235,7 +196,7 @@ export default function GroundStormTransition({ onClose }) {
 
   return (
     <div style={{ position: "absolute", inset: 0, zIndex: 100, pointerEvents: "auto", background: "rgba(0,0,0,0.85)" }}>
-      {/* Close Button */}
+      {/* Return Button */}
       <button 
         onClick={onClose}
         style={{
@@ -248,8 +209,47 @@ export default function GroundStormTransition({ onClose }) {
         RETURN
       </button>
 
+      {/* Floating Event Info HUD */}
+      {hoveredEvent && (
+        <div style={{
+          position: "absolute",
+          bottom: "4rem",
+          left: "50%",
+          transform: "translateX(-50%)",
+          zIndex: 200,
+          background: "rgba(15, 23, 42, 0.85)",
+          border: `1px solid ${hoveredEvent.color}`,
+          borderRadius: "12px",
+          padding: "16px 24px",
+          color: "white",
+          backdropFilter: "blur(12px)",
+          boxShadow: `0 0 25px ${hoveredEvent.color}44`,
+          textAlign: "center",
+          fontFamily: "'Cinzel', serif",
+        }}>
+          <div style={{ fontSize: "0.75rem", color: hoveredEvent.color, fontWeight: "bold", letterSpacing: "2px" }}>
+            {hoveredEvent.status}
+          </div>
+          <div style={{ fontSize: "1.2rem", margin: "6px 0 12px 0", fontWeight: "bold" }}>
+            {hoveredEvent.title}
+          </div>
+          <a 
+            href={hoveredEvent.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "inline-block", background: hoveredEvent.color,
+              color: "#000", padding: "6px 18px", borderRadius: "4px",
+              textDecoration: "none", fontSize: "0.85rem", fontWeight: "bold"
+            }}
+          >
+            EXPLORE & REGISTER
+          </a>
+        </div>
+      )}
+
       <Canvas camera={{ position: [0, 0, 5], fov: 60 }}>
-        <Scene data={data} />
+        <Scene data={data} onHoverCore={setHoveredEvent} />
       </Canvas>
     </div>
   );

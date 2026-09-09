@@ -1,12 +1,37 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CinematicPanel from "./CinematicPanel";
 import SectionAbout from "./SectionAbout";
 import SectionGate from "./SectionGate";
+import MobileDeskGate from "./MobileDeskGate";
 import Navbar2 from "../navbar/Navbar2";
 import CastleAtmosphere from "./CastleAtmosphere";
 
 export default function CinematicHero() {
   const [navbarVisible, setNavbarVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === "undefined") return false;
+    const urlParams = new URLSearchParams(window.location.search);
+    return (
+      window.innerWidth < 820 ||
+      urlParams.get("mobile") === "desk" ||
+      urlParams.get("mobile") === "table" ||
+      urlParams.get("mobile") === "1"
+    );
+  });
+
+  useEffect(() => {
+    const checkMobile = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      setIsMobile(
+        window.innerWidth < 820 ||
+        urlParams.get("mobile") === "desk" ||
+        urlParams.get("mobile") === "table" ||
+        urlParams.get("mobile") === "1"
+      );
+    };
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   return (
     <div style={{ position: "relative", backgroundColor: "#000" }}>
@@ -21,7 +46,7 @@ export default function CinematicHero() {
           frameExt="jpg"
           scrubVh="550vh"
           dwellVh="320vh"
-          placeholderSrc="/images/landing_page.png"
+          placeholderSrc={isMobile ? "/images/landing_page_mobile.webp" : "/images/landing_page.png"}
           staticBgSrc="/images/gate.jpg"
           outroBgSrc="/images/gate.jpg"
           outroStart={0.85}
@@ -59,23 +84,45 @@ export default function CinematicHero() {
         </div>
       </div>
 
-      <div style={{ position: "relative", zIndex: 2 }}>
-        <CinematicPanel
-          framesPath="/frames/transition2/frame_"
-          frameCount={192}
-          frameExt="jpg"
-          scrubVh="500vh"
-          dwellVh="300vh"
-          placeholderSrc="/images/gate.jpg"
-          staticBgSrc="/images/hall.jpg"
-          outroBgSrc="/images/next_hall.jpg"
-          outroStart={0.85}
-          hideBeforePin={true}
-          onEnterDwell={() => setNavbarVisible(true)}
-        >
-          {(dwellProgress) => <SectionGate dwellProgress={dwellProgress} />}
-        </CinematicPanel>
-      </div>
+      {isMobile ? (
+        <div style={{ position: "relative", zIndex: 2 }}>
+          <CinematicPanel
+            key="mobile-gate-panel"
+            framesPath="/frames/transition2/frame_"
+            frameCount={75}
+            frameExt="jpg"
+            scrubVh="280vh"
+            dwellVh="300vh"
+            placeholderSrc="/images/gate.jpg"
+            staticBgSrc="/images/mobile_desk.webp"
+            outroBgSrc="/images/mobile_desk.webp"
+            outroStart={0.95}
+            hideBeforePin={true}
+            onEnterDwell={() => setNavbarVisible(true)}
+          >
+            {(dwellProgress) => <MobileDeskGate dwellProgress={dwellProgress} />}
+          </CinematicPanel>
+        </div>
+      ) : (
+        <div style={{ position: "relative", zIndex: 2 }}>
+          <CinematicPanel
+            key="desktop-gate-panel"
+            framesPath="/frames/transition2/frame_"
+            frameCount={192}
+            frameExt="jpg"
+            scrubVh="500vh"
+            dwellVh="300vh"
+            placeholderSrc="/images/gate.jpg"
+            staticBgSrc="/images/hall.jpg"
+            outroBgSrc="/images/next_hall.jpg"
+            outroStart={0.85}
+            hideBeforePin={true}
+            onEnterDwell={() => setNavbarVisible(true)}
+          >
+            {(dwellProgress) => <SectionGate dwellProgress={dwellProgress} />}
+          </CinematicPanel>
+        </div>
+      )}
 
     </div>
   );

@@ -1,19 +1,19 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 
-// --- Dropdown Component ---
+// --- Basic Clean Dropdown Component ---
 const DropdownMenu = ({ label, items }) => {
   const [isOpen, setIsOpen] = useState(false);
   const timeoutRef = useRef(null);
 
   const handleMouseEnter = () => {
-    clearTimeout(timeoutRef.current);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setIsOpen(true);
   };
 
   const handleMouseLeave = () => {
     timeoutRef.current = setTimeout(() => {
       setIsOpen(false);
-    }, 200);
+    }, 150);
   };
 
   return (
@@ -22,10 +22,13 @@ const DropdownMenu = ({ label, items }) => {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <button className="font-medium text-sm text-slate-100 hover:text-cyan-300 flex items-center gap-1.5 transition-all duration-200 hover:drop-shadow-[0_0_8px_rgba(56,189,248,0.8)]">
-        {label}
+      <button
+        type="button"
+        className="text-sm font-medium text-slate-200 hover:text-cyan-400 flex items-center gap-1 transition-colors py-1"
+      >
+        <span>{label}</span>
         <svg
-          className={`w-3.5 h-3.5 mt-0.5 transition-transform duration-300 ${isOpen ? 'rotate-180 text-cyan-400' : 'text-slate-300'}`}
+          className={`w-3.5 h-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180 text-cyan-400' : 'text-slate-400'}`}
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
@@ -35,104 +38,61 @@ const DropdownMenu = ({ label, items }) => {
         </svg>
       </button>
 
-      {/* Glossy Dropdown Card */}
+      {/* Simple, Clean Dropdown */}
       <div
-        className={`absolute mt-3 py-2 min-w-[185px] rounded-2xl z-50 transition-all duration-300 ${
-          isOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
+        className={`absolute top-full left-0 pt-2 min-w-[170px] z-50 transition-all duration-150 ${
+          isOpen ? 'opacity-100 visible translate-y-0 pointer-events-auto' : 'opacity-0 invisible -translate-y-1 pointer-events-none'
         }`}
-        style={{
-          background: "linear-gradient(145deg, rgba(255, 255, 255, 0.10) 0%, rgba(15, 23, 42, 0.65) 50%, rgba(3, 7, 18, 0.85) 100%)",
-          backdropFilter: "blur(28px) saturate(190%)",
-          WebkitBackdropFilter: "blur(28px) saturate(190%)",
-          border: "1px solid rgba(255, 255, 255, 0.22)",
-          boxShadow: "0 20px 40px rgba(0,0,0,0.65), inset 0 1px 1px rgba(255,255,255,0.4), 0 0 20px rgba(56,189,248,0.12)",
-        }}
       >
-        {items.map((item) => (
-          <a
-            key={item.label}
-            href={item.href}
-            className="block px-4 py-2 text-xs font-medium text-slate-200 hover:text-cyan-300 hover:bg-white/10 transition-all duration-150 rounded-lg mx-1"
-          >
-            {item.label}
-          </a>
-        ))}
+        <div className="bg-[#0b1120]/95 backdrop-blur-md border border-white/10 rounded-xl py-1.5 shadow-xl">
+          {items.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              className="block px-4 py-2 text-xs font-medium text-slate-300 hover:text-cyan-400 hover:bg-white/5 transition-colors"
+            >
+              {item.label}
+            </a>
+          ))}
+        </div>
       </div>
     </div>
   );
 };
 
 const Navbar = ({ isDarkMode, isVisible = true }) => {
-  const [isScroll, setIsScroll] = useState(false)
-  const sideMenuRef = useRef()
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const openMenu = () => {
-    sideMenuRef.current.style.transform = 'translateX(-16rem)'
-  }
-
-  const closeMenu = () => {
-    sideMenuRef.current.style.transform = 'translateX(16rem)'
-  }
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 40) {
-        setIsScroll(true)
-      } else {
-        setIsScroll(false)
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  const closeMenu = () => setIsMenuOpen(false);
+  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
   return (
     <>
       <nav
-        className={`w-full fixed top-0 left-0 z-50 px-5 lg:px-8 xl:px-[8%] py-3.5 flex items-center justify-between transition-all duration-500 ${
-          isScroll
-            ? "backdrop-blur-xl border-b border-white/10"
-            : "bg-transparent"
-        }`}
+        className="w-full fixed top-0 left-0 z-50 px-4 sm:px-6 lg:px-12 xl:px-[7%] py-2.5 sm:py-4 flex items-center justify-between transition-opacity duration-300 bg-transparent"
         style={{
-          background: isScroll
-            ? "linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(15,23,42,0.30) 100%)"
-            : "transparent",
-          backdropFilter: isScroll ? "blur(20px) saturate(180%)" : "none",
-          WebkitBackdropFilter: isScroll ? "blur(20px) saturate(180%)" : "none",
-          boxShadow: isScroll ? "0 8px 32px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.18)" : "none",
           opacity: isVisible ? 1 : 0,
           pointerEvents: isVisible ? "auto" : "none",
-          transition: "opacity 0.7s ease, background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease",
         }}
       >
-        <a href="/home" className='relative flex justify-center items-center mr-2 group'>
+        {/* Left: Brand Logo */}
+        <a href="/home" className="flex items-center gap-2 z-20">
           <img
             src="/images/logo.png"
             alt="Udghosh logo"
-            className="ml-2 w-11 h-11 z-10 object-contain drop-shadow-[0_0_12px_rgba(56,189,248,0.5)] group-hover:drop-shadow-[0_0_20px_rgba(56,189,248,0.9)] transition-all duration-300"
+            className="w-8 h-8 sm:w-10 sm:h-10 object-contain drop-shadow-[0_0_8px_rgba(56,189,248,0.4)]"
           />
-
-          <h1 className='block sm:hidden font-extrabold font-poppins text-2xl w-auto text-white ml-2'>UDGHOSH</h1>
-          <p className='block sm:hidden text-cyan-400 font-bold text-3xl pb-2 pl-[2px]'>.</p>
+          <span className="font-bold font-poppins text-lg sm:text-xl text-white tracking-wide">
+            UDGHOSH<span className="text-cyan-400">.</span>
+          </span>
         </a>
 
-        {/* --- Glossy Desktop Menu Capsule --- */}
-        <ul
-          className="hidden md:flex items-center gap-6 lg:gap-8 rounded-full px-8 py-2.5 transition-all duration-300"
-          style={{
-            background: "linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.04) 50%, rgba(15, 23, 42, 0.25) 100%)",
-            backdropFilter: "blur(24px) saturate(200%)",
-            WebkitBackdropFilter: "blur(24px) saturate(200%)",
-            border: "1px solid rgba(255, 255, 255, 0.22)",
-            boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.35), inset 0 1px 1px 0 rgba(255, 255, 255, 0.45), inset 0 -1px 1px 0 rgba(0, 0, 0, 0.2)",
-          }}
-        >
+        {/* Center: Navigation Links (Desktop) */}
+        <ul className="hidden md:flex items-center gap-7 lg:gap-8 z-20">
           <li>
             <a
-              className='font-medium text-sm text-slate-100 hover:text-cyan-300 transition-all duration-200 hover:drop-shadow-[0_0_8px_rgba(56,189,248,0.8)]'
               href="https://events.udghosh.org.in/"
+              className="text-sm font-medium text-slate-200 hover:text-cyan-400 transition-colors"
             >
               Competitions
             </a>
@@ -153,15 +113,110 @@ const Navbar = ({ isDarkMode, isVisible = true }) => {
           </li>
           <li>
             <a
-              className='font-medium text-sm text-slate-100 hover:text-cyan-300 transition-all duration-200 hover:drop-shadow-[0_0_8px_rgba(56,189,248,0.8)]'
               href="/gallery"
+              className="text-sm font-medium text-slate-200 hover:text-cyan-400 transition-colors"
             >
               Gallery
             </a>
           </li>
           <li>
             <a
-              className='font-medium text-sm text-slate-100 hover:text-cyan-300 transition-all duration-200 hover:drop-shadow-[0_0_8px_rgba(56,189,248,0.8)]'
+              href="/teams"
+              className="text-sm font-medium text-slate-200 hover:text-cyan-400 transition-colors"
+            >
+              Team
+            </a>
+          </li>
+          <li>
+            <a
+              href="/past-events"
+              className="text-sm font-medium text-slate-200 hover:text-cyan-400 transition-colors"
+            >
+              Proshows
+            </a>
+          </li>
+          <li>
+            <a
+              href="/merch"
+              className="text-sm font-medium text-slate-200 hover:text-cyan-400 transition-colors"
+            >
+              Merchandise
+            </a>
+          </li>
+        </ul>
+
+        {/* Right: Register Button & Mobile Hamburger */}
+        <div className="flex items-center gap-2 sm:gap-3 lg:gap-4 z-20">
+          <a
+            href="https://e-sports-26.web.app/register"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3 sm:px-4 py-1.5 text-[11px] sm:text-xs font-semibold tracking-wider text-cyan-300 uppercase bg-cyan-950/40 hover:bg-cyan-900/60 border border-cyan-500/40 hover:border-cyan-400 rounded-lg transition-all whitespace-nowrap"
+          >
+            <span className="inline sm:hidden">Register</span>
+            <span className="hidden sm:inline">Register for E-Sports</span>
+          </a>
+
+          <button
+            type="button"
+            aria-label="Toggle navigation menu"
+            className="block md:hidden p-1.5 text-slate-200 hover:text-white rounded-lg active:bg-white/10 transition-colors focus:outline-none"
+            onClick={toggleMenu}
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile Menu Backdrop */}
+      <div
+        className={`fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden transition-opacity duration-300 ${
+          isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={closeMenu}
+      />
+
+      {/* Mobile Menu Drawer */}
+      <div
+        className={`flex md:hidden flex-col fixed right-0 top-0 bottom-0 w-72 max-w-[80vw] z-50 h-screen transition-transform duration-300 ease-in-out text-white bg-[#0b1120]/95 backdrop-blur-xl border-l border-white/10 shadow-2xl ${
+          isMenuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
+          <div className="flex items-center gap-2">
+            <img src="/images/logo.png" alt="Udghosh" className="w-7 h-7 object-contain" />
+            <span className="font-bold font-poppins text-base text-white tracking-wide">
+              UDGHOSH<span className="text-cyan-400">.</span>
+            </span>
+          </div>
+          <button
+            type="button"
+            aria-label="Close menu"
+            className="text-slate-400 hover:text-white p-1 rounded-lg hover:bg-white/5 transition-colors"
+            onClick={closeMenu}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <ul className="flex-1 overflow-y-auto px-6 py-6 flex flex-col gap-1">
+          <li>
+            <a
+              className="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-200 hover:text-cyan-400 hover:bg-white/5 transition-colors"
+              onClick={closeMenu}
+              href="https://events.udghosh.org.in/"
+            >
+              Competitions
+            </a>
+          </li>
+          <li>
+            <a
+              className="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-200 hover:text-cyan-400 hover:bg-white/5 transition-colors"
+              onClick={closeMenu}
               href="/teams"
             >
               Team
@@ -169,7 +224,17 @@ const Navbar = ({ isDarkMode, isVisible = true }) => {
           </li>
           <li>
             <a
-              className='font-medium text-sm text-slate-100 hover:text-cyan-300 transition-all duration-200 hover:drop-shadow-[0_0_8px_rgba(56,189,248,0.8)]'
+              className="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-200 hover:text-cyan-400 hover:bg-white/5 transition-colors"
+              onClick={closeMenu}
+              href="/gallery"
+            >
+              Gallery
+            </a>
+          </li>
+          <li>
+            <a
+              className="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-200 hover:text-cyan-400 hover:bg-white/5 transition-colors"
+              onClick={closeMenu}
               href="/past-events"
             >
               Proshows
@@ -177,72 +242,86 @@ const Navbar = ({ isDarkMode, isVisible = true }) => {
           </li>
           <li>
             <a
-              className='font-medium text-sm text-slate-100 hover:text-cyan-300 transition-all duration-200 hover:drop-shadow-[0_0_8px_rgba(56,189,248,0.8)]'
+              className="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-200 hover:text-cyan-400 hover:bg-white/5 transition-colors"
+              onClick={closeMenu}
               href="/merch"
             >
               Merchandise
             </a>
           </li>
+          <li className="pt-2 pb-1">
+            <div className="h-px bg-white/10 mx-3" />
+          </li>
+          <li>
+            <a
+              className="block px-3 py-2 text-xs font-medium text-slate-400 hover:text-cyan-400 hover:bg-white/5 transition-colors"
+              onClick={closeMenu}
+              href="http://esports.udghosh.org.in"
+            >
+              Esports Arena
+            </a>
+          </li>
+          <li>
+            <a
+              className="block px-3 py-2 text-xs font-medium text-slate-400 hover:text-cyan-400 hover:bg-white/5 transition-colors"
+              onClick={closeMenu}
+              href="https://unosq.udghosh.org.in/"
+            >
+              UNOSQ Quest
+            </a>
+          </li>
+          <li>
+            <a
+              className="block px-3 py-2 text-xs font-medium text-slate-400 hover:text-cyan-400 hover:bg-white/5 transition-colors"
+              onClick={closeMenu}
+              href="https://ca.udghosh.org.in/"
+            >
+              Campus Ambassador
+            </a>
+          </li>
+          <li>
+            <a
+              className="block px-3 py-2 text-xs font-medium text-slate-400 hover:text-cyan-400 hover:bg-white/5 transition-colors"
+              onClick={closeMenu}
+              href="/antique"
+            >
+              Antique & Legacy
+            </a>
+          </li>
+          <li>
+            <a
+              className="block px-3 py-2 text-xs font-medium text-slate-400 hover:text-cyan-400 hover:bg-white/5 transition-colors"
+              onClick={closeMenu}
+              href="/social"
+            >
+              Social Initiatives
+            </a>
+          </li>
+          <li>
+            <a
+              className="block px-3 py-2 text-xs font-medium text-slate-400 hover:text-cyan-400 hover:bg-white/5 transition-colors"
+              onClick={closeMenu}
+              href="/vision"
+            >
+              Vision & Impact
+            </a>
+          </li>
         </ul>
 
-        {/* --- Right Side Glossy Button --- */}
-        <div className='flex items-center gap-2 lg:gap-4'>
+        <div className="p-5 border-t border-white/10">
           <a
             href="https://e-sports-26.web.app/register"
             target="_blank"
             rel="noopener noreferrer"
-            className='relative group flex items-center justify-center px-3 py-1.5 lg:px-5 lg:py-2 ml-2 lg:ml-4 font-bold text-white transition-all duration-300'
-            style={{ fontFamily: "'Orbitron', sans-serif" }}
+            onClick={closeMenu}
+            className="block w-full py-2.5 text-center text-xs font-semibold tracking-wider text-cyan-300 uppercase bg-cyan-950/60 hover:bg-cyan-900/80 border border-cyan-500/40 hover:border-cyan-400 rounded-xl transition-all shadow-lg"
           >
-            <span
-              className="absolute inset-0 skew-x-[-15deg] transition-all duration-300"
-              style={{
-                background: "linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(56,189,248,0.25) 50%, rgba(2,132,199,0.15) 100%)",
-                backdropFilter: "blur(16px)",
-                border: "1px solid rgba(255, 255, 255, 0.35)",
-                boxShadow: "0 4px 20px rgba(0,0,0,0.3), inset 0 1px 1px rgba(255,255,255,0.6), 0 0 15px rgba(56,189,248,0.35)",
-              }}
-            ></span>
-            <span className="relative flex items-center gap-1.5 lg:gap-2 text-[10px] lg:text-xs tracking-wider uppercase whitespace-nowrap drop-shadow-[0_0_6px_rgba(255,255,255,0.7)]">
-              <span className="leading-none"><span className="hidden sm:inline">Register for </span>E-Sports</span>
-            </span>
+            Register for E-Sports
           </a>
-
-          <button className='block md:hidden ml-1 lg:ml-3 text-white' onClick={openMenu}>
-            <span className="text-2xl">☰</span>
-          </button>
         </div>
-
-        {/* --- Glossy Mobile Menu Drawer --- */}
-        <ul
-          ref={sideMenuRef}
-          className='flex z-100 md:hidden flex-col gap-4 py-20 px-10 fixed -right-64 top-0 bottom-0 w-64 z-50 h-screen transition duration-500 text-white'
-          style={{
-            background: "linear-gradient(160deg, rgba(255, 255, 255, 0.08) 0%, rgba(15, 23, 42, 0.75) 50%, rgba(3, 7, 18, 0.92) 100%)",
-            backdropFilter: "blur(32px) saturate(190%)",
-            WebkitBackdropFilter: "blur(32px) saturate(190%)",
-            borderLeft: "1px solid rgba(255, 255, 255, 0.2)",
-            boxShadow: "-12px 0 40px rgba(0,0,0,0.85), inset 1px 0 0 rgba(255,255,255,0.25)",
-          }}
-        >
-          <div className='absolute right-6 top-6 cursor-pointer text-xl text-slate-300 hover:text-white' onClick={closeMenu}>
-            ✖
-          </div>
-
-          <li><a className='font-medium text-slate-100 hover:text-cyan-300' onClick={closeMenu} href="https://events.udghosh.org.in/">Competitions</a></li>
-          <li><a className='font-medium text-slate-100 hover:text-cyan-300' onClick={closeMenu} href="/teams">Team</a></li>
-          <li><a className='font-medium text-slate-100 hover:text-cyan-300' onClick={closeMenu} href="/gallery">Gallery</a></li>
-          <li><a className='font-medium text-slate-100 hover:text-cyan-300' onClick={closeMenu} href="http://esports.udghosh.org.in">Esports</a></li>
-          <li><a className='font-medium text-slate-100 hover:text-cyan-300' onClick={closeMenu} href="https://unosq.udghosh.org.in/">UNOSQ</a></li>
-          <li><a className='font-medium text-slate-100 hover:text-cyan-300' onClick={closeMenu} href="https://ca.udghosh.org.in/">CA</a></li>
-          <li><a className='font-medium text-slate-100 hover:text-cyan-300' onClick={closeMenu} href="/antique">Antique</a></li>
-          <li><a className='font-medium text-slate-100 hover:text-cyan-300' onClick={closeMenu} href="/social">Social Initiatives</a></li>
-          <li><a className='font-medium text-slate-100 hover:text-cyan-300' onClick={closeMenu} href="/vision">Vision</a></li>
-          <li><a className='font-medium text-slate-100 hover:text-cyan-300' onClick={closeMenu} href="/past-events">Proshows</a></li>
-        </ul>
-      </nav>
+      </div>
     </>
-  )
-}
+  );
+};
 
 export default Navbar
