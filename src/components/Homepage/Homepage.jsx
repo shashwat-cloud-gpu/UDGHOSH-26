@@ -14,7 +14,7 @@ export default function Homepage() {
         <div style={{
           position: "fixed",
           inset: 0,
-          backgroundImage: "url(/images/next_hall.jpg)",
+          backgroundImage: "url(/images/next_hall.webp)",
           backgroundSize: "cover",
           backgroundPosition: "center top",
           zIndex: -1,

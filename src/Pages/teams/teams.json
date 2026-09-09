@@ -6,6 +6,7 @@
             "members": [
                 {
                     "name": "Abhishek",
+                    "hidden": true,
                     "photo": "https://live.staticflickr.com/65535/55426699563_f4d0e1fee3_b.jpg",
                     "linkedin": "",
                     "phone": "9927860926",
@@ -40,6 +41,7 @@
                 },
                 {
                     "name": "Anshika",
+                    "hidden": true,
                     "photo": "https://live.staticflickr.com/65535/55426597179_27bfaa359d_b.jpg",
                     "linkedin": "",
                     "phone": "6395485144",
@@ -66,6 +68,7 @@
             "members": [
                 {
                     "name": "Aryan",
+                    "hidden": true,
                     "photo": "https://live.staticflickr.com/65535/55426597114_1d9a99ec13_b.jpg",
                     "linkedin": "",
                     "phone": "8273695084",
@@ -165,6 +168,7 @@
             "members": [
                 {
                     "name": "Suyash",
+                    "hidden": true,
                     "photo": "https://live.staticflickr.com/65535/55426597069_edaa1704c8_b.jpg",
                     "linkedin": "",
                     "phone": "8989409477",
@@ -234,6 +238,7 @@
             "members": [
                 {
                     "name": "Harshavardan",
+                    "hidden": true,
                     "photo": "https://live.staticflickr.com/65535/55425457052_23b1e0d599_b.jpg",
                     "linkedin": "https://www.linkedin.com/in/harshavardan-yadav-037130282?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
                     "phone": "9369567314",

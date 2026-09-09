@@ -1,61 +1,59 @@
+import React, { Suspense, lazy } from "react";
 import "./App.css";
-import { useRef } from "react";
-import Navbar2 from "./components/navbar/Navbar2.jsx";
 import { AuthContextProvider } from "./context/AuthContext";
 import { Route, Routes } from "react-router-dom";
 import Homepage from "./components/Homepage/Homepage";
-import Sponsors from "./components/Sponsors/Sponsors";
-import Teams from "./Pages/teams/Teams.jsx";
-import C_Antique from "./components/Commitments/antique";
-import C_Impact from "./components/Commitments/impacts";
-import C_Initiatives from "./components/Commitments/initiatives";
-import C_Vision from "./components/Commitments/vision";
-import Gallery from "./components/Gallery/Gallery.jsx";
-import LoadingVideo from "./components/LoadingVideo/LoadingVideo.jsx";
-import Social from "./components/social/social";
-import Vision from "./components/vision/vision";
-import Antique from "./components/antique/antique";
-import Gallery2 from "./components/Gallery2/Gallery2.jsx";
-import MapG from "./components/Map/MapG.jsx";
-import Carousel from "./components/Carousel/Carousel.jsx";
-import PastEvent from "./components/PastEvent/PastEvent.jsx";
-import Carousel2 from "./components/Carousel2/Carousel2.jsx";
-import LiveUpdates from "./components/LiveUpdates/MatchDashboard.jsx";
-import Merchandise from "./components/merch/merch.jsx";
-function App() {
+import SmoothScroll from "./components/SmoothScroll/SmoothScroll.jsx";
 
-  const navbarRef = useRef();
- 
+// Code-split subpages to minimize initial JavaScript bundle and accelerate initial load
+const Sponsors = lazy(() => import("./components/Sponsors/Sponsors"));
+const Teams = lazy(() => import("./Pages/teams/Teams.jsx"));
+const CAntique = lazy(() => import("./components/Commitments/antique"));
+const CImpact = lazy(() => import("./components/Commitments/impacts"));
+const CInitiatives = lazy(() => import("./components/Commitments/initiatives"));
+const CVision = lazy(() => import("./components/Commitments/vision"));
+const Gallery = lazy(() => import("./components/Gallery/Gallery.jsx"));
+const Social = lazy(() => import("./components/social/social"));
+const Vision = lazy(() => import("./components/vision/vision"));
+const Antique = lazy(() => import("./components/antique/antique"));
+const MapG = lazy(() => import("./components/Map/MapG.jsx"));
+const Carousel = lazy(() => import("./components/Carousel/Carousel.jsx"));
+const PastEvent = lazy(() => import("./components/PastEvent/PastEvent.jsx"));
+const Carousel2 = lazy(() => import("./components/Carousel2/Carousel2.jsx"));
+const LiveUpdates = lazy(() => import("./components/LiveUpdates/MatchDashboard.jsx"));
+const Merchandise = lazy(() => import("./components/merch/merch.jsx"));
+
+function App() {
   return (
-    <>
-      <AuthContextProvider>
+    <AuthContextProvider>
+      <SmoothScroll>
         <div className="App">
-          {/* <Navbar2/> */}
-          <Routes>
-            <Route path="/" element={<Homepage />} />
-            <Route path="/home" element={<Homepage />} />
-            <Route path="/sponsors" element={<Sponsors />} />
-            <Route path="/social" element={<Social />} />
-            <Route path="/vision" element={<Vision />} />
-            <Route path="/teams" element={<Teams />} />
-            <Route path="/commitments/antique" element={<C_Antique />} />
-            <Route path="/commitments/impacts" element={<C_Impact />} />
-            <Route path="/commitments/initiatives" element={<C_Initiatives />}/>
-            <Route path="/commitments/vision" element={<C_Vision />} />
-            <Route path="/gallery" element={<Gallery />} />
-            <Route path="/antique" element={<Antique />} />
-            <Route path="/map" element={<MapG/>}></Route>
-            <Route path="/carousel" element={<Carousel />} />
-            <Route path="/past-events" element={<PastEvent />} />
-            <Route path="/Carousel2" element={<Carousel2 />} />
-            <Route path="/LiveUpdates" element={<LiveUpdates />} />
-            <Route path="/merch" element={<Merchandise/>} />
-          </Routes>
+          <Suspense fallback={<div className="min-h-screen w-full bg-black" />}>
+            <Routes>
+              <Route path="/" element={<Homepage />} />
+              <Route path="/home" element={<Homepage />} />
+              <Route path="/sponsors" element={<Sponsors />} />
+              <Route path="/social" element={<Social />} />
+              <Route path="/vision" element={<Vision />} />
+              <Route path="/teams" element={<Teams />} />
+              <Route path="/commitments/antique" element={<CAntique />} />
+              <Route path="/commitments/impacts" element={<CImpact />} />
+              <Route path="/commitments/initiatives" element={<CInitiatives />} />
+              <Route path="/commitments/vision" element={<CVision />} />
+              <Route path="/gallery" element={<Gallery />} />
+              <Route path="/antique" element={<Antique />} />
+              <Route path="/map" element={<MapG />} />
+              <Route path="/carousel" element={<Carousel />} />
+              <Route path="/past-events" element={<PastEvent />} />
+              <Route path="/Carousel2" element={<Carousel2 />} />
+              <Route path="/LiveUpdates" element={<LiveUpdates />} />
+              <Route path="/merch" element={<Merchandise />} />
+            </Routes>
+          </Suspense>
         </div>
-      </AuthContextProvider>
-    </>
+      </SmoothScroll>
+    </AuthContextProvider>
   );
 }
 
 export default App;
-
