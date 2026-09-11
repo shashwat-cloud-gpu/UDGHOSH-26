@@ -7,7 +7,7 @@ import Navbar2 from "../navbar/Navbar2";
 import CastleAtmosphere from "./CastleAtmosphere";
 
 export default function CinematicHero() {
-  const [navbarVisible, setNavbarVisible] = useState(false);
+  const [navbarVisible, setNavbarVisible] = useState(true);
   // The floating "scroll" cue is position:fixed, so with no visibility
   // logic it stays on screen forever — including over the About Us dwell
   // and beyond, which reads as a second, unrelated scene bleeding through.
@@ -39,21 +39,21 @@ export default function CinematicHero() {
   }, []);
 
   return (
-    <div style={{ position: "relative", backgroundColor: "#000" }}>
+    <div style={{ position: "relative" }}>
 
-      {/* Navbar hidden until SectionGate dwell begins */}
+      {/* Navbar visible from the start */}
       <Navbar2 isVisible={navbarVisible} />
 
-      <div style={{ position: "relative" }}>
+      <div style={{ position: "relative", zIndex: 1 }}>
         <CinematicPanel
           videoSrc="/videos/transition1.mp4"
-          scrubVh="550vh"
-          dwellVh="320vh"
+          scrubVh="275vh"
+          dwellVh="32vh"
           placeholderSrc={isMobile ? "/images/landing_page_mobile.webp" : "/images/landing_page.png"}
           staticBgSrc="/images/gate.jpg"
           outroBgSrc="/images/gate.jpg"
           outroStart={0.85}
-          extendPinVh="800vh"
+          extendPinVh="80vh"
           onEnterDwell={() => setScrollCueVisible(false)}
           onLeaveDwell={() => setScrollCueVisible(true)}
         >
@@ -97,34 +97,36 @@ export default function CinematicHero() {
       </div>
 
       {isMobile ? (
-        <div style={{ position: "relative", zIndex: 2 }}>
+        <div style={{ position: "relative", zIndex: 2, marginTop: "-100vh" }}>
           <CinematicPanel
             key="mobile-gate-panel"
             videoSrc="/videos/transition2.mp4"
-            scrubVh="280vh"
+            scrubVh="140vh"
             dwellVh="300vh"
             placeholderSrc="/images/gate.jpg"
             staticBgSrc="/images/mobile_desk.webp"
             outroBgSrc="/images/mobile_desk.webp"
             outroStart={0.95}
             hideBeforePin={true}
+            fadeOutProgressStart={0.827}
             onEnterDwell={() => setNavbarVisible(true)}
           >
             {(dwellProgress) => <MobileDeskGate dwellProgress={dwellProgress} />}
           </CinematicPanel>
         </div>
       ) : (
-        <div style={{ position: "relative", zIndex: 2 }}>
+        <div style={{ position: "relative", zIndex: 2, marginTop: "-100vh" }}>
           <CinematicPanel
             key="desktop-gate-panel"
             videoSrc="/videos/transition2.mp4"
-            scrubVh="500vh"
+            scrubVh="250vh"
             dwellVh="300vh"
             placeholderSrc="/images/gate.jpg"
             staticBgSrc="/images/hall.jpg"
             outroBgSrc="/images/next_hall.jpg"
             outroStart={0.85}
             hideBeforePin={true}
+            fadeOutProgressStart={0.875}
             onEnterDwell={() => setNavbarVisible(true)}
           >
             {(dwellProgress) => <SectionGate dwellProgress={dwellProgress} />}
