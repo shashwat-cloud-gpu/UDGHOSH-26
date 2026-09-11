@@ -106,7 +106,7 @@ const TeamScroll = forwardRef(({ teams, onSectionChange }, ref) => {
                 <span className="tarot-badge-name">{tarot.name}</span>
               </div>
 
-              <h2 className="team-title">{team.title}</h2>
+              <h2 className="team-title">{team.title.replace('Head, ', '')}</h2>
 
               <div className="members-container">
                 {team.members.map((member) => (

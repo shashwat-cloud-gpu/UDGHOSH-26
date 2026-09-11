@@ -128,6 +128,7 @@
   padding: 11rem 2rem 6rem 2rem;
   overflow-y: auto;
   box-sizing: border-box;
+  position: relative; /* required so tarot-badge absolute positioning is scoped per slide */
 }
 
 .scroll-section::-webkit-scrollbar { width: 3px; }
