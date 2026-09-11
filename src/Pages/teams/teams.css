@@ -1,0 +1,330 @@
+/* ==========================================================================
+   UDGHOSH TEAMS PAGE - CLEAN ATMOSPHERIC DARK THEME
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* Base Container */
+.teams-page-wrapper {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background-color: #06080d;
+  color: #f1f5f9;
+  font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Thematic Gothic Hall Background matching Homepage with controlled opacity */
+.teams-page-bg {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  opacity: 0.42;
+  z-index: 0;
+  pointer-events: none;
+  filter: contrast(1.06) brightness(0.96);
+}
+
+/* Atmospheric Vignette Overlay */
+.teams-page-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 35%, rgba(6, 8, 13, 0.7) 100%),
+              linear-gradient(to bottom, rgba(6, 8, 13, 0.35) 0%, transparent 25%, transparent 75%, rgba(6, 8, 13, 0.75) 100%);
+}
+
+/* Top Page Title */
+.site-header {
+  font-family: 'Poppins', sans-serif;
+  position: fixed;
+  top: 4.8rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  letter-spacing: 0.25rem;
+  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.8);
+  z-index: 20;
+  pointer-events: none;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+/* GSAP Horizontal Scroll Container */
+.scroll-container {
+  overflow: hidden;
+  height: 100vh;
+  position: relative;
+  z-index: 10;
+}
+
+.scroll-section-inner {
+  display: flex;
+  height: 100vh;
+  will-change: transform;
+}
+
+/* Individual Team Slide */
+.scroll-section {
+  flex: 0 0 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 12rem 2rem 5.5rem 2rem;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.scroll-section::-webkit-scrollbar {
+  width: 4px;
+}
+.scroll-section::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+
+/* Team Department Title */
+.team-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: clamp(1.3rem, 2.2vw, 1.75rem);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: #ffffff;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+  margin-bottom: 2rem;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+/* Member Cards Flex Container */
+.members-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+}
+
+/* Member Card */
+.member-card {
+  position: relative;
+  width: 255px;
+  height: 355px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: rgba(14, 18, 27, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.member-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.member-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+
+/* Card Bottom Info Overlay */
+.member-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1.8rem 1rem 1.25rem 1rem;
+  color: #ffffff;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.94) 0%, rgba(0, 0, 0, 0.65) 65%, transparent 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.member-name {
+  font-size: 1.3rem;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  color: #ffffff;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+  margin: 0 0 0.55rem 0;
+  line-height: 1.2;
+}
+
+/* 4 Social/Contact Icons Row - Matching Reference Screenshot */
+.member-contact {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.member-contact a {
+  color: #cbd5e1;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.member-contact a:hover {
+  color: #ffffff;
+  transform: scale(1.18);
+}
+
+.member-contact svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Floating Bottom Team Switcher */
+.team-footer {
+  position: fixed;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  max-width: calc(100vw - 2rem);
+  pointer-events: auto;
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px 12px;
+  padding: 0.5rem 1.25rem;
+  border-radius: 9999px;
+  background: rgba(10, 14, 22, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.footer-links::-webkit-scrollbar {
+  display: none;
+}
+
+.footer-link {
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #94a3b8;
+  padding: 6px 8px;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.footer-link:hover {
+  color: #ffffff;
+}
+
+.footer-link.active {
+  color: #ffffff;
+  border-bottom-color: #ffffff;
+}
+
+/* Responsive Mobile Layout */
+@media (max-width: 768px) {
+  .site-header {
+    position: relative;
+    top: 0;
+    left: 0;
+    transform: none;
+    padding-top: 5.5rem;
+    padding-bottom: 1rem;
+    font-size: 2.2rem;
+    text-align: center;
+  }
+
+  .scroll-container {
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .scroll-section-inner {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    height: auto !important;
+    transform: none !important;
+  }
+
+  .scroll-section {
+    flex: none !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: auto !important;
+    padding: 2rem 1.25rem !important;
+    overflow: visible !important;
+  }
+
+  .team-title {
+    font-size: 1.35rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .members-container {
+    gap: 1.75rem;
+  }
+
+  .member-card {
+    width: 88%;
+    max-width: 280px;
+    height: 360px;
+  }
+
+  .team-footer {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header {
+    font-size: 1.85rem;
+    padding-top: 5rem;
+  }
+
+  .member-card {
+    width: 92%;
+    max-width: 260px;
+    height: 350px;
+  }
+
+  .member-name {
+    font-size: 1.2rem;
+  }
+}
