@@ -171,28 +171,6 @@ const Footer = ({ teams, onLinkClick, activeIndex }) => {
   );
 };
 
-function App() {
-  const teamScrollRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  // Filter out teams where all members are hidden (e.g. Head, SECURITY)
-  const visibleTeams = teamData.teams
-    .map((team) => ({
-      ...team,
-      members: team.members.filter((member) => !member.hidden),
-    }))
-    .filter((team) => team.members.length > 0);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  const handleFooterLinkClick = (index) => {
-    if (teamScrollRef.current) {
-      teamScrollRef.current.scrollToSection(index);
-    }
-  };
-
 const HIERARCHY = [
   { rank: "Head",             roman: "I"   },
   { rank: "Organizer",        roman: "II"  },
@@ -223,7 +201,6 @@ function App() {
   const teamScrollRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // Filter out teams where all members are hidden (e.g. Head, SECURITY)
   const visibleTeams = teamData.teams
     .map((team) => ({
       ...team,
