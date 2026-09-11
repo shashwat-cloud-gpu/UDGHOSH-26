@@ -99,14 +99,16 @@ const TeamScroll = forwardRef(({ teams, onSectionChange }, ref) => {
               key={team.id}
               style={{ '--tarot-accent': tarot.accent, '--tarot-glow': tarot.glow }}
             >
-              {/* Tarot card label — top-left of each slide */}
-              <div className="tarot-badge">
-                <span className="tarot-badge-numeral">{tarot.numeral}</span>
-                <span className="tarot-badge-symbol">{tarot.symbol}</span>
-                <span className="tarot-badge-name">{tarot.name}</span>
+              <div className="team-header-group">
+                <h2 className="team-title">{team.title.replace('Head, ', '')}</h2>
+                
+                {/* Tarot card label — centered below title */}
+                <div className="tarot-subtitle">
+                  <span className="tarot-badge-numeral">{tarot.numeral}</span>
+                  <span className="tarot-badge-symbol">{tarot.symbol}</span>
+                  <span className="tarot-badge-name">{tarot.name}</span>
+                </div>
               </div>
-
-              <h2 className="team-title">{team.title.replace('Head, ', '')}</h2>
 
               <div className="members-container">
                 {team.members.map((member) => (
@@ -195,7 +197,7 @@ function HierarchyLegend() {
             <span className="hierarchy-roman">{item.roman}</span>
             <span className="hierarchy-rank">{item.rank}</span>
             {i < HIERARCHY.length - 1 && (
-              <span className="hierarchy-arrow" aria-hidden="true">↓</span>
+              <span className="hierarchy-arrow" aria-hidden="true">→</span>
             )}
           </li>
         ))}
