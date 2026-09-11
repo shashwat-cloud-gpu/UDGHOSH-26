@@ -191,7 +191,14 @@ function App() {
         className="teams-page-bg"
         style={{ backgroundImage: "url(/images/teams_bg.jpg)" }}
       />
-      <h1 className="site-header">TEAM</h1>
+      <div className="teams-ambient" />
+
+      <h1 className="site-header">
+        <span className="site-header-latin">COHORS · UDGHOSH · MMXXIII</span>
+        <span className="site-header-main">THE TEAM</span>
+        <span className="site-header-rule" />
+      </h1>
+
       <TeamScroll ref={teamScrollRef} teams={visibleTeams} onSectionChange={setActiveIndex} />
       <Footer teams={visibleTeams} onLinkClick={handleFooterLinkClick} activeIndex={activeIndex} />
     </div>

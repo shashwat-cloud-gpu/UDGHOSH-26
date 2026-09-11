@@ -1,21 +1,22 @@
 /* ==========================================================================
-   UDGHOSH TEAMS PAGE - CLEAN ATMOSPHERIC DARK THEME
+   UDGHOSH TEAMS PAGE — ANCIENT STONE TABLET GOTHIC THEME
+   Matching antique.css / vision.css aesthetic
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Marcellus&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&display=swap');
 
 /* Base Container */
 .teams-page-wrapper {
   position: relative;
   min-height: 100vh;
   width: 100%;
-  background-color: #06080d;
+  background-color: #02040a;
   color: #f1f5f9;
-  font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Marcellus', 'Cinzel', serif;
   overflow-x: hidden;
 }
 
-/* Thematic Gothic Hall Background matching Homepage with controlled opacity */
+/* Fixed Atmospheric Background */
 .teams-page-bg {
   position: fixed;
   inset: 0;
@@ -24,40 +25,85 @@
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  opacity: 0.42;
+  opacity: 0.78;
   z-index: 0;
   pointer-events: none;
-  filter: contrast(1.06) brightness(0.96);
+  filter: contrast(1.08) brightness(0.82) saturate(0.85);
+  transform: scale(1.01);
 }
 
-/* Atmospheric Vignette Overlay */
+/* Multi-layer Atmospheric Vignette — matching antique page */
 .teams-page-bg::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at center, transparent 35%, rgba(6, 8, 13, 0.7) 100%),
-              linear-gradient(to bottom, rgba(6, 8, 13, 0.35) 0%, transparent 25%, transparent 75%, rgba(6, 8, 13, 0.75) 100%);
+  background:
+    linear-gradient(180deg, rgba(2, 4, 10, 0.88) 0%, rgba(2, 4, 10, 0.10) 18%, rgba(2, 4, 10, 0.10) 78%, rgba(0, 0, 0, 0.96) 100%),
+    radial-gradient(circle at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.65) 100%);
 }
 
-/* Top Page Title */
-.site-header {
-  font-family: 'Poppins', sans-serif;
+/* Torch-glow ambient light at center */
+.teams-ambient {
   position: fixed;
-  top: 4.8rem;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse 55% 40% at 50% 60%, rgba(180, 100, 20, 0.07) 0%, transparent 70%);
+}
+
+/* ==========================================================================
+   PAGE HEADER — STONE ENGRAVING STYLE
+   ========================================================================== */
+
+.site-header {
+  font-family: 'Cinzel', serif;
+  position: fixed;
+  top: 4.5rem;
   left: 50%;
   transform: translateX(-50%);
-  color: #ffffff;
-  font-weight: 700;
-  font-size: clamp(2rem, 4.5vw, 3rem);
-  letter-spacing: 0.25rem;
-  text-shadow: 0 4px 16px rgba(0, 0, 0, 0.8);
   z-index: 20;
   pointer-events: none;
   margin: 0;
-  text-transform: uppercase;
+  text-align: center;
 }
 
-/* GSAP Horizontal Scroll Container */
+.site-header-latin {
+  display: block;
+  font-size: clamp(0.55rem, 1vw, 0.72rem);
+  font-weight: 700;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: rgba(180, 140, 60, 0.75);
+  text-shadow: 0 0 12px rgba(180, 120, 30, 0.4);
+  margin-bottom: 0.3rem;
+}
+
+.site-header-main {
+  display: block;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: #f8f4e8;
+  text-shadow:
+    0 0 30px rgba(180, 130, 40, 0.35),
+    0 4px 16px rgba(0, 0, 0, 0.9),
+    0 1px 0 rgba(255, 220, 120, 0.15);
+}
+
+.site-header-rule {
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(180, 130, 40, 0.6), transparent);
+  margin: 0.5rem auto 0;
+}
+
+/* ==========================================================================
+   GSAP HORIZONTAL SCROLL CONTAINERS
+   ========================================================================== */
+
 .scroll-container {
   overflow: hidden;
   height: 100vh;
@@ -79,64 +125,95 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 12rem 2rem 5.5rem 2rem;
+  padding: 11rem 2rem 6rem 2rem;
   overflow-y: auto;
   box-sizing: border-box;
 }
 
-.scroll-section::-webkit-scrollbar {
-  width: 4px;
-}
+.scroll-section::-webkit-scrollbar { width: 3px; }
 .scroll-section::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 4px;
+  background: rgba(180, 130, 40, 0.25);
+  border-radius: 3px;
 }
 
-/* Team Department Title */
+/* ==========================================================================
+   TEAM DEPARTMENT TITLE — CINZEL STONE ENGRAVING
+   ========================================================================== */
+
 .team-title {
-  font-family: 'Poppins', sans-serif;
-  font-size: clamp(1.3rem, 2.2vw, 1.75rem);
-  font-weight: 600;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.1rem, 2vw, 1.6rem);
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #ffffff;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
-  margin-bottom: 2rem;
+  letter-spacing: 0.3em;
+  color: #f0e6c8;
+  text-shadow:
+    0 0 20px rgba(200, 150, 50, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.9);
+  margin-bottom: 0.5rem;
   flex-shrink: 0;
   text-align: center;
+  position: relative;
 }
 
-/* Member Cards Flex Container */
+.team-title::after {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(180, 130, 40, 0.6), transparent);
+  margin: 0.5rem auto 1.5rem;
+}
+
+/* ==========================================================================
+   MEMBER CARDS — CARVED STONE FRAME
+   ========================================================================== */
+
 .members-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2.5rem;
+  gap: 2rem;
   flex-wrap: wrap;
   max-width: 1400px;
   margin: 0 auto;
   padding-bottom: 2rem;
 }
 
-/* Member Card */
+/* Card — stone-carved portrait frame */
 .member-card {
   position: relative;
-  width: 255px;
-  height: 355px;
-  border-radius: 16px;
+  width: 240px;
+  height: 340px;
   overflow: hidden;
-  background: rgba(14, 18, 27, 0.65);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  background: rgba(8, 10, 18, 0.72);
+  /* Sharp top corners, slight bottom curve — archway feel */
+  border-radius: 2px 2px 6px 6px;
+  border: 1px solid rgba(180, 130, 40, 0.25);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.6),
+    0 8px 32px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 220, 120, 0.08);
+  transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+/* Arched top pseudo-element (decorative stone arch line) */
+.member-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent 5%, rgba(180, 130, 40, 0.55) 30%, rgba(220, 170, 60, 0.8) 50%, rgba(180, 130, 40, 0.55) 70%, transparent 95%);
+  z-index: 3;
 }
 
 .member-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7);
-  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-7px) scale(1.015);
+  box-shadow:
+    0 0 0 1px rgba(180, 130, 40, 0.4),
+    0 16px 40px rgba(0, 0, 0, 0.8),
+    0 0 24px rgba(180, 110, 20, 0.18);
+  border-color: rgba(200, 150, 50, 0.45);
 }
 
 .member-photo {
@@ -145,45 +222,55 @@
   object-fit: cover;
   object-position: top;
   display: block;
+  filter: saturate(0.88) brightness(0.92);
+  transition: filter 0.35s ease;
 }
 
-/* Card Bottom Info Overlay */
+.member-card:hover .member-photo {
+  filter: saturate(0.95) brightness(0.98);
+}
+
+/* Card Bottom Info — parchment-style gradient */
 .member-info {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 1.8rem 1rem 1.25rem 1rem;
-  color: #ffffff;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.94) 0%, rgba(0, 0, 0, 0.65) 65%, transparent 100%);
+  padding: 2rem 1rem 1rem 1rem;
+  background: linear-gradient(to top,
+    rgba(4, 6, 14, 0.97) 0%,
+    rgba(6, 8, 16, 0.82) 55%,
+    transparent 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   text-align: center;
   box-sizing: border-box;
 }
 
 .member-name {
-  font-size: 1.3rem;
-  font-weight: 600;
-  font-family: 'Poppins', sans-serif;
-  color: #ffffff;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
-  margin: 0 0 0.55rem 0;
-  line-height: 1.2;
+  font-family: 'Cinzel', serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #f0e6c8;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.95);
+  margin: 0 0 0.5rem 0;
+  line-height: 1.3;
+  text-transform: uppercase;
 }
 
-/* 4 Social/Contact Icons Row - Matching Reference Screenshot */
+/* Social/Contact Icons */
 .member-contact {
   display: flex;
-  gap: 1.25rem;
+  gap: 1rem;
   align-items: center;
   justify-content: center;
 }
 
 .member-contact a {
-  color: #cbd5e1;
+  color: rgba(200, 160, 70, 0.7);
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -192,16 +279,19 @@
 }
 
 .member-contact a:hover {
-  color: #ffffff;
-  transform: scale(1.18);
+  color: rgba(240, 200, 100, 1);
+  transform: scale(1.2);
 }
 
 .member-contact svg {
-  width: 20px;
-  height: 20px;
+  width: 17px;
+  height: 17px;
 }
 
-/* Floating Bottom Team Switcher */
+/* ==========================================================================
+   FOOTER TEAM SWITCHER — STONE TABLET PILL
+   ========================================================================== */
+
 .team-footer {
   position: fixed;
   bottom: 1.25rem;
@@ -216,48 +306,54 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px 12px;
-  padding: 0.5rem 1.25rem;
-  border-radius: 9999px;
-  background: rgba(10, 14, 22, 0.85);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  gap: 4px 8px;
+  padding: 0.55rem 1.25rem;
+  border-radius: 3px;
+  background: rgba(4, 6, 14, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(180, 130, 40, 0.22);
+  border-top: 1px solid rgba(220, 170, 60, 0.3);
+  box-shadow:
+    0 8px 28px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 rgba(255, 220, 120, 0.06);
   overflow-x: auto;
   scrollbar-width: none;
 }
 
-.footer-links::-webkit-scrollbar {
-  display: none;
-}
+.footer-links::-webkit-scrollbar { display: none; }
 
 .footer-link {
   background: none;
   border: none;
-  border-bottom: 2px solid transparent;
-  color: #94a3b8;
-  padding: 6px 8px;
+  border-bottom: 1px solid transparent;
+  color: rgba(180, 150, 90, 0.65);
+  padding: 5px 10px;
   cursor: pointer;
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.72rem;
-  font-weight: 600;
+  font-family: 'Cinzel', serif;
+  font-size: 0.62rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  transition: all 0.2s ease;
+  letter-spacing: 0.18em;
+  transition: all 0.25s ease;
   white-space: nowrap;
 }
 
 .footer-link:hover {
-  color: #ffffff;
+  color: #f0e0a0;
+  text-shadow: 0 0 10px rgba(200, 150, 40, 0.5);
 }
 
 .footer-link.active {
-  color: #ffffff;
-  border-bottom-color: #ffffff;
+  color: #f0e0a0;
+  border-bottom-color: rgba(200, 150, 40, 0.7);
+  text-shadow: 0 0 14px rgba(200, 150, 40, 0.55);
 }
 
-/* Responsive Mobile Layout */
+/* ==========================================================================
+   RESPONSIVE — MOBILE
+   ========================================================================== */
+
 @media (max-width: 768px) {
   .site-header {
     position: relative;
@@ -265,8 +361,7 @@
     left: 0;
     transform: none;
     padding-top: 5.5rem;
-    padding-bottom: 1rem;
-    font-size: 2.2rem;
+    padding-bottom: 0.5rem;
     text-align: center;
   }
 
@@ -292,14 +387,7 @@
     overflow: visible !important;
   }
 
-  .team-title {
-    font-size: 1.35rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .members-container {
-    gap: 1.75rem;
-  }
+  .members-container { gap: 1.5rem; }
 
   .member-card {
     width: 88%;
@@ -307,16 +395,11 @@
     height: 360px;
   }
 
-  .team-footer {
-    display: none;
-  }
+  .team-footer { display: none; }
 }
 
 @media (max-width: 480px) {
-  .site-header {
-    font-size: 1.85rem;
-    padding-top: 5rem;
-  }
+  .site-header-main { font-size: 1.6rem; }
 
   .member-card {
     width: 92%;
@@ -324,7 +407,5 @@
     height: 350px;
   }
 
-  .member-name {
-    font-size: 1.2rem;
-  }
+  .member-name { font-size: 0.8rem; }
 }
