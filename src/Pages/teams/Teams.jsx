@@ -99,6 +99,13 @@ const TeamScroll = forwardRef(({ teams, onSectionChange }, ref) => {
               key={team.id}
               style={{ '--tarot-accent': tarot.accent, '--tarot-glow': tarot.glow }}
             >
+              {/* Tarot card label — top-left of each slide */}
+              <div className="tarot-badge">
+                <span className="tarot-badge-numeral">{tarot.numeral}</span>
+                <span className="tarot-badge-symbol">{tarot.symbol}</span>
+                <span className="tarot-badge-name">{tarot.name}</span>
+              </div>
+
               <h2 className="team-title">{team.title}</h2>
 
               <div className="members-container">

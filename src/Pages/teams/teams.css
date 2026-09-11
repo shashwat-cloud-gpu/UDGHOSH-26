@@ -367,6 +367,53 @@
 }
 
 /* ==========================================================================
+   TAROT BADGE — top-left corner of each department slide
+   ========================================================================== */
+
+.tarot-badge {
+  position: absolute;
+  top: 5.5rem;
+  left: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.tarot-badge-numeral {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(0.52rem, 0.85vw, 0.68rem);
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  color: var(--tarot-accent, #e5c07b);
+  text-shadow: 0 0 10px var(--tarot-glow, rgba(229,192,123,0.5));
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.tarot-badge-symbol {
+  font-size: clamp(1rem, 1.6vw, 1.4rem);
+  color: var(--tarot-accent, #e5c07b);
+  filter: drop-shadow(0 0 5px var(--tarot-glow, rgba(229,192,123,0.6)));
+  line-height: 1;
+  margin: 3px 0;
+}
+
+.tarot-badge-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(0.75rem, 1.15vw, 1rem);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--tarot-accent, #e5c07b);
+  opacity: 0.9;
+  line-height: 1.2;
+  text-shadow: 0 0 12px var(--tarot-glow, rgba(229,192,123,0.4));
+}
+
+/* ==========================================================================
    TEAM HIERARCHY LEGEND — fixed right-side stone plaque
    ========================================================================== */
 
