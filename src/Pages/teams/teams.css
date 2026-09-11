@@ -146,9 +146,9 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.3em;
-  color: #f0e6c8;
+  color: var(--tarot-accent, #f0e6c8);
   text-shadow:
-    0 0 20px rgba(200, 150, 50, 0.4),
+    0 0 22px var(--tarot-glow, rgba(200,150,50,0.4)),
     0 2px 8px rgba(0, 0, 0, 0.9);
   margin-bottom: 0.5rem;
   flex-shrink: 0;
@@ -161,7 +161,7 @@
   display: block;
   width: 48px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(180, 130, 40, 0.6), transparent);
+  background: linear-gradient(90deg, transparent, var(--tarot-accent, rgba(180,130,40,0.6)), transparent);
   margin: 0.5rem auto 1.5rem;
 }
 
@@ -197,24 +197,38 @@
   transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
-/* Arched top pseudo-element (decorative stone arch line) */
+/* Card top-line uses tarot accent colour via CSS variable */
 .member-card::before {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 3px;
-  background: linear-gradient(90deg, transparent 5%, rgba(180, 130, 40, 0.55) 30%, rgba(220, 170, 60, 0.8) 50%, rgba(180, 130, 40, 0.55) 70%, transparent 95%);
+  background: linear-gradient(
+    90deg,
+    transparent 5%,
+    var(--tarot-accent, rgba(180,130,40,0.9)) 30%,
+    var(--tarot-accent, rgba(220,170,60,1)) 50%,
+    var(--tarot-accent, rgba(180,130,40,0.9)) 70%,
+    transparent 95%
+  );
+  opacity: 0.75;
   z-index: 3;
+  transition: opacity 0.3s ease;
 }
 
 .member-card:hover {
   transform: translateY(-7px) scale(1.015);
   box-shadow:
-    0 0 0 1px rgba(180, 130, 40, 0.4),
+    0 0 0 1px var(--tarot-accent, rgba(200,150,50,0.45)),
     0 16px 40px rgba(0, 0, 0, 0.8),
-    0 0 24px rgba(180, 110, 20, 0.18);
-  border-color: rgba(200, 150, 50, 0.45);
+    0 0 28px var(--tarot-glow, rgba(180,110,20,0.22));
+  border-color: var(--tarot-accent, rgba(200,150,50,0.45));
 }
+
+.member-card:hover::before {
+  opacity: 1;
+}
+
 
 .member-photo {
   width: 100%;
@@ -270,16 +284,18 @@
 }
 
 .member-contact a {
-  color: rgba(200, 160, 70, 0.7);
+  color: var(--tarot-accent, rgba(200,160,70,0.7));
+  opacity: 0.75;
   text-decoration: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: color 0.2s ease, transform 0.2s ease;
+  transition: color 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
 }
 
 .member-contact a:hover {
-  color: rgba(240, 200, 100, 1);
+  color: var(--tarot-accent, rgba(240,200,100,1));
+  opacity: 1;
   transform: scale(1.2);
 }
 
