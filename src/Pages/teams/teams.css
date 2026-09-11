@@ -367,6 +367,92 @@
 }
 
 /* ==========================================================================
+   TEAM HIERARCHY LEGEND — fixed right-side stone plaque
+   ========================================================================== */
+
+.hierarchy-legend {
+  position: fixed;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 25;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: 1rem 0.85rem 1rem 0.85rem;
+  background: rgba(4, 6, 14, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(180, 130, 40, 0.2);
+  border-top: 1px solid rgba(220, 170, 60, 0.28);
+  border-radius: 3px;
+  box-shadow:
+    0 8px 28px rgba(0, 0, 0, 0.65),
+    inset 0 1px 0 rgba(255, 220, 120, 0.05);
+}
+
+.hierarchy-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  color: rgba(180, 130, 40, 0.55);
+  text-transform: uppercase;
+  margin: 0 0 0.75rem 0;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(180, 130, 40, 0.18);
+  width: 100%;
+  text-align: center;
+}
+
+.hierarchy-chain {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.hierarchy-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.hierarchy-roman {
+  font-family: 'Cinzel', serif;
+  font-size: 0.48rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: rgba(180, 130, 40, 0.5);
+  line-height: 1;
+}
+
+.hierarchy-rank {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(240, 220, 170, 0.85);
+  text-align: center;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.hierarchy-arrow {
+  display: block;
+  font-size: 0.7rem;
+  color: rgba(180, 130, 40, 0.45);
+  line-height: 1;
+  margin: 4px 0;
+}
+
+/* ==========================================================================
    RESPONSIVE — MOBILE
    ========================================================================== */
 
@@ -412,6 +498,7 @@
   }
 
   .team-footer { display: none; }
+  .hierarchy-legend { display: none; }
 }
 
 @media (max-width: 480px) {

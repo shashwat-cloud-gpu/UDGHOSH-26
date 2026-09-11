@@ -193,6 +193,54 @@ function App() {
     }
   };
 
+const HIERARCHY = [
+  { rank: "Head",             roman: "I"   },
+  { rank: "Organizer",        roman: "II"  },
+  { rank: "Senior Executive", roman: "III" },
+  { rank: "Junior Executive", roman: "IV"  },
+];
+
+function HierarchyLegend() {
+  return (
+    <aside className="hierarchy-legend" aria-label="Team Hierarchy">
+      <p className="hierarchy-label">HIERARCHY</p>
+      <ol className="hierarchy-chain">
+        {HIERARCHY.map((item, i) => (
+          <li key={item.rank} className="hierarchy-item">
+            <span className="hierarchy-roman">{item.roman}</span>
+            <span className="hierarchy-rank">{item.rank}</span>
+            {i < HIERARCHY.length - 1 && (
+              <span className="hierarchy-arrow" aria-hidden="true">↓</span>
+            )}
+          </li>
+        ))}
+      </ol>
+    </aside>
+  );
+}
+
+function App() {
+  const teamScrollRef = useRef(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Filter out teams where all members are hidden (e.g. Head, SECURITY)
+  const visibleTeams = teamData.teams
+    .map((team) => ({
+      ...team,
+      members: team.members.filter((member) => !member.hidden),
+    }))
+    .filter((team) => team.members.length > 0);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const handleFooterLinkClick = (index) => {
+    if (teamScrollRef.current) {
+      teamScrollRef.current.scrollToSection(index);
+    }
+  };
+
   return (
     <div className="teams-page-wrapper">
       <Navbar2 />
@@ -208,6 +256,7 @@ function App() {
         <span className="site-header-rule" />
       </h1>
 
+      <HierarchyLegend />
       <TeamScroll ref={teamScrollRef} teams={visibleTeams} onSectionChange={setActiveIndex} />
       <Footer teams={visibleTeams} onLinkClick={handleFooterLinkClick} activeIndex={activeIndex} />
     </div>
