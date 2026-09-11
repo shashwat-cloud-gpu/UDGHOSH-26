@@ -8,19 +8,19 @@ import "./teams.css";
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-// ─── Tarot archetype for each department ────────────────────────────────────
+// ─── Final approved Tarot archetype for each department ─────────────────────
 const TAROT_MAP = {
-  'teams-about-hospi':  { numeral: 'XVII',  name: 'The Star',           symbol: '✦', accent: '#7dd3fc', glow: 'rgba(125,211,252,0.18)' },
-  'teams-about-enc':    { numeral: 'XVI',   name: 'The Tower',          symbol: '⚡', accent: '#f97316', glow: 'rgba(249,115,22,0.18)'  },
-  'teams-about-mark':   { numeral: 'I',     name: 'The Magician',       symbol: '∞',  accent: '#a78bfa', glow: 'rgba(167,139,250,0.18)' },
-  'teams-about-pr':     { numeral: 'II',    name: 'The High Priestess', symbol: '☽',  accent: '#c4b5fd', glow: 'rgba(196,181,253,0.15)' },
-  'teams-about-wna':    { numeral: 'IX',    name: 'The Hermit',         symbol: '◈',  accent: '#6ee7b7', glow: 'rgba(110,231,183,0.15)' },
-  'teams-about-design': { numeral: 'III',   name: 'The Empress',        symbol: '✿',  accent: '#f9a8d4', glow: 'rgba(249,168,212,0.15)' },
-  'teams-about-mnp':    { numeral: 'XIX',   name: 'The Sun',            symbol: '☀',  accent: '#fcd34d', glow: 'rgba(252,211,77,0.18)'  },
-  'teams-about-sm':     { numeral: 'IV',    name: 'The Emperor',        symbol: '♦',  accent: '#fb923c', glow: 'rgba(251,146,60,0.18)'  },
-  'teams-about-fin':    { numeral: 'XXI',   name: 'The World',          symbol: '◉',  accent: '#86efac', glow: 'rgba(134,239,172,0.15)' },
-  'teams-about-sec':    { numeral: 'VIII',  name: 'Strength',           symbol: '⚔',  accent: '#fca5a5', glow: 'rgba(252,165,165,0.15)' },
-  'teams-about-fc':     { numeral: 'VII',   name: 'The Chariot',        symbol: '⚜',  accent: '#e5c07b', glow: 'rgba(229,192,123,0.18)' },
+  'teams-about-hospi':  { numeral: 'XVII',         name: 'The Star',          symbol: '✦', accent: '#7dd3fc', glow: 'rgba(125,211,252,0.18)' },
+  'teams-about-enc':    { numeral: 'XXI',           name: 'The World',         symbol: '◎', accent: '#c4b5fd', glow: 'rgba(196,181,253,0.20)' },
+  'teams-about-mark':   { numeral: 'I',             name: 'The Magician',      symbol: '∞',  accent: '#a78bfa', glow: 'rgba(167,139,250,0.18)' },
+  'teams-about-pr':     { numeral: 'II of Cups',    name: 'Two of Cups',       symbol: '⚭',  accent: '#fda4af', glow: 'rgba(253,164,175,0.18)' },
+  'teams-about-wna':    { numeral: 'XIV',           name: 'Temperance',        symbol: '⚗',  accent: '#6ee7b7', glow: 'rgba(110,231,183,0.15)' },
+  'teams-about-design': { numeral: 'Ace of Wands',  name: 'Ace of Wands',      symbol: '✵',  accent: '#fdba74', glow: 'rgba(253,186,116,0.18)' },
+  'teams-about-mnp':    { numeral: 'XVIII',         name: 'The Moon',          symbol: '☽',  accent: '#bae6fd', glow: 'rgba(186,230,253,0.15)' },
+  'teams-about-sm':     { numeral: 'V',             name: 'The Hierophant',    symbol: '♦',  accent: '#d8b4fe', glow: 'rgba(216,180,254,0.18)' },
+  'teams-about-fin':    { numeral: 'X',             name: 'Wheel of Fortune',  symbol: '◉',  accent: '#fcd34d', glow: 'rgba(252,211,77,0.18)'  },
+  'teams-about-sec':    { numeral: 'VIII',          name: 'Strength',          symbol: '⚔',  accent: '#fca5a5', glow: 'rgba(252,165,165,0.15)' },
+  'teams-about-fc':     { numeral: 'IV',            name: 'The Emperor',       symbol: '⚜',  accent: '#e5c07b', glow: 'rgba(229,192,123,0.18)' },
 };
 
 const TeamScroll = forwardRef(({ teams, onSectionChange }, ref) => {
