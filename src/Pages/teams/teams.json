@@ -5,15 +5,6 @@
             "title": "Head, HOSPITALITY",
             "members": [
                 {
-                    "name": "Abhishek",
-                    "hidden": true,
-                    "photo": "https://live.staticflickr.com/65535/55426699563_f4d0e1fee3_b.jpg",
-                    "linkedin": "",
-                    "phone": "9927860926",
-                    "email": "sabhishekk23@iitk.ac.in",
-                    "instagram": ""
-                },
-                {
                     "name": "Suresh",
                     "photo": "https://live.staticflickr.com/65535/55426555533_1db42ce5e9_b.jpg",
                     "linkedin": "",
@@ -40,19 +31,6 @@
                     }
                 },
                 {
-                    "name": "Anshika",
-                    "hidden": true,
-                    "photo": "https://live.staticflickr.com/65535/55426597179_27bfaa359d_b.jpg",
-                    "linkedin": "",
-                    "phone": "6395485144",
-                    "email": "anshikam23@iitk.ac.in",
-                    "instagram": "",
-                    "imageStyle": {
-                        "objectPosition": "bottom center",
-                        "transform": "scale(2) translateY(-10%)"
-                    }
-                },
-                {
                     "name": "Yuvraj",
                     "photo": "https://live.staticflickr.com/65535/55426466966_faa2c383fe_z.jpg",
                     "linkedin": "",
@@ -66,15 +44,6 @@
             "id": "teams-about-mark",
             "title": "Head, MARKETING",
             "members": [
-                {
-                    "name": "Aryan",
-                    "hidden": true,
-                    "photo": "https://live.staticflickr.com/65535/55426597114_1d9a99ec13_b.jpg",
-                    "linkedin": "",
-                    "phone": "8273695084",
-                    "email": "aryans23@iitk.ac.in",
-                    "instagram": ""
-                },
                 {
                     "name": "Amey",
                     "photo": "https://live.staticflickr.com/65535/55426725814_14b2900efc_b.jpg",
@@ -137,7 +106,7 @@
                 },
                 {
                     "name": "Chirag Gupta",
-                    "photo": "https://live.staticflickr.com/65535/55426555633_6da4c9a6f7_b.jpg",
+                    "photo": "https://live.staticflickr.com/65535/55429306072_9683dc8703_b.jpg",
                     "linkedin": "",
                     "phone": "8630969755",
                     "email": "chiragg24@iitk.ac.in",
@@ -153,12 +122,12 @@
             "title": "Head, DESIGN",
             "members": [
                 {
-                    "name": "Om",
-                    "photo": "https://live.staticflickr.com/65535/54820124016_f82dd1a8f2_w.jpg",
+                    "name": "Anushka",
+                    "photo": "https://res.cloudinary.com/mxuy06ca/image/upload/q_auto,f_auto/v1788974846/y550vx3ztrd4eynt2sej.jpg",
                     "linkedin": "",
-                    "phone": "",
-                    "email": "",
-                    "instagram": ""
+                    "phone": "7970200693",
+                    "email": "anushkasri24@iitk.ac.in",
+                    "instagram": "https://www.instagram.com/anuskaa_666"
                 }
             ]
         },
@@ -167,12 +136,11 @@
             "title": "Head, MEDIA & PUBLICITY",
             "members": [
                 {
-                    "name": "Suyash",
-                    "hidden": true,
-                    "photo": "https://live.staticflickr.com/65535/55426597069_edaa1704c8_b.jpg",
+                    "name": "Om",
+                    "photo": "https://live.staticflickr.com/65535/54820124016_f82dd1a8f2_w.jpg",
                     "linkedin": "",
-                    "phone": "8989409477",
-                    "email": "psuyash23@iitk.ac.in",
+                    "phone": "",
+                    "email": "",
                     "instagram": ""
                 },
                 {
@@ -194,7 +162,7 @@
             "members": [
                 {
                     "name": "Lokesh",
-                    "photo": "https://live.staticflickr.com/65535/55426597004_c5084bfa8a_b.jpg",
+                    "photo": "https://live.staticflickr.com/65535/55430673095_1b10655e75_b.jpg",
                     "linkedin": "",
                     "phone": "7673921276",
                     "email": "glokesh23@iitk.ac.in",
@@ -240,7 +208,7 @@
                     "name": "Harshavardan",
                     "hidden": true,
                     "photo": "https://live.staticflickr.com/65535/55425457052_23b1e0d599_b.jpg",
-                    "linkedin": "https://www.linkedin.com/in/harshavardan-yadav-037130282?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
+                    "linkedin": "https://www.linkedin.com/in/harshavardan-yadav-037130282",
                     "phone": "9369567314",
                     "email": "harshabs23@iitk.ac.in",
                     "instagram": "",
