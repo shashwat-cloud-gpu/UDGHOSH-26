@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./Homepage.css";
@@ -11,29 +11,63 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Homepage() {
   const sectionRef = useRef(null);
+  const pinWrapperRef = useRef(null);
   const bgRef = useRef(null);
   const overlayRef = useRef(null);
+  const contentRef = useRef(null);
 
-  // CinematicHero's last panel hands off to this section with a hard cut,
-  // because this backdrop used to sit at opacity 1 the whole time, simply
-  // hidden behind the still-pinned hero content until it releases. Instead,
-  // fade this backdrop in on its own scroll-linked trigger as the section
-  // approaches — since scroll position is tracked in real document
-  // coordinates (unaffected by the hero panel's fixed/pinned overlay), this
-  // fade completes *underneath* the hero panel while it's still visible, so
-  // by the time the hero content actually goes away there's nothing left to
-  // visibly change.
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === "undefined") return false;
+    const urlParams = new URLSearchParams(window.location.search);
+    return (
+      window.innerWidth < 820 ||
+      urlParams.get("mobile") === "desk" ||
+      urlParams.get("mobile") === "table" ||
+      urlParams.get("mobile") === "1"
+    );
+  });
+
+  useEffect(() => {
+    const checkMobile = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      setIsMobile(
+        window.innerWidth < 820 ||
+        urlParams.get("mobile") === "desk" ||
+        urlParams.get("mobile") === "table" ||
+        urlParams.get("mobile") === "1"
+      );
+    };
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // 1. Fade the background in perfectly underneath Panel 2's final moments
       ScrollTrigger.create({
         trigger: sectionRef.current,
         start: "top bottom",
         end: "top top",
-        scrub: 0.8,
+        scrub: true,
         onUpdate: (self) => {
           const opacity = String(self.progress);
           if (bgRef.current) bgRef.current.style.opacity = opacity;
           if (overlayRef.current) overlayRef.current.style.opacity = opacity;
+        },
+      });
+
+      // 2. Lock the page in place exactly when Panel 2 begins its fade out
+      ScrollTrigger.create({
+        trigger: pinWrapperRef.current,
+        start: "top top",
+        end: "+=200%", // Keep it pinned for 2 screen heights (100vh for crossfade, 100vh for read time)
+        pin: true,
+        scrub: true,
+        onUpdate: (self) => {
+          if (contentRef.current) {
+            // Fade in over the first half of the pin duration
+            contentRef.current.style.opacity = Math.min(1, self.progress * 2);
+          }
         },
       });
     });
@@ -44,34 +78,41 @@ export default function Homepage() {
     <>
       <CinematicHero />
 
-      <div ref={sectionRef} style={{ position: "relative" }}>
-        <div
-          ref={bgRef}
-          style={{
-            position: "fixed",
-            inset: 0,
-            backgroundImage: "url(/images/next_hall.webp)",
-            backgroundSize: "cover",
-            backgroundPosition: "center top",
-            zIndex: -1,
-            pointerEvents: "none",
-            opacity: 0,
-          }}
-        />
-        <div
-          ref={overlayRef}
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(0,0,0,0.35)",
-            zIndex: -1,
-            pointerEvents: "none",
-            opacity: 0,
-          }}
-        />
+      {/* Fixed backgrounds must be OUTSIDE the pinned sectionRef to prevent GSAP from stretching/scrolling them */}
+      <div
+        ref={bgRef}
+        style={{
+          position: "fixed",
+          inset: 0,
+          backgroundImage: isMobile ? "url(/images/mobile_desk.webp)" : "url(/images/next_hall.webp)",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          zIndex: -1,
+          pointerEvents: "none",
+          opacity: 0,
+        }}
+      />
+      <div
+        ref={overlayRef}
+        style={{
+          position: "fixed",
+          inset: 0,
+          background: "rgba(0,0,0,0.35)",
+          zIndex: -1,
+          pointerEvents: "none",
+          opacity: 0,
+        }}
+      />
 
-        <AfterMovies />
-        <JoinCommunity />
+      {/* marginTop: -200vh pulls this section up so it perfectly overlaps the final 100vh of the Hero pin */}
+      <div ref={sectionRef} style={{ position: "relative", marginTop: "-200vh", zIndex: 1 }}>
+        <div ref={pinWrapperRef}>
+          {/* Content fades in motionlessly while the background is locked */}
+          <div ref={contentRef} style={{ opacity: 0 }}>
+            <AfterMovies />
+            <JoinCommunity />
+          </div>
+        </div>
       </div>
 
       <Footer2 />

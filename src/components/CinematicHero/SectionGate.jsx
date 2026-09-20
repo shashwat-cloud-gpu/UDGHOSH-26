@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import GateAtmosphere from "./GateAtmosphere";
-import GroundStormTransition from "./GroundStormTransition";
 import MobileDeskGate from "./MobileDeskGate";
 
 const GATES = [
@@ -11,7 +10,7 @@ const GATES = [
     label: "THE GALLERY",
     sub: "Carved frames of past editions & visual chronicles",
     url: "/gallery", external: false,
-    left: "0.5%", top: "12.5%", width: "11.7%", height: "62%",
+    left: "3%", top: "20.5%", width: "11.7%", height: "62%",
   },
   {
     id: "pronights", roman: "II",
@@ -19,7 +18,7 @@ const GATES = [
     label: "PRO NIGHTS",
     sub: "Theatrical stone masks, stage concerts & star nights",
     url: "/past-events", external: false,
-    left: "12.8%", top: "16.2%", width: "12%", height: "58.3%",
+    left: "15.8%", top: "29.2%", width: "12%", height: "58.3%",
   },
   {
     id: "social", roman: "III",
@@ -27,7 +26,7 @@ const GATES = [
     label: "SOCIAL INITIATIVES",
     sub: "Cradled sapling & creeping vines of human welfare",
     url: "/social", external: false,
-    left: "25.3%", top: "21.3%", width: "12.2%", height: "54.2%",
+    left: "28.3%", top: "31.3%", width: "12.2%", height: "54.2%",
   },
   {
     id: "competitions", roman: "IV",
@@ -35,16 +34,16 @@ const GATES = [
     label: "COMPETITIONS",
     sub: "The throne of victor's wreaths, armored battles & sports olympiad",
     url: "https://events.udghosh.org.in/", external: true,
-    left: "38%", top: "6.9%", width: "24%", height: "69%",
+    left: "38%", top: "13%", width: "24%", height: "69%",
     isPrimary: true,
   },
   {
     id: "esports", roman: "V",
-    latin: "PORTA \u00b7 V \u00b7 PUGNA DIGITALIS",
+    latin: "PORTA \u00b7 V \u00b7 DIGITALIS",
     label: "ESPORTS COLOSSEUM",
     sub: "Ancient stone gears & runes of competitive gaming",
     url: "https://esports.udghosh.org.in/", external: true,
-    left: "62.5%", top: "21.3%", width: "12.2%", height: "54.2%",
+    left: "60%", top: "31.3%", width: "12.2%", height: "54.2%",
   },
   {
     id: "antique", roman: "VI",
@@ -52,20 +51,20 @@ const GATES = [
     label: "ANTIQUE & LEGACY",
     sub: "Eroded sundials, 25-year annals & heritage relics",
     url: "/antique", external: false,
-    left: "75.3%", top: "16.2%", width: "12%", height: "58.3%",
+    left: "73.3%", top: "29.2%", width: "12%", height: "58.3%",
   },
   {
     id: "unosq", roman: "VII",
-    latin: "PORTA \u00b7 VII \u00b7 QUAESTIO UNOSQ",
+    latin: "PORTA \u00b7 VII \u00b7 QUAESTIO",
     label: "UNOSQ QUEST",
     sub: "The open tome, quill & owl of cryptic trials",
     url: "https://unosq.udghosh.org.in/", external: true,
-    left: "87.8%", top: "12.5%", width: "11.7%", height: "62%",
+    left: "85.8%", top: "20.5%", width: "11.7%", height: "62%",
   },
 ];
 
 const TORCHES = [
-  { left: "1.9%",  top: "49.8%" },
+  { left: "1.9%", top: "49.8%" },
   { left: "27.4%", top: "57.0%" },
   { left: "40.1%", top: "57.8%" },
   { left: "59.4%", top: "57.8%" },
@@ -73,7 +72,7 @@ const TORCHES = [
   { left: "97.2%", top: "49.2%" },
 ];
 
-const ORBIT_TEXT = "\u2726  UDGHOSH  '23  \u2726  THE  PATRONUS  PURSUIT  \u2726  IIT  KANPUR  \u2726  ";
+const ORBIT_TEXT = "\u2726  UDGHOSH  '23  \u2726  ARCANA ASCENSION  \u2726  IIT  KANPUR  \u2726  ";
 
 function trapezoid(t) {
   if (t < 0.25) return t / 0.25;
@@ -85,15 +84,13 @@ function DesktopCastleGate({ dwellProgress = 0 }) {
   const [hovered, setHovered] = useState(null);
   const [enteringGate, setEnteringGate] = useState(null);
   const [zoomActive, setZoomActive] = useState(false);
-  const [isIgnited, setIsIgnited] = useState(false);
-  const [flash, setFlash] = useState(false);
   const opacity = trapezoid(dwellProgress);
   const navigate = useNavigate();
 
   const orbitCanvasRef = useRef(null);
-  const fireCanvasRef  = useRef(null);
-  const orbitRafRef    = useRef(null);
-  const fireRafRef     = useRef(null);
+  const fireCanvasRef = useRef(null);
+  const orbitRafRef = useRef(null);
+  const fireRafRef = useRef(null);
 
   // Orbit text ring with High-DPI pixel density
   useEffect(() => {
@@ -213,8 +210,8 @@ function DesktopCastleGate({ dwellProgress = 0 }) {
   const [cursorPos, setCursorPos] = useState({ x: 50, y: 50 });
 
   const handleMouseMove = (e) => {
-    // Only track if not entering a gate and not ignited yet
-    if (enteringGate || isIgnited) return;
+    // Only track if not entering a gate
+    if (enteringGate) return;
     const { clientX, clientY, currentTarget } = e;
     const { left, top, width, height } = currentTarget.getBoundingClientRect();
     const x = ((clientX - left) / width) * 100;
@@ -222,20 +219,8 @@ function DesktopCastleGate({ dwellProgress = 0 }) {
     setCursorPos({ x, y });
   };
 
-  const handleIgnite = () => {
-    if (isIgnited) return;
-    setIsIgnited(true);
-    setFlash(true);
-    // Remove auto-navigation so the storm can be explored interactively
-  };
-
-  const handleCloseStorm = () => {
-    setIsIgnited(false);
-    setFlash(false);
-  };
-
   const handleClick = (gate) => {
-    if (enteringGate || isIgnited) return;
+    if (enteringGate) return;
 
     // Calculate focal center for camera zoom into the archway
     const parsePct = (str) => parseFloat(str) || 0;
@@ -262,19 +247,16 @@ function DesktopCastleGate({ dwellProgress = 0 }) {
   };
 
   return (
-    <div 
+    <div
       onMouseMove={handleMouseMove}
       style={{
-      position: "absolute", inset: 0,
-      opacity,
-      pointerEvents: opacity > 0.15 && !enteringGate ? "auto" : "none",
-      fontFamily: "'Cinzel', serif",
-      overflow: "hidden",
-    }}>
+        position: "absolute", inset: 0,
+        opacity,
+        pointerEvents: opacity > 0.15 && !enteringGate ? "auto" : "none",
+        fontFamily: "'Cinzel', serif",
+        overflow: "hidden",
+      }}>
 
-      {isIgnited && <GroundStormTransition onClose={handleCloseStorm} />}
-
-      {/* Camera Zoom-In Wrapper */}
       <div style={{
         position: "absolute", inset: 0,
         transformOrigin: enteringGate ? `${enteringGate.originX}% ${enteringGate.originY}%` : "50% 50%",
@@ -446,18 +428,16 @@ function DesktopCastleGate({ dwellProgress = 0 }) {
           <canvas ref={fireCanvasRef} width={220} height={240}
             style={{ position: "absolute", top: "-64px", pointerEvents: "none", zIndex: 3 }}
           />
-          <div 
-            onClick={handleIgnite}
+          <div
             style={{
-            position: "relative",
-            width: "clamp(80px,7vw,112px)",
-            height: "clamp(112px,9.8vw,160px)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            zIndex: 2,
-            filter: "drop-shadow(0 0 15px rgba(56,189,248,0.7))",
-            animation: "patronusFlameGlow 7s infinite ease-in-out",
-            cursor: "pointer",
-          }}>
+              position: "relative",
+              width: "clamp(80px,7vw,112px)",
+              height: "clamp(112px,9.8vw,160px)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              zIndex: 2,
+              filter: "drop-shadow(0 0 15px rgba(56,189,248,0.7))",
+              animation: "patronusFlameGlow 7s infinite ease-in-out",
+            }}>
             <img src="/images/logo.png" alt="Udghosh"
               style={{ width: "100%", height: "100%", objectFit: "contain" }}
             />
@@ -522,15 +502,6 @@ function DesktopCastleGate({ dwellProgress = 0 }) {
         }} />
       )}
 
-
-      {/* White flash when ignited */}
-      <div style={{
-        position: "absolute", inset: 0,
-        pointerEvents: "none", zIndex: 11,
-        background: "white",
-        opacity: flash ? 1 : 0,
-        transition: flash ? "none" : "opacity 2s ease",
-      }} />
     </div>
   );
 }

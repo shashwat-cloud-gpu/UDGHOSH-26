@@ -19,6 +19,7 @@ export default function CinematicPanel({
   enabled = true,
   extendPinVh = null,
   hideBeforePin = false,
+  fadeOutProgressStart = null,
 }) {
   const wrapperRef = useRef(null);
   const pinRef = useRef(null);
@@ -156,12 +157,27 @@ export default function CinematicPanel({
           // the placeholder (which is the same image as the video's first
           // frame) stays put as a safe fallback until playback is possible.
           if (placeholderImgRef.current) {
-            const fadeOutEnd = 0.05;
+            const fadeOutStart = 0.02; // Keep at 100% opacity for the first 2% of scroll
+            const fadeOutEnd = 0.07;   // Complete fade out by 7% of scroll
+            
             if (total <= scrubRatio && !ready) {
               placeholderImgRef.current.style.opacity = "1";
+            } else if (total <= fadeOutStart) {
+              placeholderImgRef.current.style.opacity = "1";
+            } else if (total >= fadeOutEnd) {
+              placeholderImgRef.current.style.opacity = "0";
             } else {
-              placeholderImgRef.current.style.opacity =
-                total > fadeOutEnd ? "0" : String(1 - total / fadeOutEnd);
+              const fadeProgress = (total - fadeOutStart) / (fadeOutEnd - fadeOutStart);
+              placeholderImgRef.current.style.opacity = String(1 - fadeProgress);
+            }
+          }
+
+          if (fadeOutProgressStart !== null && pinRef.current && self.isActive) {
+            if (total <= fadeOutProgressStart) {
+              pinRef.current.style.opacity = "1";
+            } else {
+              const fadeProg = (total - fadeOutProgressStart) / (1 - fadeOutProgressStart);
+              pinRef.current.style.opacity = String(1 - fadeProg);
             }
           }
 
@@ -234,10 +250,7 @@ export default function CinematicPanel({
           width: "100%",
           height: "100vh",
           overflow: "hidden",
-          // Start hidden (matches GSAP's first onToggle call) so there's no
-          // flash of this panel's content before its own pin is reached.
-          opacity: hideBeforePin ? 0 : 1,
-          transition: hideBeforePin ? "opacity 0.15s ease" : undefined,
+          opacity: hideBeforePin ? 0 : 1, // Start hidden so GSAP reverts to 0 after pin
         }}
       >
         {/* Placeholder image (visible before video loads) */}
@@ -252,9 +265,8 @@ export default function CinematicPanel({
               width: "100%",
               height: "100%",
               objectFit: "cover",
-              zIndex: 0,
-              opacity: videoReady ? 0 : 1,
-              transition: "opacity 0.6s ease",
+              zIndex: 1, // Increased to 1 to stay on top of the video
+              opacity: 1,
               willChange: "opacity",
               transform: "translateZ(0)",
             }}
