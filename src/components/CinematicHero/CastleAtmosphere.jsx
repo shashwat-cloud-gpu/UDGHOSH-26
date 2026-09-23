@@ -38,22 +38,8 @@ export default function CastleAtmosphere({ opacity = 1 }) {
       );
     }
 
-    // ── Fog / Mist Engine ──
-    // Soft drifting blobs behind everything else, giving the scene real
-    // depth instead of a flat black backdrop.
-    const fogBlobCount = 6;
+    // ── Fog removed ──
     const fogBlobs = [];
-    function createFogBlob() {
-      return {
-        x: Math.random() * width,
-        y: height * (0.55 + Math.random() * 0.4),
-        radiusX: width * (0.28 + Math.random() * 0.22),
-        radiusY: height * (0.10 + Math.random() * 0.08),
-        speed: (Math.random() * 0.12 + 0.05) * (Math.random() > 0.5 ? 1 : -1),
-        opacity: Math.random() * 0.08 + 0.05,
-      };
-    }
-    for (let i = 0; i < fogBlobCount; i++) fogBlobs.push(createFogBlob());
 
     // ── Rain Engine ──
     const rainCount = 130;
@@ -360,22 +346,7 @@ export default function CastleAtmosphere({ opacity = 1 }) {
       }
       const hue = HUES[lightningState.hue];
 
-      // 1. Fog / mist (drifts slowly, sits behind everything)
-      ctx.save();
-      fogBlobs.forEach((f) => {
-        f.x += f.speed;
-        if (f.x - f.radiusX > width + 50) f.x = -f.radiusX - 50;
-        if (f.x + f.radiusX < -50) f.x = width + f.radiusX + 50;
-        const grad = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.radiusX);
-        const boosted = f.opacity + fi * 0.12;
-        grad.addColorStop(0, `rgba(200, 210, 225, ${boosted})`);
-        grad.addColorStop(1, "rgba(200, 210, 225, 0)");
-        ctx.fillStyle = grad;
-        ctx.beginPath();
-        ctx.ellipse(f.x, f.y, f.radiusX, f.radiusY, 0, 0, Math.PI * 2);
-        ctx.fill();
-      });
-      ctx.restore();
+      // 1. Fog removed
 
       // 2. Lightning atmosphere & sky glow
       if (fi > 0) {

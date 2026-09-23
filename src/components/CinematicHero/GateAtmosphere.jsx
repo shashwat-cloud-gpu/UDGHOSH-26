@@ -38,21 +38,8 @@ export default function GateAtmosphere({ opacity = 1 }) {
       );
     }
 
-    // ── Fog / Mist Engine ──
-    // Low drifting haze across the hall floor for depth.
-    const fogBlobCount = 6;
+    // ── Fog removed ──
     const fogBlobs = [];
-    function createFogBlob() {
-      return {
-        x: Math.random() * width,
-        y: height * (0.6 + Math.random() * 0.35),
-        radiusX: width * (0.26 + Math.random() * 0.2),
-        radiusY: height * (0.08 + Math.random() * 0.06),
-        speed: (Math.random() * 0.1 + 0.04) * (Math.random() > 0.5 ? 1 : -1),
-        opacity: Math.random() * 0.07 + 0.04,
-      };
-    }
-    for (let i = 0; i < fogBlobCount; i++) fogBlobs.push(createFogBlob());
 
     // ── Rain Engine ──
     const rainCount = 130;
@@ -345,22 +332,7 @@ export default function GateAtmosphere({ opacity = 1 }) {
       }
       const hue = HUES[lightningState.hue];
 
-      // 1. Fog / mist (drifts low across the hall floor)
-      ctx.save();
-      fogBlobs.forEach((f) => {
-        f.x += f.speed;
-        if (f.x - f.radiusX > width + 50) f.x = -f.radiusX - 50;
-        if (f.x + f.radiusX < -50) f.x = width + f.radiusX + 50;
-        const grad = ctx.createRadialGradient(f.x, f.y, 0, f.x, f.y, f.radiusX);
-        const boosted = f.opacity + fi * 0.1;
-        grad.addColorStop(0, `rgba(195, 205, 220, ${boosted})`);
-        grad.addColorStop(1, "rgba(195, 205, 220, 0)");
-        ctx.fillStyle = grad;
-        ctx.beginPath();
-        ctx.ellipse(f.x, f.y, f.radiusX, f.radiusY, 0, 0, Math.PI * 2);
-        ctx.fill();
-      });
-      ctx.restore();
+      // 1. Fog removed
 
       // 2. Torchlight breathing glow — independent of lightning
       ctx.save();
