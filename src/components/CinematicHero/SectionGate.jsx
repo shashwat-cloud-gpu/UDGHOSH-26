@@ -269,7 +269,7 @@ function DesktopCastleGate({ dwellProgress = 0 }) {
         {/* Backdrop for seamless sync when zooming */}
         {enteringGate && (
           <img
-            src="/images/hall.jpg"
+            src="https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203290/udghosh-23/images/hall.jpg"
             alt=""
             style={{
               position: "absolute", inset: 0,
@@ -438,7 +438,7 @@ function DesktopCastleGate({ dwellProgress = 0 }) {
               filter: "drop-shadow(0 0 15px rgba(56,189,248,0.7))",
               animation: "patronusFlameGlow 7s infinite ease-in-out",
             }}>
-            <img src="/images/logo.png" alt="Udghosh"
+            <img src="https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203296/udghosh-23/images/logo.png" alt="Udghosh"
               style={{ width: "100%", height: "100%", objectFit: "contain" }}
             />
           </div>

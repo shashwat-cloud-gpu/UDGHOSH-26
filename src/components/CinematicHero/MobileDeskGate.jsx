@@ -7,7 +7,7 @@ const DRAWERS = [
     id: "competitions",
     url: "https://events.udghosh.org.in/",
     external: true,
-    image: "/images/desk_drawers/competitions.webp",
+    image: "https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203301/udghosh-23/images/desk_drawers/competitions.webp",
     top: "20.1%",
     height: "9.7%",
     focalX: 63.4,
@@ -17,7 +17,7 @@ const DRAWERS = [
     id: "websites",
     url: "https://unosq.udghosh.org.in/",
     external: true,
-    image: "/images/desk_drawers/websites.webp",
+    image: "https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203307/udghosh-23/images/desk_drawers/websites.webp",
     top: "30.1%",
     height: "10.2%",
     focalX: 63.4,
@@ -27,7 +27,7 @@ const DRAWERS = [
     id: "gallery",
     url: "/gallery",
     external: false,
-    image: "/images/desk_drawers/gallery.webp",
+    image: "https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203303/udghosh-23/images/desk_drawers/gallery.webp",
     top: "40.5%",
     height: "10.2%",
     focalX: 63.4,
@@ -37,7 +37,7 @@ const DRAWERS = [
     id: "team",
     url: "/teams",
     external: false,
-    image: "/images/desk_drawers/team.webp",
+    image: "https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203306/udghosh-23/images/desk_drawers/team.webp",
     top: "51.1%",
     height: "9.1%",
     focalX: 63.4,
@@ -47,7 +47,7 @@ const DRAWERS = [
     id: "proshows",
     url: "/past-events",
     external: false,
-    image: "/images/desk_drawers/proshows.webp",
+    image: "https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203305/udghosh-23/images/desk_drawers/proshows.webp",
     top: "60.5%",
     height: "9.1%",
     focalX: 63.4,
@@ -57,7 +57,7 @@ const DRAWERS = [
     id: "merchandise",
     url: "/merch",
     external: false,
-    image: "/images/desk_drawers/merchandise.webp",
+    image: "https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203304/udghosh-23/images/desk_drawers/merchandise.webp",
     top: "69.8%",
     height: "9.3%",
     focalX: 63.4,
@@ -67,7 +67,7 @@ const DRAWERS = [
     id: "esports",
     url: "https://esports.udghosh.org.in/",
     external: true,
-    image: "/images/desk_drawers/esports.webp",
+    image: "https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203302/udghosh-23/images/desk_drawers/esports.webp",
     top: "79.4%",
     height: "10.6%",
     focalX: 63.4,
@@ -204,7 +204,7 @@ export default function MobileDeskGate({ dwellProgress = 0 }) {
         >
           {/* Base Desk Image with Vignette / Blur on tap */}
           <img
-            src="/images/mobile_desk.webp"
+            src="https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203295/udghosh-23/images/mobile_desk.webp"
             alt="Antique Rolltop Desk"
             style={{
               position: "absolute",

@@ -78,7 +78,7 @@ const Navbar = ({ isDarkMode, isVisible = true }) => {
         {/* Left: Brand Logo */}
         <a href="/home" className="flex items-center gap-2 z-20">
           <img
-            src="/images/logo.png"
+            src="https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203296/udghosh-23/images/logo.png"
             alt="Udghosh logo"
             className="w-8 h-8 sm:w-10 sm:h-10 object-contain drop-shadow-[0_0_8px_rgba(56,189,248,0.4)]"
           />
@@ -186,7 +186,7 @@ const Navbar = ({ isDarkMode, isVisible = true }) => {
       >
         <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
           <div className="flex items-center gap-2">
-            <img src="/images/logo.png" alt="Udghosh" className="w-7 h-7 object-contain" />
+            <img src="https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203296/udghosh-23/images/logo.png" alt="Udghosh" className="w-7 h-7 object-contain" />
             <span className="font-bold font-poppins text-base text-white tracking-wide">
               UDGHOSH<span className="text-cyan-400">.</span>
             </span>

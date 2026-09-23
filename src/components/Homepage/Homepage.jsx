@@ -84,7 +84,7 @@ export default function Homepage() {
         style={{
           position: "fixed",
           inset: 0,
-          backgroundImage: isMobile ? "url(/images/mobile_desk.webp)" : "url(/images/next_hall.webp)",
+          backgroundImage: isMobile ? "url(https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203295/udghosh-23/images/mobile_desk.webp)" : "url(https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203292/udghosh-23/images/next_hall.webp)",
           backgroundSize: "cover",
           backgroundPosition: "center",
           zIndex: -1,

@@ -279,7 +279,7 @@ export default function Antique() {
     <div className="antique-page-root">
       {/* ── Background Castle Architecture ── */}
       <img
-        src="/images/antique_bg.jpg"
+        src="https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203297/udghosh-23/images/antique_bg.jpg"
         alt=""
         className="antique-bg-image"
         loading="eager"

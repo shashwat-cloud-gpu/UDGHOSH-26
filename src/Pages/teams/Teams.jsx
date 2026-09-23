@@ -232,7 +232,7 @@ function App() {
       <Navbar2 />
       <div
         className="teams-page-bg"
-        style={{ backgroundImage: "url(/images/teams_bg.jpg)" }}
+        style={{ backgroundImage: "url(https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203300/udghosh-23/images/teams_bg.jpg)" }}
       />
       <div className="teams-ambient" />
 
