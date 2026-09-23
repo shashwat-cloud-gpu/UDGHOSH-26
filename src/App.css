@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Samarkan';
-  src: url('/Samarkan.ttf') format('truetype');
+  src: url('./fonts/Samarkan.ttf') format('truetype');
 }
 
 .App {
