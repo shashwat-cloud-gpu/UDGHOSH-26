@@ -49,7 +49,7 @@ export default function CinematicHero() {
           videoSrc="/videos/transition1.mp4"
           scrubVh="275vh"
           dwellVh="32vh"
-          placeholderSrc={isMobile ? "/images/landing_page_mobile.webp" : "/images/landing_page.png"}
+          placeholderSrc={isMobile ? "/images/landing_page_mobile.webp" : "https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/udghosh-23/landing_page.png"}
           staticBgSrc="/images/gate.jpg"
           outroBgSrc="/images/gate.jpg"
           outroStart={0.85}
