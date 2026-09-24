@@ -109,7 +109,7 @@ export default function MobileHallGate({ dwellProgress = 0 }) {
         position: "absolute",
         inset: 0,
         opacity,
-        pointerEvents: opacity > 0.15 && !entering ? "auto" : "none",
+        pointerEvents: opacity >= 1 && !entering ? "auto" : "none",
         fontFamily: "'Cinzel', serif",
         overflow: "hidden",
       }}
