@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar2 from "../navbar/Navbar2.jsx";
 import Footer2 from "../Footer2/Footer2.jsx";
@@ -7,7 +7,6 @@ import "./social.css";
 const initiativesData = [
   {
     id: "udaan",
-    badge: "Inclusivity & Smiles",
     title: "UDAAN",
     image: "https://live.staticflickr.com/65535/53225579402_da49bc827c_c.jpg",
     description:
@@ -15,61 +14,105 @@ const initiativesData = [
   },
   {
     id: "marathon",
-    badge: "Women Empowerment & Education",
-    title: "Udghosh Marathon",
+    title: "MARATHON",
     image: "https://live.staticflickr.com/65535/52398183996_f8cb83a0c5.jpg",
     description:
       "The Udghosh family's marathon unites Kanpur residents and locals, spreading awareness about women's empowerment and girl child education, engaging both the community and city in these vital causes.",
   },
   {
     id: "blood-donation",
-    badge: "Gift of Life • Raktarpan",
-    title: "Blood Donation Camp",
+    title: "BLOOD DONATION CAMP",
     image: "https://live.staticflickr.com/65535/52397672797_2a584fc67e.jpg",
     description:
-      "This Gandhi Jayanti, Udghosh stands proud to organize “Blood Donation Camp”, in collaboration with Raktarpan. Make a difference on this day to become the hero society needs. Battle fears, take a leap, and give someone a chance at life by voluntarily donating blood.",
+      "This Gandhi Jayanti, Udghosh stands proud to organize “ Blood Donation Camp”, in collaboration with Raktarpan. Make a difference on this day to become the hero society needs. Battle fears, take a leap, and give someone a chance at life by voluntarily donating blood.",
   },
   {
     id: "plantation",
-    badge: "Green Earth & Ecological Hope",
-    title: "Plantation for Donation",
+    title: "PLANTATION FOR DONATION",
     image: "https://live.staticflickr.com/65535/52398183966_610f96d4e1.jpg",
     description:
       "We are continuing the legacy of Udghosh's renowned social efforts. Udghosh, IIT Kanpur is hosting a tree-planting event on campus titled \"Plantation for Donation\" to battle challenges such as deforestation and global warming while improving the area's aesthetic appeal and ecological stability.",
   },
 ];
 
-const valuesData = [
-  {
-    icon: "♥",
-    heading: "Inclusive Play",
-    text: "Every game is an open invitation. We believe every soul deserves the joy of play, genuine companionship, and celebration regardless of background or ability.",
-  },
-  {
-    icon: "★",
-    heading: "City & Community First",
-    text: "Bridging the university and Kanpur with empathy, blood donation camps, and girl child empowerment initiatives that create lasting grassroots impact.",
-  },
-  {
-    icon: "✿",
-    heading: "Ecological Care",
-    text: "Honoring our environment with mindful campus greening, active tree planting, and sustainable stewardship for the generations to follow.",
-  },
-];
-
 const Social = () => {
   const [transitionState, setTransitionState] = useState("entering"); // "entering" | "entered" | "exiting"
+  const [deckOffsets, setDeckOffsets] = useState([]);
+  const [dealtIndices, setDealtIndices] = useState(new Set());
+  const [isDeckReady, setIsDeckReady] = useState(false);
+  const [isDealing, setIsDealing] = useState(false);
+
+  const gridRef = useRef(null);
+  const cardRefs = useRef([]);
+  const timersRef = useRef([]);
   const navigate = useNavigate();
+
+  // Clean all dealing timers
+  const clearDealTimers = () => {
+    timersRef.current.forEach((t) => clearTimeout(t));
+    timersRef.current = [];
+  };
+
+  // Measure deck positions and deal cards 1 by 1
+  const dealCardsOneByOne = useCallback(() => {
+    clearDealTimers();
+    if (!gridRef.current) return;
+
+    const gridRect = gridRef.current.getBoundingClientRect();
+    const centerX = gridRect.left + gridRect.width / 2;
+    const centerY = gridRect.top + gridRect.height / 2;
+
+    const newOffsets = cardRefs.current.map((el, i) => {
+      if (!el) return { dx: 0, dy: 0, rot: 0 };
+      const r = el.getBoundingClientRect();
+      const elCenterX = r.left + r.width / 2;
+      const elCenterY = r.top + r.height / 2;
+      return {
+        dx: centerX - elCenterX,
+        dy: centerY - elCenterY,
+        rot: (i - 1.5) * 2.8,
+      };
+    });
+
+    setDeckOffsets(newOffsets);
+    setDealtIndices(new Set());
+    setIsDeckReady(true);
+    setIsDealing(true);
+
+    // Stagger slide out from deck 1 by 1
+    const delays = [400, 800, 1200, 1600];
+    delays.forEach((delay, idx) => {
+      const timer = setTimeout(() => {
+        setDealtIndices((prev) => new Set([...prev, idx]));
+        if (idx === delays.length - 1) {
+          setIsDealing(false);
+        }
+      }, delay);
+      timersRef.current.push(timer);
+    });
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const timer = setTimeout(() => {
+
+    // Trigger illumination transition
+    const enterTimer = setTimeout(() => {
       setTransitionState("entered");
     }, 60);
-    return () => clearTimeout(timer);
-  }, []);
 
-  // Exit transition: smoothly dim down from lit into darkness before navigating
+    // Initial deck deal animation when site opens
+    const dealInitTimer = setTimeout(() => {
+      dealCardsOneByOne();
+    }, 220);
+
+    return () => {
+      clearTimeout(enterTimer);
+      clearTimeout(dealInitTimer);
+      clearDealTimers();
+    };
+  }, [dealCardsOneByOne]);
+
+  // Lit to dark transition before navigating
   const handleNavigateAway = (targetUrl) => {
     if (transitionState === "exiting") return;
     setTransitionState("exiting");
@@ -78,7 +121,7 @@ const Social = () => {
     }, 750);
   };
 
-  // Intercept internal link click to trigger the lit-to-dark transition
+  // Intercept internal link click
   const handleRootClick = (e) => {
     const anchor = e.target.closest("a");
     if (anchor && anchor.getAttribute("href")) {
@@ -149,60 +192,73 @@ const Social = () => {
       <div className="social-container">
         {/* Header Section */}
         <div className="social-header-box">
-          <div className="social-tagline">
-            <span>✦ Citadel of Compassion ✦</span>
-          </div>
-          <h1 className="social-main-title">Our Social Initiatives</h1>
-          <p className="social-subtext">
-            Beyond the roar of competition lies a deeper purpose. At Udghosh, we
-            champion inclusivity, celebrate resilience, and illuminate lives through
-            sportsmanship, health, and community stewardship.
-          </p>
+          <h1 className="social-main-title">Social Initiatives</h1>
           <div className="social-divider" />
+          <button
+            type="button"
+            className="social-redeal-btn"
+            onClick={dealCardsOneByOne}
+            disabled={isDealing}
+            title="Deal deck again"
+          >
+            <span>Re-deal Deck</span>
+            <span>↺</span>
+          </button>
         </div>
 
-        {/* Initiatives Grid */}
-        <div className="social-grid">
-          {initiativesData.map((item) => (
-            <div key={item.id} className="social-card">
-              <div className="social-card-img-wrap">
-                <img
-                  src={item.image}
-                  alt={item.title}
-                  loading="lazy"
-                  onError={(e) => {
-                    e.currentTarget.onerror = null;
-                    e.currentTarget.src =
-                      "https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2024/photo1?_a=BAMAPqcg0";
+        {/* Deck Stage & Cards Grid */}
+        <div className="social-deck-stage">
+          <div className="social-cards-grid" ref={gridRef}>
+            {initiativesData.map((item, index) => {
+              const isDealt = dealtIndices.has(index);
+              const offset = deckOffsets[index] || { dx: 0, dy: 0, rot: 0 };
+
+              const cardStyle = !isDeckReady
+                ? { opacity: 0 }
+                : !isDealt
+                ? {
+                    transform: `translate3d(${offset.dx}px, ${offset.dy}px, 0) rotate(${offset.rot}deg) scale(0.96)`,
+                    zIndex: 20 + (4 - index),
+                    boxShadow: "0 18px 45px rgba(0, 0, 0, 0.9), 0 0 25px rgba(245, 158, 11, 0.2)",
+                    transition: "transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.85s ease",
+                  }
+                : {
+                    transform: "translate3d(0, 0, 0) rotate(0deg) scale(1)",
+                    zIndex: 1,
+                    transition: "transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.85s ease",
+                  };
+
+              return (
+                <div
+                  key={item.id}
+                  ref={(el) => (cardRefs.current[index] = el)}
+                  className={`social-card ${isDealt ? "is-dealt" : "in-deck"}`}
+                  style={cardStyle}
+                  onClick={() => {
+                    if (!isDealt) {
+                      setDealtIndices((prev) => new Set([...prev, index]));
+                    }
                   }}
-                />
-              </div>
-              <div className="social-card-body">
-                <span className="social-card-badge">✦ {item.badge}</span>
-                <h3 className="social-card-title">{item.title}</h3>
-                <p className="social-card-desc">{item.description}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Wholesome Community Values Strip */}
-        <div className="social-values-section">
-          <div className="social-values-header">
-            <h2 className="social-values-title">The Heart That Guides Us</h2>
-            <p className="social-values-desc">
-              Three foundational pillars that unite our sporting festival with heartfelt
-              humanitarian care and responsibility.
-            </p>
-          </div>
-          <div className="social-values-grid">
-            {valuesData.map((val, idx) => (
-              <div key={idx} className="social-value-box">
-                <div className="social-value-icon">{val.icon}</div>
-                <h4 className="social-value-heading">{val.heading}</h4>
-                <p className="social-value-text">{val.text}</p>
-              </div>
-            ))}
+                >
+                  <div className="social-card-img-wrap">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src =
+                          "https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2024/photo1?_a=BAMAPqcg0";
+                      }}
+                    />
+                  </div>
+                  <div className="social-card-body">
+                    <h3 className="social-card-title">{item.title}</h3>
+                    <p className="social-card-desc">{item.description}</p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
