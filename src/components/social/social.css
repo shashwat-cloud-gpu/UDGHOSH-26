@@ -89,17 +89,17 @@
 
 .social-main-title {
   font-family: 'Cinzel', serif;
-  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-size: clamp(3rem, 7vw, 5rem);
   font-weight: 800;
   text-align: center;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   line-height: 1.15;
   margin: 0.5rem 0 1rem;
-  background: linear-gradient(180deg, #FFFFFF 0%, #F6E6C2 35%, #D4AF37 70%, #9A7426 100%);
+  background: linear-gradient(180deg, #e8f5e9 0%, #81c784 35%, #4caf50 70%, #1b5e20 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 4px 24px rgba(212, 175, 55, 0.32));
+  filter: drop-shadow(0 4px 24px rgba(76, 175, 80, 0.4));
 }
 
 .social-divider {
