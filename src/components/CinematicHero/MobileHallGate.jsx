@@ -1,12 +1,12 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import GateAtmosphere from "./GateAtmosphere";
 import { GATES, TORCHES } from "./SectionGate";
 
-// Same hall art used on desktop — reused here instead of a separate mobile
-// asset so gate positions/percentages line up exactly with GATES below.
 const HALL_IMG =
   "https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203290/udghosh-23/images/hall.jpg";
+
+const GLYPHS = ["✦", "☾", "☉", "⚷", "✧"];
 
 function trapezoid(t) {
   if (t < 0.25) return t / 0.25;
@@ -14,32 +14,27 @@ function trapezoid(t) {
   return 1 - (t - 0.85) / 0.15;
 }
 
+const PRIMARY_IDX = GATES.findIndex((g) => g.isPrimary);
+
 export default function MobileHallGate({ dwellProgress = 0 }) {
   const navigate = useNavigate();
-  const scrollRef = useRef(null);
   const imgRef = useRef(null);
-  const rafRef = useRef(null);
+  const [imgWidth, setImgWidth] = useState(0);
+  const [activeIdx, setActiveIdx] = useState(PRIMARY_IDX < 0 ? 0 : PRIMARY_IDX);
+  const [entering, setEntering] = useState(null);
 
   const opacity = trapezoid(dwellProgress);
 
-  const [imgWidth, setImgWidth] = useState(0);
-  const [activeId, setActiveId] = useState(
-    (GATES.find((g) => g.isPrimary) || GATES[0]).id
-  );
-  const [entering, setEntering] = useState(null);
-  const [hasInteracted, setHasInteracted] = useState(false);
-
-  // Measure the rendered width of the hall image. Height is pinned to
-  // 100vh and width is "auto", so the image is naturally wider than the
-  // screen — that overflow is what the user pans through.
+  // Measure the rendered image width (height: 100vh, width: auto).
+  // This tells us where each gate falls in pixels.
   useEffect(() => {
     function measure() {
       if (imgRef.current) {
         setImgWidth(imgRef.current.getBoundingClientRect().width);
       }
     }
-    if (imgRef.current?.complete) measure();
     const img = imgRef.current;
+    if (img?.complete) measure();
     img?.addEventListener("load", measure);
     window.addEventListener("resize", measure);
     return () => {
@@ -48,44 +43,22 @@ export default function MobileHallGate({ dwellProgress = 0 }) {
     };
   }, []);
 
-  // On first measure, center the view on the primary gate (Competitions)
-  // so mobile users land on the most important gate first, same as how
-  // it's the biggest/centered arch on desktop.
-  const didCenter = useRef(false);
-  useEffect(() => {
-    if (!scrollRef.current || !imgWidth || didCenter.current) return;
-    didCenter.current = true;
-    const primary = GATES.find((g) => g.isPrimary) || GATES[0];
-    const centerPct =
-      (parseFloat(primary.left) + parseFloat(primary.width) / 2) / 100;
-    const target =
-      centerPct * imgWidth - scrollRef.current.clientWidth / 2;
-    scrollRef.current.scrollLeft = Math.max(0, target);
-  }, [imgWidth]);
+  // Compute translateX so the active gate's centre aligns with the
+  // viewport centre — same visual composition as desktop.
+  function getTranslateX() {
+    if (!imgWidth) return -(imgWidth / 2 - window.innerWidth / 2);
+    const gate = GATES[activeIdx];
+    const gateCenterPct =
+      parseFloat(gate.left) + parseFloat(gate.width) / 2;
+    const gateCenterPx = (gateCenterPct / 100) * imgWidth;
+    const raw = window.innerWidth / 2 - gateCenterPx;
+    // Clamp: never show blank space on either side
+    const minX = window.innerWidth - imgWidth;
+    return Math.max(minX, Math.min(0, raw));
+  }
 
-  const updateActiveGate = useCallback(() => {
-    if (!scrollRef.current || !imgWidth) return;
-    const el = scrollRef.current;
-    const viewCenterPx = el.scrollLeft + el.clientWidth / 2;
-    let closest = GATES[0];
-    let closestDist = Infinity;
-    GATES.forEach((g) => {
-      const centerPx =
-        ((parseFloat(g.left) + parseFloat(g.width) / 2) / 100) * imgWidth;
-      const dist = Math.abs(centerPx - viewCenterPx);
-      if (dist < closestDist) {
-        closestDist = dist;
-        closest = g;
-      }
-    });
-    setActiveId(closest.id);
-  }, [imgWidth]);
-
-  const handleScroll = () => {
-    if (!hasInteracted) setHasInteracted(true);
-    if (rafRef.current) cancelAnimationFrame(rafRef.current);
-    rafRef.current = requestAnimationFrame(updateActiveGate);
-  };
+  const translateX = getTranslateX();
+  const activeGate = GATES[activeIdx];
 
   const handleEnter = (gate) => {
     if (entering) return;
@@ -100,8 +73,6 @@ export default function MobileHallGate({ dwellProgress = 0 }) {
     }, 550);
   };
 
-  const activeGate = GATES.find((g) => g.id === activeId) || GATES[0];
-
   return (
     <div
       style={{
@@ -113,96 +84,193 @@ export default function MobileHallGate({ dwellProgress = 0 }) {
         overflow: "hidden",
       }}
     >
-      {/* Horizontal pan container — this IS the interaction: drag/swipe
-          left-right through the same wide hall image used on desktop. */}
+      {/* ── Hall image + overlays ── pans left/right via translateX  */}
       <div
-        ref={scrollRef}
-        onScroll={handleScroll}
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          height: "100%",
+          transform: `translateX(${translateX}px)`,
+          // Smooth slide to the selected gate
+          transition: "transform 0.55s cubic-bezier(0.25, 1, 0.5, 1)",
+          willChange: "transform",
+        }}
+      >
+        <img
+          ref={imgRef}
+          src={HALL_IMG}
+          alt="Udghosh Hall"
+          draggable={false}
+          style={{
+            height: "100vh",
+            width: "auto",
+            display: "block",
+            userSelect: "none",
+            pointerEvents: "none",
+          }}
+        />
+
+        <GateAtmosphere opacity={0.7} />
+
+        {/* Torch glows */}
+        {TORCHES.map((t, i) => (
+          <div
+            key={i}
+            style={{
+              position: "absolute",
+              left: t.left,
+              top: t.top,
+              width: "60px",
+              height: "60px",
+              transform: "translate(-50%,-50%)",
+              borderRadius: "50%",
+              background: "rgba(217,119,6,0.30)",
+              filter: "blur(20px)",
+              pointerEvents: "none",
+              animation: "torchBreathing 4s infinite ease-in-out",
+              animationDelay: `${i * 0.7}s`,
+            }}
+          />
+        ))}
+
+        {/* Invisible tap zones — tapping a gate highlights it
+            (sets it as active) without instantly entering it,
+            giving the user a chance to read the label first.
+            Double-tap or pressing Enter below will navigate. */}
+        {GATES.map((gate, idx) => (
+          <button
+            key={gate.id}
+            aria-label={`Select ${gate.label}`}
+            onClick={() => setActiveIdx(idx)}
+            style={{
+              position: "absolute",
+              left: gate.left,
+              top: gate.top,
+              width: gate.width,
+              height: gate.height,
+              background:
+                idx === activeIdx
+                  ? "rgba(56,189,248,0.08)"
+                  : "transparent",
+              border:
+                idx === activeIdx
+                  ? "1px solid rgba(56,189,248,0.35)"
+                  : "none",
+              cursor: "pointer",
+              borderRadius: "4px",
+              transition: "background 0.3s, border 0.3s",
+            }}
+          />
+        ))}
+      </div>
+
+      {/* ── Bottom vignette ── */}
+      <div
         style={{
           position: "absolute",
           inset: 0,
-          overflowX: "auto",
-          overflowY: "hidden",
-          WebkitOverflowScrolling: "touch",
-          scrollSnapType: "x proximity",
+          background:
+            "linear-gradient(to bottom, transparent 55%, rgba(0,0,0,0.78) 100%)",
+          pointerEvents: "none",
+          zIndex: 1,
+        }}
+      />
+
+      {/* ── Left / Right navigation arrows ── */}
+      <button
+        onClick={() => setActiveIdx((i) => Math.max(0, i - 1))}
+        disabled={activeIdx === 0}
+        aria-label="Previous gate"
+        style={{
+          position: "absolute",
+          left: "4vw",
+          top: "50%",
+          transform: "translateY(-50%)",
+          zIndex: 4,
+          background: "rgba(8,20,33,0.55)",
+          border: "1px solid rgba(56,189,248,0.35)",
+          backdropFilter: "blur(6px)",
+          color: "#38BDF8",
+          fontSize: "22px",
+          width: "40px",
+          height: "40px",
+          borderRadius: "50%",
           display: "flex",
-          scrollbarWidth: "none",
+          alignItems: "center",
+          justifyContent: "center",
+          opacity: activeIdx === 0 ? 0.2 : 0.9,
+          cursor: activeIdx === 0 ? "default" : "pointer",
+          transition: "opacity 0.3s",
+          pointerEvents: entering ? "none" : "auto",
         }}
       >
-        <div style={{ position: "relative", height: "100vh", flexShrink: 0 }}>
-          <img
-            ref={imgRef}
-            src={HALL_IMG}
-            alt="Udghosh Hall"
-            draggable={false}
+        ‹
+      </button>
+
+      <button
+        onClick={() => setActiveIdx((i) => Math.min(GATES.length - 1, i + 1))}
+        disabled={activeIdx === GATES.length - 1}
+        aria-label="Next gate"
+        style={{
+          position: "absolute",
+          right: "4vw",
+          top: "50%",
+          transform: "translateY(-50%)",
+          zIndex: 4,
+          background: "rgba(8,20,33,0.55)",
+          border: "1px solid rgba(56,189,248,0.35)",
+          backdropFilter: "blur(6px)",
+          color: "#38BDF8",
+          fontSize: "22px",
+          width: "40px",
+          height: "40px",
+          borderRadius: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          opacity: activeIdx === GATES.length - 1 ? 0.2 : 0.9,
+          cursor: activeIdx === GATES.length - 1 ? "default" : "pointer",
+          transition: "opacity 0.3s",
+          pointerEvents: entering ? "none" : "auto",
+        }}
+      >
+        ›
+      </button>
+
+      {/* ── Gate indicator dots ── */}
+      <div
+        style={{
+          position: "absolute",
+          top: "6%",
+          left: "50%",
+          transform: "translateX(-50%)",
+          display: "flex",
+          gap: "6px",
+          zIndex: 4,
+          pointerEvents: "none",
+        }}
+      >
+        {GATES.map((_, i) => (
+          <div
+            key={i}
             style={{
-              height: "100vh",
-              width: "auto",
-              display: "block",
-              userSelect: "none",
-              pointerEvents: "none",
+              width: i === activeIdx ? "18px" : "6px",
+              height: "6px",
+              borderRadius: "3px",
+              background: i === activeIdx ? "#38BDF8" : "rgba(255,255,255,0.3)",
+              transition: "all 0.35s ease",
             }}
           />
-
-          <GateAtmosphere opacity={0.7} />
-
-          {/* Torch ambient glows, reused from the desktop layout */}
-          {TORCHES.map((t, i) => (
-            <div
-              key={i}
-              style={{
-                position: "absolute",
-                left: t.left,
-                top: t.top,
-                width: "60px",
-                height: "60px",
-                transform: "translate(-50%,-50%)",
-                borderRadius: "50%",
-                background: "rgba(217,119,6,0.30)",
-                filter: "blur(20px)",
-                pointerEvents: "none",
-                animation: "torchBreathing 4s infinite ease-in-out",
-                animationDelay: `${i * 0.7}s`,
-              }}
-            />
-          ))}
-
-          {/* Gate tap zones — also act as scroll-snap points so a swipe
-              settles on the nearest gate instead of stopping mid-arch. */}
-          {GATES.map((gate) => (
-            <button
-              key={gate.id}
-              aria-label={`Enter ${gate.label}`}
-              onClick={() => handleEnter(gate)}
-              style={{
-                position: "absolute",
-                left: gate.left,
-                top: gate.top,
-                width: gate.width,
-                height: gate.height,
-                background: "transparent",
-                border: "none",
-                padding: 0,
-                cursor: "pointer",
-                scrollSnapAlign: "center",
-                borderRadius: "6px",
-                boxShadow:
-                  activeId === gate.id
-                    ? "0 0 0 2px rgba(56,189,248,0.55)"
-                    : "none",
-                transition: "box-shadow 0.35s ease",
-              }}
-            />
-          ))}
-        </div>
+        ))}
       </div>
 
-      {/* Label card for whichever gate is currently centered */}
+      {/* ── Active gate label ── */}
       <div
         style={{
           position: "absolute",
           left: "50%",
-          bottom: "10%",
+          bottom: "12%",
           transform: "translateX(-50%)",
           textAlign: "center",
           pointerEvents: "none",
@@ -234,7 +302,7 @@ export default function MobileHallGate({ dwellProgress = 0 }) {
             color: "#F8FAFC",
             textTransform: "uppercase",
             textShadow: "0 2px 8px rgba(0,0,0,1)",
-            marginTop: "3px",
+            marginTop: "4px",
             transition: "all 0.3s ease",
           }}
         >
@@ -254,19 +322,18 @@ export default function MobileHallGate({ dwellProgress = 0 }) {
         </div>
       </div>
 
-      {/* Always targets whichever gate is centered — avoids needing a
-          precise tap on a small archway on a phone screen. */}
+      {/* ── Enter button ── */}
       <button
         onClick={() => handleEnter(activeGate)}
         style={{
           position: "absolute",
           left: "50%",
-          bottom: "3%",
+          bottom: "3.5%",
           transform: "translateX(-50%)",
-          padding: "9px 24px",
+          padding: "9px 28px",
           borderRadius: "999px",
           border: "1px solid rgba(56,189,248,0.5)",
-          background: "rgba(8,20,33,0.7)",
+          background: "rgba(8,20,33,0.72)",
           backdropFilter: "blur(6px)",
           color: "#38BDF8",
           fontFamily: "'Cinzel', serif",
@@ -275,45 +342,17 @@ export default function MobileHallGate({ dwellProgress = 0 }) {
           textTransform: "uppercase",
           opacity: entering ? 0 : 1,
           transition: "opacity 0.3s ease",
-          zIndex: 3,
+          zIndex: 4,
+          cursor: "pointer",
         }}
       >
-        Enter Gate {activeGate.roman}
+        Enter Gate {activeGate.roman}{" "}
+        <span style={{ fontSize: "0.6em", color: "#93C5FD" }}>
+          {GLYPHS[activeIdx % GLYPHS.length]}
+        </span>
       </button>
 
-      {/* Swipe hint — fades out permanently after the first interaction */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          top: "48%",
-          right: "4%",
-          transform: "translateY(-50%)",
-          opacity: entering || hasInteracted ? 0 : 0.6,
-          transition: "opacity 0.4s ease",
-          color: "#93C5FD",
-          fontSize: "22px",
-          pointerEvents: "none",
-          animation: "hallSwipeHint 1.8s ease-in-out infinite",
-          zIndex: 3,
-        }}
-      >
-        ›
-      </div>
-
-      {/* Bottom vignette to match the desktop gate scene */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          background:
-            "linear-gradient(to bottom, transparent 55%, rgba(0,0,0,0.75) 100%)",
-          pointerEvents: "none",
-          zIndex: 1,
-        }}
-      />
-
-      {/* Flash transition curtain when entering a gate */}
+      {/* ── Dark flash curtain on enter ── */}
       <div
         style={{
           position: "fixed",
@@ -327,10 +366,6 @@ export default function MobileHallGate({ dwellProgress = 0 }) {
       />
 
       <style>{`
-        @keyframes hallSwipeHint {
-          0%, 100% { transform: translateY(-50%) translateX(0); opacity: 0.5; }
-          50% { transform: translateY(-50%) translateX(8px); opacity: 0.9; }
-        }
         @keyframes torchBreathing {
           0%, 100% { opacity: 0.7; }
           50% { opacity: 1; }
