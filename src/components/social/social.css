@@ -66,10 +66,11 @@
 
 .social-header-box {
   text-align: center;
-  max-width: 800px;
+  width: fit-content;
+  max-width: 95%;
   margin: 0 auto 3.5rem;
   background: rgba(0, 0, 0, 0.5);
-  padding: 2rem;
+  padding: clamp(1rem, 3vw, 1.5rem) clamp(1.5rem, 5vw, 4rem);
   border-radius: 20px;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -96,7 +97,8 @@
 
 .social-main-title {
   font-family: 'Cinzel', serif;
-  font-size: clamp(3rem, 7vw, 5rem);
+  font-size: clamp(1.8rem, 4vw, 3.2rem);
+  white-space: nowrap;
   font-weight: 800;
   text-align: center;
   text-transform: uppercase;
