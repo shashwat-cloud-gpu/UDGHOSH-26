@@ -45,7 +45,7 @@ function EventCard({ title, mainDesc, subDesc, image, reverse }) {
             loading="lazy"
             onError={(e) => {
               e.currentTarget.onerror = null;
-              e.currentTarget.src = "https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2024/photo1?_a=BAMAPqcg0";
+              e.currentTarget.src = "https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2024/photo1?_a=BAMAPqcg0";
             }}
           />
         </div>
@@ -98,40 +98,40 @@ export default function PastEvents() {
     {
       title: "Pronite with Ash King",
       mainDesc: "An enchanting evening as Ash King graced the stage with his soulful voice and chart-topping hits. The audience was swept away by his mesmerizing performance, making Pro Nite a truly magical experience.",
-      image: "https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/Ashking?_a=BAMAPqcg0",
+      image: "https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/Ashking?_a=BAMAPqcg0",
     },
     {
       title: "Pronite with Karan Kanchan",
       mainDesc: "A magical Pro Nite as Karan Kanchra set the stage alive with his soulful voice and heartfelt songs. The crowd swayed, sang along, and cherished every note in a night full of unforgettable melodies",
-      image: "https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/karan?_a=BAMAPqcg0",
+      image: "https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/karan?_a=BAMAPqcg0",
       reverse: true
     },
     {
       title: "Band Performance with Yash raj",
       mainDesc: "Band Performance by Yash Raj brought a perfect blend of talent, rhythm, and stage presence. Their captivating music and seamless teamwork turned the evening into a mesmerizing experience for everyone present.",
-      image: "https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/Yash?_a=BAMAPqcg0",
+      image: "https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/Yash?_a=BAMAPqcg0",
     },
     {
       title: "EDM Night with Sartek",
       mainDesc: "EDM Night with Sartek was a high-voltage celebration of music, energy, and togetherness. The pulsating beats, stunning visuals, and electrifying atmosphere created memories that still resonate with every attendee.",
-      image: "https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/EDM?_a=BAMAPqcg0",
+      image: "https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/EDM?_a=BAMAPqcg0",
       reverse: true
     },
     {
       title: "Bollywood night with Gajender verma",
       mainDesc: "Bollywood Night with Gajendra Verma was a celebration of music and emotions. His soulful performances, combined with the audience’s enthusiasm, turned the evening into an unforgettable experience that resonated long after the final note",
-      image: "https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/Bollywood?_a=BAMAPqcg0",
+      image: "https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/Bollywood?_a=BAMAPqcg0",
     },
     {
       title: "DJ Night with Ravator",
       mainDesc: "Nonstop energy, thumping bass, and an electrifying crowd — that’s what DJ Night with Ravator was all about. Truly a night to remember!”",
-      image: "https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/Ravator?_a=BAMAPqcg0",
+      image: "https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/Ravator?_a=BAMAPqcg0",
       reverse: true
     },
     {
       title: "Rap show with Thugs",
       mainDesc: "A power-packed night as Thugs from Overseas took the stage with hard-hitting rap, raw energy, and unstoppable flow. The beats dropped heavy, the crowd vibed harder — a true celebration of hip-hop culture.",
-      image: "https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/thugs?_a=BAMAPqcg0",
+      image: "https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/thugs?_a=BAMAPqcg0",
     }
   ];
 

@@ -82,7 +82,7 @@ const App = () => {
                 {/* Middle Column (Image) */}
                 <div className="md:col-span-4 flex justify-center order-first md:order-none">
                      <a href="/">
-                        <img src="https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203296/udghosh-23/images/logo.png" alt="Udghosh Logo" className="mx-auto h-auto w-full max-w-[10rem] sm:max-w-[12rem] object-contain" />
+                        <img src="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_limit,q_auto:best,f_auto/v1790203296/udghosh-23/images/logo.png" alt="Udghosh Logo" className="mx-auto h-auto w-full max-w-[10rem] sm:max-w-[12rem] object-contain" />
                      </a>
                 </div>
 

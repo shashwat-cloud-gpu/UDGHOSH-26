@@ -81,7 +81,7 @@ export default function Vision() {
     <div className="vision-page-root">
       {/* ── Background Gothic Architecture ── */}
       <img
-        src="https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203297/udghosh-23/images/antique_bg.jpg"
+        src="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203297/udghosh-23/images/antique_bg.jpg"
         alt=""
         className="vision-bg-image"
         loading="eager"

@@ -4,32 +4,32 @@ import Navbar2 from "../navbar/Navbar2";
 
 const cardData = {
   y2025: [
-    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2024/photo1?_a=BAMAPqcg0', alt: '2025 Image 1' },
-    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2024/photo2?_a=BAMAPqcg0', alt: '2025 Image 2' },
-    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2024/photo3?_a=BAMAPqcg0', alt: '2025 Image 3' },
-    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2024/photo4?_a=BAMAPqcg0', alt: '2025 Image 4' },
-    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2024/photo5?_a=BAMAPqcg0', alt: '2025 Image 5' },
-    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2024/photo6?_a=BAMAPqcg0', alt: '2025 Image 6' },
-    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2024/photo7?_a=BAMAPqcg0', alt: '2025 Image 7' },
+    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2024/photo1?_a=BAMAPqcg0', alt: '2025 Image 1' },
+    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2024/photo2?_a=BAMAPqcg0', alt: '2025 Image 2' },
+    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2024/photo3?_a=BAMAPqcg0', alt: '2025 Image 3' },
+    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2024/photo4?_a=BAMAPqcg0', alt: '2025 Image 4' },
+    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2024/photo5?_a=BAMAPqcg0', alt: '2025 Image 5' },
+    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2024/photo6?_a=BAMAPqcg0', alt: '2025 Image 6' },
+    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2024/photo7?_a=BAMAPqcg0', alt: '2025 Image 7' },
   ],
   y2024: [
-    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2024/photo7?_a=BAMAPqcg0', alt: '2024 Image 1' },
-    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2024/photo6?_a=BAMAPqcg0', alt: '2024 Image 2' },
-    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2024/photo5?_a=BAMAPqcg0', alt: '2024 Image 3' },
-    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2024/photo4?_a=BAMAPqcg0', alt: '2024 Image 4' },
-    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2024/photo3?_a=BAMAPqcg0', alt: '2024 Image 5' },
-    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2024/photo2?_a=BAMAPqcg0', alt: '2024 Image 6' },
-    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2024/photo1?_a=BAMAPqcg0', alt: '2024 Image 7' },
+    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2024/photo7?_a=BAMAPqcg0', alt: '2024 Image 1' },
+    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2024/photo6?_a=BAMAPqcg0', alt: '2024 Image 2' },
+    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2024/photo5?_a=BAMAPqcg0', alt: '2024 Image 3' },
+    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2024/photo4?_a=BAMAPqcg0', alt: '2024 Image 4' },
+    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2024/photo3?_a=BAMAPqcg0', alt: '2024 Image 5' },
+    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2024/photo2?_a=BAMAPqcg0', alt: '2024 Image 6' },
+    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2024/photo1?_a=BAMAPqcg0', alt: '2024 Image 7' },
   ],
   y2023: [
-    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2023/photo1?_a=BAMAPqcg0', alt: '2023 Image 1' },
-    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2023/photo2?_a=BAMAPqcg0', alt: '2023 Image 2' },
-    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2023/photo3?_a=BAMAPqcg0', alt: '2023 Image 3' },
-    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2023/photo4?_a=BAMAPqcg0', alt: '2023 Image 4' },
-    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2023/photo5?_a=BAMAPqcg0', alt: '2023 Image 5' },
-    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2023/photo6?_a=BAMAPqcg0', alt: '2023 Image 6' },
-    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2023/photo7?_a=BAMAPqcg0', alt: '2023 Image 7' },
-    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2023/photo8?_a=BAMAPqcg0', alt: '2023 Image 8' },
+    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2023/photo1?_a=BAMAPqcg0', alt: '2023 Image 1' },
+    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2023/photo2?_a=BAMAPqcg0', alt: '2023 Image 2' },
+    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2023/photo3?_a=BAMAPqcg0', alt: '2023 Image 3' },
+    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2023/photo4?_a=BAMAPqcg0', alt: '2023 Image 4' },
+    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2023/photo5?_a=BAMAPqcg0', alt: '2023 Image 5' },
+    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2023/photo6?_a=BAMAPqcg0', alt: '2023 Image 6' },
+    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2023/photo7?_a=BAMAPqcg0', alt: '2023 Image 7' },
+    { src: 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2023/photo8?_a=BAMAPqcg0', alt: '2023 Image 8' },
   ],
 };
 
@@ -282,7 +282,7 @@ function App() {
                 className="w-full h-full object-cover"
                 onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src = "https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2024/photo1?_a=BAMAPqcg0";
+                  e.target.src = "https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2024/photo1?_a=BAMAPqcg0";
                 }}
               />
             </div>

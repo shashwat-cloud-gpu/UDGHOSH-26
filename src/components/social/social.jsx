@@ -8,28 +8,28 @@ const initiativesData = [
   {
     id: "udaan",
     title: "UDAAN",
-    image: "https://live.staticflickr.com/65535/53225579402_da49bc827c_c.jpg",
+    image: "https://live.staticflickr.com/65535/53225579402_da49bc827c_b.jpg",
     description:
       "UDAAN is a social initiative by UDGHOSH, to celebrate the differently-abled children of god. UDGHOSH reveres the spirit of the children by organizing various activities, talks, games and friendly sports competitions wherein the children can enjoy themselves and savor sportsmanship.",
   },
   {
     id: "marathon",
     title: "MARATHON",
-    image: "https://live.staticflickr.com/65535/52398183996_f8cb83a0c5.jpg",
+    image: "https://live.staticflickr.com/65535/52398183996_f8cb83a0c5_b.jpg",
     description:
       "The Udghosh family's marathon unites Kanpur residents and locals, spreading awareness about women's empowerment and girl child education, engaging both the community and city in these vital causes.",
   },
   {
     id: "blood-donation",
     title: "BLOOD DONATION CAMP",
-    image: "https://live.staticflickr.com/65535/52397672797_2a584fc67e.jpg",
+    image: "https://live.staticflickr.com/65535/52397672797_2a584fc67e_b.jpg",
     description:
       "This Gandhi Jayanti, Udghosh stands proud to organize “ Blood Donation Camp”, in collaboration with Raktarpan. Make a difference on this day to become the hero society needs. Battle fears, take a leap, and give someone a chance at life by voluntarily donating blood.",
   },
   {
     id: "plantation",
     title: "PLANTATION FOR DONATION",
-    image: "https://live.staticflickr.com/65535/52398183966_610f96d4e1.jpg",
+    image: "https://live.staticflickr.com/65535/52398183966_610f96d4e1_b.jpg",
     description:
       "We are continuing the legacy of Udghosh's renowned social efforts. Udghosh, IIT Kanpur is hosting a tree-planting event on campus titled \"Plantation for Donation\" to battle challenges such as deforestation and global warming while improving the area's aesthetic appeal and ecological stability.",
   },
@@ -241,7 +241,7 @@ const Social = () => {
                       onError={(e) => {
                         e.currentTarget.onerror = null;
                         e.currentTarget.src =
-                          "https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/images/2024/photo1?_a=BAMAPqcg0";
+                          "https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2024/photo1?_a=BAMAPqcg0";
                       }}
                     />
                   </div>

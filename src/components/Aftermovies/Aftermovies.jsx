@@ -172,28 +172,28 @@ const componentStyles = `
 
 const cardData = [
   {
-    image: "https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/u24?_a=BAMAPqcg0",
+    image: "https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/u24?_a=BAMAPqcg0",
     link: "https://www.youtube.com/watch?v=JrUZKtvXjnA",
     title: "Udghosh'24",
     description:
       "Relive Udghosh’24 at IIT Kanpur – Asia’s largest college sports festival! Thrilling matches, spectacular pronites, and moments full of courage, resilience, and unity.",
   },
   {
-    image: "https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/Aftermovies_2023?_a=BAMAPqcg0",
+    image: "https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/Aftermovies_2023?_a=BAMAPqcg0",
     link: "https://youtu.be/XZevkj2qpf0?si=MQeHYb8rawxkFa2D",
     title: "Udghosh'23",
     description:
       "Experience the excitement of Udghosh’23! From nail-biting finishes to awe-inspiring performances, the festival was an unforgettable celebration of sports and energy.",
   },
   {
-    image: "https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto,w_900,c_scale/v1/udghosh-23/public/WhatsApp_Image_2024-09-25_at_22.07.53_77040e06?_a=BAMAPqcg0",
+    image: "https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/WhatsApp_Image_2024-09-25_at_22.07.53_77040e06?_a=BAMAPqcg0",
     link: "https://www.youtube.com/watch?v=GP2WpyK5Fng",
     title: "Udghosh'22",
     description:
       "Catch the official aftermovie of Udghosh’22 – a festival of competition, camaraderie, and celebration, bringing together students for moments of pure excitement and joy.",
   },
   {
-    image: "https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/Untitled_design_(1)?_a=BAMAPqcg0",
+    image: "https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/Untitled_design_(1)?_a=BAMAPqcg0",
     link: "https://www.youtube.com/watch?v=Rm8lM1WskBc",
     title: "Udghosh'21",
     description:

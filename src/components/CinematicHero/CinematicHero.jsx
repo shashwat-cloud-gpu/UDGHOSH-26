@@ -49,9 +49,9 @@ export default function CinematicHero() {
           videoSrc="https://res.cloudinary.com/u5qztegz/video/upload/v1790203285/udghosh-23/videos/transition1.mp4"
           scrubVh="275vh"
           dwellVh="32vh"
-          placeholderSrc={isMobile ? "https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203294/udghosh-23/images/landing_page_mobile.webp" : "https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/udghosh-23/landing_page.png"}
-          staticBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203289/udghosh-23/images/gate.jpg"
-          outroBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203289/udghosh-23/images/gate.jpg"
+          placeholderSrc={isMobile ? "https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203294/udghosh-23/images/landing_page_mobile.webp" : "https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/udghosh-23/landing_page.png"}
+          staticBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203289/udghosh-23/images/gate.jpg"
+          outroBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203289/udghosh-23/images/gate.jpg"
           outroStart={0.85}
           extendPinVh="80vh"
           onEnterDwell={() => setScrollCueVisible(false)}
@@ -103,9 +103,9 @@ export default function CinematicHero() {
             videoSrc="https://res.cloudinary.com/u5qztegz/video/upload/v1790203287/udghosh-23/videos/transition2.mp4"
             scrubVh="140vh"
             dwellVh="300vh"
-            placeholderSrc="https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203289/udghosh-23/images/gate.jpg"
-            staticBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203295/udghosh-23/images/mobile_desk.webp"
-            outroBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203295/udghosh-23/images/mobile_desk.webp"
+            placeholderSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203289/udghosh-23/images/gate.jpg"
+            staticBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203295/udghosh-23/images/mobile_desk.webp"
+            outroBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203295/udghosh-23/images/mobile_desk.webp"
             outroStart={0.95}
             hideBeforePin={true}
             fadeOutProgressStart={0.827}
@@ -121,9 +121,9 @@ export default function CinematicHero() {
             videoSrc="https://res.cloudinary.com/u5qztegz/video/upload/v1790203287/udghosh-23/videos/transition2.mp4"
             scrubVh="250vh"
             dwellVh="300vh"
-            placeholderSrc="https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203289/udghosh-23/images/gate.jpg"
-            staticBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203290/udghosh-23/images/hall.jpg"
-            outroBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203291/udghosh-23/images/next_hall.jpg"
+            placeholderSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203289/udghosh-23/images/gate.jpg"
+            staticBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203290/udghosh-23/images/hall.jpg"
+            outroBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203291/udghosh-23/images/next_hall.jpg"
             outroStart={0.85}
             hideBeforePin={true}
             fadeOutProgressStart={0.875}

@@ -4,20 +4,20 @@ import './Arena.css';
 import Navbar2 from '../navbar/Navbar2.jsx';
 import Particles from './Particles/Particles.jsx'
 // Sport icon Cloudinary URLs
-const cricketIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/cricket';
-const footballIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/football';
-const badmintonIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/badminton';
-const basketballIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/basketball';
-const volleyballIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/volleyball';
-const tabletennisIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/tabletennis';
-const lawntennisIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/lawntennis';
-const squashIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/squash';
-const hockeyIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/hockey';
-const kabaddiIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/kabaddi';
-const khokhoIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/khokho';
-const taekwondoIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/taekwondo';
-const chessIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/chess';
-const frisbeeIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/frisbee';
+const cricketIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_limit,q_auto:best,f_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/cricket';
+const footballIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_limit,q_auto:best,f_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/football';
+const badmintonIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_limit,q_auto:best,f_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/badminton';
+const basketballIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_limit,q_auto:best,f_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/basketball';
+const volleyballIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_limit,q_auto:best,f_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/volleyball';
+const tabletennisIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_limit,q_auto:best,f_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/tabletennis';
+const lawntennisIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_limit,q_auto:best,f_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/lawntennis';
+const squashIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_limit,q_auto:best,f_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/squash';
+const hockeyIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_limit,q_auto:best,f_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/hockey';
+const kabaddiIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_limit,q_auto:best,f_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/kabaddi';
+const khokhoIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_limit,q_auto:best,f_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/khokho';
+const taekwondoIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_limit,q_auto:best,f_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/taekwondo';
+const chessIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_limit,q_auto:best,f_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/chess';
+const frisbeeIcon = 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_limit,q_auto:best,f_auto/v1/udghosh-23/src/components/LiveUpdates/assets/icons/frisbee';
 
 
 
