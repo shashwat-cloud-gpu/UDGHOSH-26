@@ -16,30 +16,10 @@ export default function Homepage() {
   const overlayRef = useRef(null);
   const contentRef = useRef(null);
 
-  const [isMobile, setIsMobile] = useState(() => {
-    if (typeof window === "undefined") return false;
-    const urlParams = new URLSearchParams(window.location.search);
-    return (
-      window.innerWidth < 820 ||
-      urlParams.get("mobile") === "desk" ||
-      urlParams.get("mobile") === "table" ||
-      urlParams.get("mobile") === "1"
-    );
-  });
-
-  useEffect(() => {
-    const checkMobile = () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      setIsMobile(
-        window.innerWidth < 820 ||
-        urlParams.get("mobile") === "desk" ||
-        urlParams.get("mobile") === "table" ||
-        urlParams.get("mobile") === "1"
-      );
-    };
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+  // NOTE: the mobile/desktop background split was removed here because both
+  // now use the same "next_hall" background — the mobile experience reuses
+  // the desktop hall art (see MobileHallGate.jsx) instead of a separate
+  // "mobile_desk" scene, so isMobile is no longer needed in this file.
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -84,7 +64,7 @@ export default function Homepage() {
         style={{
           position: "fixed",
           inset: 0,
-          backgroundImage: isMobile ? "url(https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203295/udghosh-23/images/mobile_desk.webp)" : "url(https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203292/udghosh-23/images/next_hall.webp)",
+          backgroundImage: "url(https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203292/udghosh-23/images/next_hall.webp)",
           backgroundSize: "cover",
           backgroundPosition: "center",
           zIndex: -1,

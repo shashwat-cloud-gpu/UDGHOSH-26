@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import GateAtmosphere from "./GateAtmosphere";
 import MobileDeskGate from "./MobileDeskGate";
 
-const GATES = [
+export const GATES = [
   {
     id: "gallery", roman: "I",
     latin: "PORTA \u00b7 I \u00b7 MEMORIAE",
@@ -63,7 +63,7 @@ const GATES = [
   },
 ];
 
-const TORCHES = [
+export const TORCHES = [
   { left: "1.9%", top: "49.8%" },
   { left: "27.4%", top: "57.0%" },
   { left: "40.1%", top: "57.8%" },

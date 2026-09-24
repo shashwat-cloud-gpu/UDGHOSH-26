@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import CinematicPanel from "./CinematicPanel";
 import SectionAbout from "./SectionAbout";
 import SectionGate from "./SectionGate";
-import MobileDeskGate from "./MobileDeskGate";
+import MobileHallGate from "./MobileHallGate";
 import Navbar2 from "../navbar/Navbar2";
 import CastleAtmosphere from "./CastleAtmosphere";
 
@@ -104,14 +104,14 @@ export default function CinematicHero() {
             scrubVh="140vh"
             dwellVh="300vh"
             placeholderSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203289/udghosh-23/images/gate.jpg"
-            staticBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203295/udghosh-23/images/mobile_desk.webp"
-            outroBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203295/udghosh-23/images/mobile_desk.webp"
+            staticBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203290/udghosh-23/images/hall.jpg"
+            outroBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203291/udghosh-23/images/next_hall.jpg"
             outroStart={0.95}
             hideBeforePin={true}
             fadeOutProgressStart={0.827}
             onEnterDwell={() => setNavbarVisible(true)}
           >
-            {(dwellProgress) => <MobileDeskGate dwellProgress={dwellProgress} />}
+            {(dwellProgress) => <MobileHallGate dwellProgress={dwellProgress} />}
           </CinematicPanel>
         </div>
       ) : (
