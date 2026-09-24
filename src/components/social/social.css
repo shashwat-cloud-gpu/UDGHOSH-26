@@ -105,34 +105,9 @@
 .social-divider {
   width: 120px;
   height: 2px;
-  margin: 1.25rem auto 1.5rem;
+  margin: 1.25rem auto 0;
   background: linear-gradient(90deg, transparent, #eab308, transparent);
   opacity: 0.75;
-}
-
-.social-redeal-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: 'Cinzel', serif;
-  font-size: 0.78rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: #fef08a;
-  background: rgba(245, 158, 11, 0.12);
-  border: 1px solid rgba(245, 158, 11, 0.35);
-  padding: 0.4rem 1.2rem;
-  border-radius: 9999px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(8px);
-}
-
-.social-redeal-btn:hover {
-  background: rgba(245, 158, 11, 0.25);
-  border-color: rgba(245, 158, 11, 0.65);
-  box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
-  transform: translateY(-2px);
 }
 
 /* --- DECK STAGE & CARDS GRID --- */

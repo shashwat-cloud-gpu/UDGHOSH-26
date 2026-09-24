@@ -40,7 +40,6 @@ const Social = () => {
   const [deckOffsets, setDeckOffsets] = useState([]);
   const [dealtIndices, setDealtIndices] = useState(new Set());
   const [isDeckReady, setIsDeckReady] = useState(false);
-  const [isDealing, setIsDealing] = useState(false);
 
   const gridRef = useRef(null);
   const cardRefs = useRef([]);
@@ -77,16 +76,12 @@ const Social = () => {
     setDeckOffsets(newOffsets);
     setDealtIndices(new Set());
     setIsDeckReady(true);
-    setIsDealing(true);
 
     // Stagger slide out from deck 1 by 1
     const delays = [400, 800, 1200, 1600];
     delays.forEach((delay, idx) => {
       const timer = setTimeout(() => {
         setDealtIndices((prev) => new Set([...prev, idx]));
-        if (idx === delays.length - 1) {
-          setIsDealing(false);
-        }
       }, delay);
       timersRef.current.push(timer);
     });
@@ -143,30 +138,32 @@ const Social = () => {
 
   return (
     <div onClick={handleRootClick} className="social-page">
-      {/* 1. Castle Hall Background with Embedded Lamps — transitions dark <-> lit */}
+      {/* 1. Castle Hall Background with Wholesome Golden Sunlight & Lamps */}
       <div
         className="social-bg"
         style={{
-          backgroundImage: "url('/images/gallery_bg.jpg')",
+          backgroundImage: "url('/images/social_bg.jpg')",
           filter:
             transitionState === "entering"
-              ? "contrast(1.15) brightness(0.12) saturate(0.6) blur(6px)"
+              ? "contrast(1.1) brightness(0.15) saturate(0.6) blur(6px)"
               : isExiting
-              ? "contrast(1.15) brightness(0.10) saturate(0.5) blur(6px)"
-              : "contrast(1.05) brightness(0.95) saturate(1.0) blur(0px)",
+              ? "contrast(1.1) brightness(0.12) saturate(0.5) blur(6px)"
+              : "contrast(1.02) brightness(0.98) saturate(1.08) blur(0px)",
           transform:
-            transitionState === "entering" || isExiting ? "scale(1.05)" : "scale(1.01)",
+            transitionState === "entering" || isExiting ? "scale(1.04)" : "scale(1.01)",
           transition: isExiting
             ? "filter 0.75s ease-in, transform 0.75s ease-in"
             : "filter 1.3s cubic-bezier(0.16, 1, 0.3, 1), transform 1.3s cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       />
 
-      {/* 2. Warm Lantern Light Flare Burst that blooms as we emerge into the lit hall */}
+      {/* 2. Warm Golden Sunlight & Lantern Light Flare Burst */}
       <div
         className="social-lantern-bloom"
         style={{
-          opacity: isEntered ? 0.35 : 0,
+          background:
+            "radial-gradient(ellipse 1100px 750px at 50% 25%, rgba(254, 240, 138, 0.35) 0%, rgba(251, 191, 36, 0.20) 32%, rgba(245, 158, 11, 0.08) 60%, transparent 80%)",
+          opacity: isEntered ? 0.42 : 0,
           transition: "opacity 1.4s ease-out",
         }}
       />
@@ -182,8 +179,14 @@ const Social = () => {
         }}
       />
 
-      {/* 4. Atmospheric Vignette for Content Legibility */}
-      <div className="social-vignette" />
+      {/* 4. Atmospheric Warm Vignette for Content Legibility */}
+      <div
+        className="social-vignette"
+        style={{
+          background:
+            "radial-gradient(circle at 50% 45%, transparent 35%, rgba(18, 14, 10, 0.65) 100%)",
+        }}
+      />
 
       {/* Navigation */}
       <Navbar2 />
@@ -194,16 +197,6 @@ const Social = () => {
         <div className="social-header-box">
           <h1 className="social-main-title">Social Initiatives</h1>
           <div className="social-divider" />
-          <button
-            type="button"
-            className="social-redeal-btn"
-            onClick={dealCardsOneByOne}
-            disabled={isDealing}
-            title="Deal deck again"
-          >
-            <span>Re-deal Deck</span>
-            <span>↺</span>
-          </button>
         </div>
 
         {/* Deck Stage & Cards Grid */}
