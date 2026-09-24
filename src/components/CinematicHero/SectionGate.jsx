@@ -207,6 +207,7 @@ function DesktopCastleGate({ dwellProgress = 0 }) {
     return () => cancelAnimationFrame(fireRafRef.current);
   }, []);
 
+  // eslint-disable-next-line no-unused-vars
   const [cursorPos, setCursorPos] = useState({ x: 50, y: 50 });
 
   const handleMouseMove = (e) => {
@@ -243,7 +244,7 @@ function DesktopCastleGate({ dwellProgress = 0 }) {
       } else {
         navigate(gate.url);
       }
-    }, 750);
+    }, 720);
   };
 
   return (
@@ -256,6 +257,19 @@ function DesktopCastleGate({ dwellProgress = 0 }) {
         fontFamily: "'Cinzel', serif",
         overflow: "hidden",
       }}>
+
+      {/* Dark portal transition curtain when zooming into gate archway */}
+      <div
+        style={{
+          position: "fixed",
+          inset: 0,
+          backgroundColor: "#090807",
+          zIndex: 9999,
+          pointerEvents: "none",
+          opacity: zoomActive ? 1 : 0,
+          transition: zoomActive ? "opacity 0.72s cubic-bezier(0.65, 0, 0.35, 1)" : "none",
+        }}
+      />
 
       <div style={{
         position: "absolute", inset: 0,
