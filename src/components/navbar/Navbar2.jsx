@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState } from 'react'
 
 // --- Basic Clean Dropdown Component ---
 const DropdownMenu = ({ label, items }) => {
@@ -62,16 +62,6 @@ const DropdownMenu = ({ label, items }) => {
 
 const Navbar = ({ isDarkMode, isVisible = true }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 8);
-    };
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   const closeMenu = () => setIsMenuOpen(false);
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
@@ -79,52 +69,16 @@ const Navbar = ({ isDarkMode, isVisible = true }) => {
   return (
     <>
       <nav
-        className="w-full fixed top-0 left-0 z-50 px-4 sm:px-6 lg:px-12 xl:px-[7%] py-2.5 sm:py-4 flex items-center justify-between transition-all duration-300"
+        className="w-full fixed top-0 left-0 z-50 px-4 sm:px-6 lg:px-12 xl:px-[7%] py-2.5 sm:py-4 flex items-center justify-between transition-opacity duration-300 bg-transparent"
         style={{
           opacity: isVisible ? 1 : 0,
           pointerEvents: isVisible ? "auto" : "none",
         }}
       >
-        {/* ── 1. Frosted Header Backdrop & Glowing Header Line ──
-            Covers everything above the header line so the header is always clean and crisp */}
-        <div
-          className={`absolute inset-0 pointer-events-none transition-all duration-300 ${
-            isScrolled
-              ? "bg-[#080706]/95 backdrop-blur-xl border-b border-amber-500/25 shadow-[0_10px_35px_rgba(0,0,0,0.9),0_1px_15px_rgba(245,158,11,0.12)]"
-              : "bg-gradient-to-b from-[#080706]/85 via-[#080706]/40 to-transparent border-b border-white/[0.06]"
-          }`}
-        >
-          {/* Delicate Illuminated Hairline Accent right along the header line */}
-          <div
-            className={`absolute bottom-0 left-0 right-0 h-[1px] transition-opacity duration-300 ${
-              isScrolled
-                ? "bg-gradient-to-r from-transparent via-amber-400/60 to-transparent opacity-100"
-                : "bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-30"
-            }`}
-          />
-        </div>
-
-        {/* ── 2. Top Scroll Fade Veil ──
-            Extends downward from the header line, softly fading out any content that scrolls upwards towards and above the header */}
-        <div
-          className="absolute left-0 right-0 top-full pointer-events-none transition-all duration-300 overflow-hidden"
-          style={{
-            height: isScrolled ? "4.5rem" : "3.5rem",
-            background:
-              "linear-gradient(to bottom, rgba(8, 7, 6, 0.95) 0%, rgba(8, 7, 6, 0.72) 35%, rgba(8, 7, 6, 0.25) 75%, transparent 100%)",
-            backdropFilter: isScrolled ? "blur(8px)" : "blur(4px)",
-            WebkitBackdropFilter: isScrolled ? "blur(8px)" : "blur(4px)",
-            maskImage:
-              "linear-gradient(to bottom, black 0%, black 25%, rgba(0,0,0,0.6) 60%, transparent 100%)",
-            WebkitMaskImage:
-              "linear-gradient(to bottom, black 0%, black 25%, rgba(0,0,0,0.6) 60%, transparent 100%)",
-          }}
-        />
-
         {/* Left: Brand Logo */}
         <a href="/home" className="flex items-center gap-2 z-20">
           <img
-            src="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_limit,q_auto:best,f_auto/v1790203296/udghosh-23/images/logo.png"
+            src="https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203296/udghosh-23/images/logo.png"
             alt="Udghosh logo"
             className="w-8 h-8 sm:w-10 sm:h-10 object-contain drop-shadow-[0_0_8px_rgba(56,189,248,0.4)]"
           />
@@ -232,7 +186,7 @@ const Navbar = ({ isDarkMode, isVisible = true }) => {
       >
         <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
           <div className="flex items-center gap-2">
-            <img src="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_limit,q_auto:best,f_auto/v1790203296/udghosh-23/images/logo.png" alt="Udghosh" className="w-7 h-7 object-contain" />
+            <img src="https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203296/udghosh-23/images/logo.png" alt="Udghosh" className="w-7 h-7 object-contain" />
             <span className="font-bold font-poppins text-base text-white tracking-wide">
               UDGHOSH<span className="text-cyan-400">.</span>
             </span>
