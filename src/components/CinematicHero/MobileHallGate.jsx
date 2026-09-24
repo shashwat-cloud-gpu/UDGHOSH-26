@@ -149,17 +149,10 @@ export default function MobileHallGate({ dwellProgress = 0 }) {
               top: gate.top,
               width: gate.width,
               height: gate.height,
-              background:
-                idx === activeIdx
-                  ? "rgba(56,189,248,0.08)"
-                  : "transparent",
-              border:
-                idx === activeIdx
-                  ? "1px solid rgba(56,189,248,0.35)"
-                  : "none",
+              background: "transparent",
+              border: "none",
               cursor: "pointer",
-              borderRadius: "4px",
-              transition: "background 0.3s, border 0.3s",
+              outline: "none",
             }}
           />
         ))}
@@ -242,7 +235,7 @@ export default function MobileHallGate({ dwellProgress = 0 }) {
       <div
         style={{
           position: "absolute",
-          top: "6%",
+          top: "14%",
           left: "50%",
           transform: "translateX(-50%)",
           display: "flex",
