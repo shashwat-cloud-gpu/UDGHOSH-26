@@ -138,7 +138,7 @@ const Social = () => {
 
   return (
     <div onClick={handleRootClick} className="social-page">
-      {/* 1. Castle Hall Background with Wholesome Golden Sunlight & Lamps */}
+      {/* 1. Castle Floral Garden Background with Wholesome Sunlight & Lamps */}
       <div
         className="social-bg"
         style={{
@@ -148,7 +148,7 @@ const Social = () => {
               ? "contrast(1.1) brightness(0.15) saturate(0.6) blur(6px)"
               : isExiting
               ? "contrast(1.1) brightness(0.12) saturate(0.5) blur(6px)"
-              : "contrast(1.02) brightness(0.98) saturate(1.08) blur(0px)",
+              : "contrast(1.04) brightness(1.02) saturate(1.14) blur(0px)",
           transform:
             transitionState === "entering" || isExiting ? "scale(1.04)" : "scale(1.01)",
           transition: isExiting
@@ -162,8 +162,8 @@ const Social = () => {
         className="social-lantern-bloom"
         style={{
           background:
-            "radial-gradient(ellipse 1100px 750px at 50% 25%, rgba(254, 240, 138, 0.35) 0%, rgba(251, 191, 36, 0.20) 32%, rgba(245, 158, 11, 0.08) 60%, transparent 80%)",
-          opacity: isEntered ? 0.42 : 0,
+            "radial-gradient(ellipse 1100px 750px at 45% 30%, rgba(254, 240, 138, 0.32) 0%, rgba(251, 191, 36, 0.18) 32%, rgba(245, 158, 11, 0.06) 65%, transparent 80%)",
+          opacity: isEntered ? 0.38 : 0,
           transition: "opacity 1.4s ease-out",
         }}
       />

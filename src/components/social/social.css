@@ -36,13 +36,13 @@
   background: radial-gradient(circle 900px at 50% 35%, rgba(254, 240, 138, 0.28) 0%, rgba(245, 158, 11, 0.14) 40%, transparent 75%);
 }
 
-/* Atmospheric vignette for focus and depth */
+/* Atmospheric vignette for focus and depth while letting floral accents shine */
 .social-vignette {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  background: radial-gradient(circle at 50% 50%, rgba(9, 8, 7, 0.2) 0%, rgba(9, 8, 7, 0.88) 100%);
+  background: radial-gradient(circle at 50% 45%, rgba(9, 8, 7, 0.08) 0%, rgba(9, 8, 7, 0.38) 65%, rgba(9, 8, 7, 0.72) 100%);
 }
 
 /* Dark portal curtain for entrance & exit transitions */
