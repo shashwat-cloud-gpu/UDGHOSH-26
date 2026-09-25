@@ -19,6 +19,9 @@ export default function SmoothScroll({ children }) {
       infinite: false,
     });
 
+    // Expose lenis instance globally for smooth programmatic navigation
+    window.lenis = lenis;
+
     // Synchronize Lenis with GSAP ScrollTrigger
     lenis.on("scroll", ScrollTrigger.update);
 

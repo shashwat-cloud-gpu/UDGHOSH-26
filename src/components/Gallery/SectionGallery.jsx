@@ -97,10 +97,12 @@ export default function SectionGallery({
 
     // Hide resting elements during transit
     cardElement.style.opacity = "0";
-    if (featuredImgRef.current) featuredImgRef.current.style.opacity = "0";
-    if (featuredOverlayRef.current) featuredOverlayRef.current.style.opacity = "0";
+    // Pre-assign image src so the browser decodes it during the animation
+    if (featuredImgRef.current) {
+      featuredImgRef.current.src = newCenterItem.image;
+    }
 
-    // 3. GSAP Cross-Expansion Animation
+    // 3. GSAP Cross-Expansion Animation (Ultra-smooth 60fps handoff)
     const tl = gsap.timeline({
       onComplete: () => {
         // Swap state: old center moves to clicked thumbnail slot
@@ -111,17 +113,23 @@ export default function SectionGallery({
           return updated;
         });
 
-        // Restore visibility
+        // Reveal resting elements underneath before proxies disappear
         cardElement.style.opacity = "1";
         if (featuredImgRef.current) featuredImgRef.current.style.opacity = "1";
         if (featuredOverlayRef.current) featuredOverlayRef.current.style.opacity = "1";
-
-        // Re-apply white border to big image ONLY when fully expanded!
         setIsExpanded(true);
 
-        expandProxy.remove();
-        shrinkProxy.remove();
-        setIsAnimating(false);
+        // Seamless micro-fade handoff: proxies fade out smoothly over 0.16s with ZERO flicker
+        gsap.to([expandProxy, shrinkProxy], {
+          opacity: 0,
+          duration: 0.16,
+          ease: "power2.out",
+          onComplete: () => {
+            expandProxy.remove();
+            shrinkProxy.remove();
+            setIsAnimating(false);
+          },
+        });
       },
     });
 
@@ -133,8 +141,8 @@ export default function SectionGallery({
         width: stageRect.width,
         height: stageRect.height,
         borderRadius: "18px",
-        duration: 0.52,
-        ease: "power3.inOut",
+        duration: 0.56,
+        ease: "power2.inOut",
       },
       0
     );
@@ -146,11 +154,11 @@ export default function SectionGallery({
         top: cardRect.top,
         width: cardRect.width,
         height: cardRect.height,
-        borderRadius: "14px",
-        duration: 0.48,
-        ease: "power3.inOut",
+        borderRadius: "12px",
+        duration: 0.52,
+        ease: "power2.inOut",
       },
-      0.04
+      0.03
     );
   };
 

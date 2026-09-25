@@ -16,7 +16,15 @@ export default function Gallery() {
   const scrollToSection = (targetId) => {
     const el = document.getElementById(targetId);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
+      if (window.lenis) {
+        window.lenis.scrollTo(el, {
+          offset: -20,
+          duration: 1.5,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        });
+      } else {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
     }
   };
 

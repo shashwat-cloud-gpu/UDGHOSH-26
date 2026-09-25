@@ -19,6 +19,22 @@
   --gothic-ease-cinematic: cubic-bezier(0.7, 0, 0.2, 1);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
 .gothic-gallery-root {
   position: relative;
   width: 100%;
