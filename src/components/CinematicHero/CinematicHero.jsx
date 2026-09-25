@@ -47,7 +47,7 @@ export default function CinematicHero() {
       <div style={{ position: "relative", zIndex: 1 }}>
         <CinematicPanel
           videoSrc="https://res.cloudinary.com/u5qztegz/video/upload/v1790203285/udghosh-23/videos/transition1.mp4"
-          scrubVh="275vh"
+          scrubVh="183vh"
           dwellVh="32vh"
           placeholderSrc={isMobile ? "https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203294/udghosh-23/images/landing_page_mobile.webp" : "https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/udghosh-23/landing_page.png"}
           staticBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203289/udghosh-23/images/gate.jpg"
@@ -101,7 +101,7 @@ export default function CinematicHero() {
           <CinematicPanel
             key="mobile-gate-panel"
             videoSrc="https://res.cloudinary.com/u5qztegz/video/upload/v1790203287/udghosh-23/videos/transition2.mp4"
-            scrubVh="140vh"
+            scrubVh="93vh"
             dwellVh="300vh"
             placeholderSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203289/udghosh-23/images/gate.jpg"
             staticBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203290/udghosh-23/images/hall.jpg"
@@ -119,7 +119,7 @@ export default function CinematicHero() {
           <CinematicPanel
             key="desktop-gate-panel"
             videoSrc="https://res.cloudinary.com/u5qztegz/video/upload/v1790203287/udghosh-23/videos/transition2.mp4"
-            scrubVh="250vh"
+            scrubVh="167vh"
             dwellVh="300vh"
             placeholderSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203289/udghosh-23/images/gate.jpg"
             staticBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203290/udghosh-23/images/hall.jpg"
