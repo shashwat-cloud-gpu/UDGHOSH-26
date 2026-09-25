@@ -663,13 +663,11 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   color: #ffffff;
-  background: rgba(3, 5, 8, 0.35);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: transparent;
   padding: 0.45rem 1.05rem;
   border-radius: 8px;
   border: 2px solid #ffffff;
-  box-shadow: 0 0 16px rgba(255, 255, 255, 0.35), inset 0 0 8px rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.35);
   display: inline-block;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95);
 }
@@ -1023,32 +1021,34 @@
     padding: 0.2rem 0.3rem;
   }
 
-  /* Text label floats right above the dot when hovered or active */
+  /* Text label floats right above the dot when hovered or active: pure white bold text */
   .gothic-node-label {
     display: block;
     position: absolute;
-    bottom: 130%;
+    bottom: 135%;
     left: 50%;
     transform: translateX(-50%) translateY(4px);
-    background: rgba(3, 5, 8, 0.95);
-    border: 1px solid var(--gothic-cyan-glow);
-    color: var(--gothic-cyan-bright);
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-size: 0.58rem;
-    letter-spacing: 0.14em;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.65rem;
+    letter-spacing: 0.16em;
     white-space: nowrap;
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.25s ease, transform 0.25s ease;
     z-index: 25;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.9), 0 0 10px rgba(0, 242, 254, 0.25);
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.95), 0 0 10px rgba(255, 255, 255, 0.4);
   }
 
   .gothic-timeline-node:hover .gothic-node-label,
   .gothic-timeline-node.active .gothic-node-label {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
+    color: #ffffff;
   }
 
   .gothic-node-numeral {
@@ -1110,8 +1110,8 @@
     font-size: 0.78rem;
     font-weight: 700;
     padding: 0.35rem 0.75rem;
-    border: 1.8px solid #ffffff;
-    background: rgba(3, 5, 8, 0.38);
+    border: 2px solid #ffffff;
+    background: transparent;
     max-width: 90%;
     white-space: nowrap;
     overflow: hidden;
