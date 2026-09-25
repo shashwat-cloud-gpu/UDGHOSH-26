@@ -918,7 +918,7 @@
    7. COMPREHENSIVE MOBILE OPTIMIZATIONS (< 768px & < 480px)
    ========================================================================== */
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   /* --- Gothic Sanctuary Viewport: All 3 Gates 100% Visible & Centered --- */
   .gothic-hall-viewport {
     height: auto;
@@ -1044,8 +1044,9 @@
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.95), 0 0 10px rgba(255, 255, 255, 0.4);
   }
 
+  /* Show label strictly when hovering over the node */
   .gothic-timeline-node:hover .gothic-node-label,
-  .gothic-timeline-node.active .gothic-node-label {
+  .gothic-timeline-node:focus .gothic-node-label {
     opacity: 1;
     transform: translateX(-50%) translateY(0);
     color: #ffffff;
