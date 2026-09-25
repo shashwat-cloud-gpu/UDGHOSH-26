@@ -50,6 +50,9 @@ export default function GothicHall({ onScrollToSection }) {
 
   return (
     <div className="gothic-hall-viewport" id="hall-viewport">
+      {/* Full-height atmospheric cathedral background for mobile (eliminates black bars) */}
+      <div className="gothic-hall-ambient-fill" aria-hidden="true" />
+
       <div className="gothic-hall-stage">
         <div className="gothic-hall-image-wrapper">
           {/* Sanctuary Artwork */}
