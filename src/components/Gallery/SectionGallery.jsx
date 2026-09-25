@@ -95,14 +95,12 @@ export default function SectionGallery({
     shrinkProxy.appendChild(shrinkImg);
     document.body.appendChild(shrinkProxy);
 
-    // Hide resting elements during transit
+    // Hide resting elements during transit so they do not show before flight completes
     cardElement.style.opacity = "0";
-    // Pre-assign image src so the browser decodes it during the animation
-    if (featuredImgRef.current) {
-      featuredImgRef.current.src = newCenterItem.image;
-    }
+    if (featuredImgRef.current) featuredImgRef.current.style.opacity = "0";
+    if (featuredOverlayRef.current) featuredOverlayRef.current.style.opacity = "0";
 
-    // 3. GSAP Cross-Expansion Animation (Ultra-smooth 60fps handoff)
+    // 3. GSAP Cross-Expansion Animation
     const tl = gsap.timeline({
       onComplete: () => {
         // Swap state: old center moves to clicked thumbnail slot
@@ -113,23 +111,20 @@ export default function SectionGallery({
           return updated;
         });
 
-        // Reveal resting elements underneath before proxies disappear
-        cardElement.style.opacity = "1";
-        if (featuredImgRef.current) featuredImgRef.current.style.opacity = "1";
+        // Set new image and reveal resting elements now that flight has landed
+        if (featuredImgRef.current) {
+          featuredImgRef.current.src = newCenterItem.image;
+          featuredImgRef.current.style.opacity = "1";
+        }
         if (featuredOverlayRef.current) featuredOverlayRef.current.style.opacity = "1";
+        cardElement.style.opacity = "1";
+
+        // Re-apply white border to big image ONLY when fully expanded!
         setIsExpanded(true);
 
-        // Seamless micro-fade handoff: proxies fade out smoothly over 0.16s with ZERO flicker
-        gsap.to([expandProxy, shrinkProxy], {
-          opacity: 0,
-          duration: 0.16,
-          ease: "power2.out",
-          onComplete: () => {
-            expandProxy.remove();
-            shrinkProxy.remove();
-            setIsAnimating(false);
-          },
-        });
+        expandProxy.remove();
+        shrinkProxy.remove();
+        setIsAnimating(false);
       },
     });
 
