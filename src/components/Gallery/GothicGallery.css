@@ -659,18 +659,19 @@
 
 .gothic-single-title {
   font-family: var(--gothic-font-display);
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-size: 0.92rem;
+  font-weight: 700;
   letter-spacing: 0.08em;
   color: #ffffff;
-  background: rgba(5, 8, 14, 0.75);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  padding: 0.4rem 0.95rem;
-  border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(3, 5, 8, 0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 0.45rem 1.05rem;
+  border-radius: 8px;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.35), inset 0 0 8px rgba(255, 255, 255, 0.12);
   display: inline-block;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.95);
 }
 
 /* Vertical Thumbnails Strip (Right Column) */
@@ -1107,7 +1108,10 @@
 
   .gothic-single-title {
     font-size: 0.78rem;
-    padding: 0.3rem 0.7rem;
+    font-weight: 700;
+    padding: 0.35rem 0.75rem;
+    border: 1.8px solid #ffffff;
+    background: rgba(3, 5, 8, 0.38);
     max-width: 90%;
     white-space: nowrap;
     overflow: hidden;
