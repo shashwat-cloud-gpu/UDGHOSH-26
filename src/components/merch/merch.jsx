@@ -6,7 +6,7 @@ function Merchandise() {
   // A reliable URL for the black t-shirt image
   // The original URL was from ibb.co which can be unreliable. 
   // Using a placeholder service for stability.
-  const blackTshirtUrl = "https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/merch?_a=BAMAPqcg0";
+  const blackTshirtUrl = "https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/merch?_a=BAMAPqcg0";
 
   return (
     <>

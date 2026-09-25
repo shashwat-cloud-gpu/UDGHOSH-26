@@ -2,13 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import './Carousel.css';
 // These image imports assume you have a local folder structure.
 // For a live environment, you would use URLs.
-const img1 = 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto,w_900,c_scale/v1/udghosh-23/src/components/Carousel/images/1';
-const img2 = 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto,w_900,c_scale/v1/udghosh-23/src/components/Carousel/images/2';
-const img3 = 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto,w_900,c_scale/v1/udghosh-23/src/components/Carousel/images/3';
-const img4 = 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto,w_900,c_scale/v1/udghosh-23/src/components/Carousel/images/4';
-const img5 = 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto,w_900,c_scale/v1/udghosh-23/src/components/Carousel/images/5';
-const img6 = 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto,w_900,c_scale/v1/udghosh-23/src/components/Carousel/images/6';
-const img7 = 'https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto,w_900,c_scale/v1/udghosh-23/src/components/Carousel/images/7';
+const img1 = 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/src/components/Carousel/images/1';
+const img2 = 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/src/components/Carousel/images/2';
+const img3 = 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/src/components/Carousel/images/3';
+const img4 = 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/src/components/Carousel/images/4';
+const img5 = 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/src/components/Carousel/images/5';
+const img6 = 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/src/components/Carousel/images/6';
+const img7 = 'https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/src/components/Carousel/images/7';
 
 export default function Carousel() {
   const cardData = [
