@@ -9,7 +9,7 @@ const HALL_IMG =
   "https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203290/udghosh-23/images/hall.jpg";
 
 function trapezoid(t) {
-  if (t < 0.25) return t / 0.25;
+  if (t <= 0) return 0;
   if (t < 0.85) return 1;
   return 1 - (t - 0.85) / 0.15;
 }
@@ -20,7 +20,7 @@ export default function MobileHallGate({ dwellProgress = 0 }) {
   const imgRef = useRef(null);
   const rafRef = useRef(null);
 
-  const opacity = trapezoid(dwellProgress);
+  const baseOpacity = trapezoid(dwellProgress);
 
   const [imgWidth, setImgWidth] = useState(0);
   const [activeId, setActiveId] = useState(
@@ -28,6 +28,7 @@ export default function MobileHallGate({ dwellProgress = 0 }) {
   );
   const [entering, setEntering] = useState(null);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [isCentered, setIsCentered] = useState(false);
 
   // Measure the rendered width of the hall image. Height is pinned to the
   // real visible viewport height (see .hallStage, using dvh) and width is
@@ -62,7 +63,11 @@ export default function MobileHallGate({ dwellProgress = 0 }) {
     const target =
       centerPct * imgWidth - scrollRef.current.clientWidth / 2;
     scrollRef.current.scrollLeft = Math.max(0, target);
+    setIsCentered(true);
   }, [imgWidth]);
+
+  // Keep opacity 0 until the initial centering finishes to avoid a leftmost flash
+  const opacity = (baseOpacity > 0 && !isCentered) ? 0 : baseOpacity;
 
   const updateActiveGate = useCallback(() => {
     if (!scrollRef.current || !imgWidth) return;
