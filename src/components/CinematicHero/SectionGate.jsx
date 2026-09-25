@@ -72,7 +72,7 @@ export const TORCHES = [
   { left: "97.2%", top: "49.2%" },
 ];
 
-const ORBIT_TEXT = "\u2726  UDGHOSH  '23  \u2726  ARCANA ASCENSION  \u2726  IIT  KANPUR  \u2726  ";
+const ORBIT_TEXT = "\u2726  UDGHOSH  '26  \u2726  22ND EDITION  \u2726  ARCANA ASCENSION  \u2726  IIT  KANPUR  \u2726  ";
 
 function trapezoid(t) {
   if (t < 0.25) return t / 0.25;
@@ -470,7 +470,7 @@ function DesktopCastleGate({ dwellProgress = 0 }) {
               letterSpacing: "0.3em",
               color: "#CBD5E1",
               textTransform: "uppercase",
-            }}>IGNIS PATRONUS</span>
+            }}>IGNIS ARCANUS</span>
           </div>
         </div>
 
