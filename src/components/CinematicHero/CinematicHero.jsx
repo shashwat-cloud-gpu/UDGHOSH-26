@@ -49,7 +49,7 @@ export default function CinematicHero() {
           videoSrc="https://res.cloudinary.com/u5qztegz/video/upload/v1790203285/udghosh-23/videos/transition1.mp4"
           scrubVh="183vh"
           dwellVh="32vh"
-          placeholderSrc={isMobile ? "https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790338888/udghosh-23/images/landing_page_mobile_v2.jpg" : "https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/udghosh-23/landing_page.png"}
+          placeholderSrc={isMobile ? "https://res.cloudinary.com/u5qztegz/image/upload/q_auto:best,f_auto/v1790338888/udghosh-23/images/landing_page_mobile_v2.jpg" : "https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/udghosh-23/landing_page.png"}
           staticBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203289/udghosh-23/images/gate.jpg"
           outroBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203289/udghosh-23/images/gate.jpg"
           outroStart={0.85}
