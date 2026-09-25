@@ -46,7 +46,7 @@ const JoinCommunity = () => {
                 {/* Logo */}
                 <div className="hidden md:block md:w-1/4">
                     <img
-                        src="/images/logo.png"
+                        src="https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203296/udghosh-23/images/logo.png"
                         alt="Udghosh logo"
                         className="w-full rounded-lg shadow-2xl object-contain"
                     />

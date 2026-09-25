@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import GateAtmosphere from "./GateAtmosphere";
 import MobileDeskGate from "./MobileDeskGate";
 
-const GATES = [
+export const GATES = [
   {
     id: "gallery", roman: "I",
     latin: "PORTA \u00b7 I \u00b7 MEMORIAE",
@@ -63,7 +63,7 @@ const GATES = [
   },
 ];
 
-const TORCHES = [
+export const TORCHES = [
   { left: "1.9%", top: "49.8%" },
   { left: "27.4%", top: "57.0%" },
   { left: "40.1%", top: "57.8%" },
@@ -72,7 +72,7 @@ const TORCHES = [
   { left: "97.2%", top: "49.2%" },
 ];
 
-const ORBIT_TEXT = "\u2726  UDGHOSH  '23  \u2726  ARCANA ASCENSION  \u2726  IIT  KANPUR  \u2726  ";
+const ORBIT_TEXT = "\u2726  UDGHOSH  '26  \u2726  22ND EDITION  \u2726  ARCANA ASCENSION  \u2726  IIT  KANPUR  \u2726  ";
 
 function trapezoid(t) {
   if (t < 0.25) return t / 0.25;
@@ -207,6 +207,7 @@ function DesktopCastleGate({ dwellProgress = 0 }) {
     return () => cancelAnimationFrame(fireRafRef.current);
   }, []);
 
+  // eslint-disable-next-line no-unused-vars
   const [cursorPos, setCursorPos] = useState({ x: 50, y: 50 });
 
   const handleMouseMove = (e) => {
@@ -243,7 +244,7 @@ function DesktopCastleGate({ dwellProgress = 0 }) {
       } else {
         navigate(gate.url);
       }
-    }, 750);
+    }, 720);
   };
 
   return (
@@ -257,6 +258,19 @@ function DesktopCastleGate({ dwellProgress = 0 }) {
         overflow: "hidden",
       }}>
 
+      {/* Dark portal transition curtain when zooming into gate archway */}
+      <div
+        style={{
+          position: "fixed",
+          inset: 0,
+          backgroundColor: "#090807",
+          zIndex: 9999,
+          pointerEvents: "none",
+          opacity: zoomActive ? 1 : 0,
+          transition: zoomActive ? "opacity 0.72s cubic-bezier(0.65, 0, 0.35, 1)" : "none",
+        }}
+      />
+
       <div style={{
         position: "absolute", inset: 0,
         transformOrigin: enteringGate ? `${enteringGate.originX}% ${enteringGate.originY}%` : "50% 50%",
@@ -269,7 +283,7 @@ function DesktopCastleGate({ dwellProgress = 0 }) {
         {/* Backdrop for seamless sync when zooming */}
         {enteringGate && (
           <img
-            src="/images/hall.jpg"
+            src="https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203290/udghosh-23/images/hall.jpg"
             alt=""
             style={{
               position: "absolute", inset: 0,
@@ -438,7 +452,7 @@ function DesktopCastleGate({ dwellProgress = 0 }) {
               filter: "drop-shadow(0 0 15px rgba(56,189,248,0.7))",
               animation: "patronusFlameGlow 7s infinite ease-in-out",
             }}>
-            <img src="/images/logo.png" alt="Udghosh"
+            <img src="https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203296/udghosh-23/images/logo.png" alt="Udghosh"
               style={{ width: "100%", height: "100%", objectFit: "contain" }}
             />
           </div>
@@ -456,7 +470,7 @@ function DesktopCastleGate({ dwellProgress = 0 }) {
               letterSpacing: "0.3em",
               color: "#CBD5E1",
               textTransform: "uppercase",
-            }}>IGNIS PATRONUS</span>
+            }}>IGNIS ARCANUS</span>
           </div>
         </div>
 

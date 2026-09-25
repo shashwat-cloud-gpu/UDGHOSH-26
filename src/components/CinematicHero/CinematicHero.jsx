@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import CinematicPanel from "./CinematicPanel";
 import SectionAbout from "./SectionAbout";
 import SectionGate from "./SectionGate";
-import MobileDeskGate from "./MobileDeskGate";
+import MobileHallGate from "./MobileHallGate";
 import Navbar2 from "../navbar/Navbar2";
 import CastleAtmosphere from "./CastleAtmosphere";
 
@@ -46,12 +46,12 @@ export default function CinematicHero() {
 
       <div style={{ position: "relative", zIndex: 1 }}>
         <CinematicPanel
-          videoSrc="/videos/transition1.mp4"
-          scrubVh="275vh"
+          videoSrc="https://res.cloudinary.com/u5qztegz/video/upload/v1790203285/udghosh-23/videos/transition1.mp4"
+          scrubVh="183vh"
           dwellVh="32vh"
-          placeholderSrc={isMobile ? "/images/landing_page_mobile.webp" : "/images/landing_page.png"}
-          staticBgSrc="/images/gate.jpg"
-          outroBgSrc="/images/gate.jpg"
+          placeholderSrc={isMobile ? "https://res.cloudinary.com/u5qztegz/image/upload/q_auto:best,f_auto/v1790338888/udghosh-23/images/landing_page_mobile_v2.jpg" : "https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/udghosh-23/landing_page.png"}
+          staticBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203289/udghosh-23/images/gate.jpg"
+          outroBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203289/udghosh-23/images/gate.jpg"
           outroStart={0.85}
           extendPinVh="80vh"
           onEnterDwell={() => setScrollCueVisible(false)}
@@ -100,30 +100,30 @@ export default function CinematicHero() {
         <div style={{ position: "relative", zIndex: 2, marginTop: "-100vh" }}>
           <CinematicPanel
             key="mobile-gate-panel"
-            videoSrc="/videos/transition2.mp4"
-            scrubVh="140vh"
+            videoSrc="https://res.cloudinary.com/u5qztegz/video/upload/v1790203287/udghosh-23/videos/transition2.mp4"
+            scrubVh="93vh"
             dwellVh="300vh"
-            placeholderSrc="/images/gate.jpg"
-            staticBgSrc="/images/mobile_desk.webp"
-            outroBgSrc="/images/mobile_desk.webp"
+            placeholderSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203289/udghosh-23/images/gate.jpg"
+            staticBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203290/udghosh-23/images/hall.jpg"
+            outroBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203291/udghosh-23/images/next_hall.jpg"
             outroStart={0.95}
             hideBeforePin={true}
             fadeOutProgressStart={0.827}
             onEnterDwell={() => setNavbarVisible(true)}
           >
-            {(dwellProgress) => <MobileDeskGate dwellProgress={dwellProgress} />}
+            {(dwellProgress) => <MobileHallGate dwellProgress={dwellProgress} />}
           </CinematicPanel>
         </div>
       ) : (
         <div style={{ position: "relative", zIndex: 2, marginTop: "-100vh" }}>
           <CinematicPanel
             key="desktop-gate-panel"
-            videoSrc="/videos/transition2.mp4"
-            scrubVh="250vh"
+            videoSrc="https://res.cloudinary.com/u5qztegz/video/upload/v1790203287/udghosh-23/videos/transition2.mp4"
+            scrubVh="167vh"
             dwellVh="300vh"
-            placeholderSrc="/images/gate.jpg"
-            staticBgSrc="/images/hall.jpg"
-            outroBgSrc="/images/next_hall.jpg"
+            placeholderSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203289/udghosh-23/images/gate.jpg"
+            staticBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203290/udghosh-23/images/hall.jpg"
+            outroBgSrc="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1790203291/udghosh-23/images/next_hall.jpg"
             outroStart={0.85}
             hideBeforePin={true}
             fadeOutProgressStart={0.875}

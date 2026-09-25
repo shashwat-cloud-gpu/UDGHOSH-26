@@ -3,7 +3,7 @@
   height: 100vh;
   position: fixed;
   z-index: -10;
-  background: url("https://res.cloudinary.com/mxuy06ca/image/upload/f_auto,q_auto/v1/udghosh-23/public/wallpaper?_a=BAMAPqcg0") no-repeat center center / cover;
+  background: url("https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/wallpaper?_a=BAMAPqcg0") no-repeat center center / cover;
 }
 
 .backgroundImage img {
