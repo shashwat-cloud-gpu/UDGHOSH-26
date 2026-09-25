@@ -576,6 +576,7 @@
     height: auto;
     max-height: none;
     overflow: visible;
+    gap: 1rem;
   }
 }
 
@@ -592,6 +593,15 @@
   min-height: 0;
   cursor: pointer;
   transition: box-shadow 0.4s ease;
+}
+
+@media (max-width: 900px) {
+  .gothic-featured-stage {
+    width: 100%;
+    height: clamp(340px, 58vw, 500px);
+    min-height: 320px;
+    border-radius: 14px;
+  }
 }
 
 .gothic-featured-stage:hover {
@@ -678,8 +688,15 @@
   .gothic-thumbnails-strip {
     flex-direction: row;
     overflow-x: auto;
-    padding-bottom: 0.5rem;
+    padding-bottom: 0.6rem;
+    gap: 0.75rem;
     height: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .gothic-thumbnails-strip::-webkit-scrollbar {
+    display: none;
   }
 }
 
@@ -699,9 +716,11 @@
 
 @media (max-width: 900px) {
   .gothic-thumb-card {
-    min-width: 140px;
-    height: 110px;
-    flex: none;
+    min-width: 125px;
+    max-width: 125px;
+    height: 90px;
+    flex: 0 0 125px;
+    border-radius: 10px;
   }
 }
 
@@ -895,3 +914,221 @@
 
 .gothic-lightbox-arrow.prev { left: 1.5rem; }
 .gothic-lightbox-arrow.next { right: 1.5rem; }
+
+/* ==========================================================================
+   7. COMPREHENSIVE MOBILE OPTIMIZATIONS (< 768px & < 480px)
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  /* --- Gothic Sanctuary Viewport --- */
+  .gothic-hall-viewport {
+    height: 92vh;
+    min-height: 560px;
+  }
+
+  .gothic-hero-title {
+    top: 13%;
+    width: 95%;
+  }
+
+  .gothic-edition-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.3em;
+  }
+
+  .gothic-gallery-heading {
+    font-size: clamp(2rem, 8.5vw, 2.8rem);
+    letter-spacing: 0.22em;
+    margin-bottom: 0.35rem;
+  }
+
+  .gothic-sub-divider {
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+  }
+
+  /* Responsive touch-friendly door tap zones */
+  #door-trails {
+    left: 3%;
+    width: 28%;
+    top: 34%;
+    height: 46%;
+  }
+
+  #door-arena {
+    left: 36%;
+    width: 28%;
+    top: 34%;
+    height: 46%;
+  }
+
+  #door-celebration {
+    left: 69%;
+    width: 28%;
+    top: 34%;
+    height: 46%;
+  }
+
+  /* --- Arcana Timeline Bar --- */
+  .gothic-bottom-timeline-bar {
+    bottom: 1rem;
+    padding: 0.3rem 0.5rem;
+  }
+
+  .gothic-timeline-track {
+    gap: 0.75rem;
+    padding: 0.3rem 0.5rem;
+    max-width: 100vw;
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  .gothic-timeline-rail {
+    left: 1.2rem;
+    right: 1.2rem;
+  }
+
+  /* Hide long text labels on mobile so nodes never crowd or overflow */
+  .gothic-node-label {
+    display: none;
+  }
+
+  .gothic-node-numeral {
+    font-size: 0.65rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .gothic-node-dot {
+    width: 12px;
+    height: 12px;
+    margin-bottom: 0;
+  }
+
+  /* --- Transition Seam Bar --- */
+  .gothic-transition-seam-bar {
+    height: 40px;
+    margin-top: -20px;
+  }
+
+  .gothic-seam-center-rune {
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+  }
+
+  /* --- Interactive Gallery Sections --- */
+  .gothic-section {
+    min-height: auto;
+    padding: 3rem 1rem 3.5rem 1rem;
+  }
+
+  .gothic-section-header {
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .gothic-main-title {
+    font-size: clamp(1.6rem, 6.5vw, 2.2rem);
+    letter-spacing: 0.15em;
+  }
+
+  .gothic-header-logo {
+    max-height: 38px;
+    max-width: 110px;
+  }
+
+  /* --- Squarish Featured Stage & Overlay on Phone --- */
+  .gothic-featured-stage {
+    height: clamp(320px, 72vw, 440px);
+    min-height: 300px;
+    border-radius: 14px;
+  }
+
+  .gothic-featured-overlay {
+    padding: 0.9rem 1rem;
+  }
+
+  .gothic-single-title {
+    font-size: 0.78rem;
+    padding: 0.3rem 0.7rem;
+    max-width: 90%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* --- Lightbox Modal on Phone --- */
+  .gothic-lightbox-dialog {
+    width: 96vw;
+    height: 94vh;
+    max-height: 94vh;
+    border-radius: 12px;
+  }
+
+  .gothic-lightbox-preview {
+    flex: 1 1 54%;
+    max-height: 54%;
+  }
+
+  .gothic-lightbox-drawer {
+    flex: 1 1 46%;
+    max-height: 46%;
+    padding: 1.2rem 1.2rem;
+  }
+
+  .gothic-lightbox-title {
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .gothic-lightbox-caption {
+    font-size: 0.82rem;
+    margin-bottom: 1rem;
+    line-height: 1.45;
+  }
+
+  .gothic-meta-specs {
+    gap: 0.55rem;
+    padding-top: 0.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .gothic-spec-row {
+    font-size: 0.72rem;
+  }
+
+  .gothic-lightbox-arrow {
+    width: 38px;
+    height: 38px;
+    font-size: 0.85rem;
+  }
+
+  .gothic-lightbox-arrow.prev { left: 0.6rem; }
+  .gothic-lightbox-arrow.next { right: 0.6rem; }
+
+  .gothic-lightbox-btn-close {
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 36px;
+    height: 36px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .gothic-section {
+    padding: 2.5rem 0.75rem 3rem 0.75rem;
+  }
+
+  .gothic-featured-stage {
+    height: clamp(280px, 80vw, 380px);
+  }
+
+  .gothic-thumb-card {
+    min-width: 105px;
+    max-width: 105px;
+    height: 80px;
+    flex: 0 0 105px;
+  }
+}
+
