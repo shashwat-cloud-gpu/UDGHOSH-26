@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 // --- Basic Clean Dropdown Component ---
 const DropdownMenu = ({ label, items }) => {
@@ -45,15 +46,28 @@ const DropdownMenu = ({ label, items }) => {
         }`}
       >
         <div className="bg-[#0b1120]/95 backdrop-blur-md border border-white/10 rounded-xl py-1.5 shadow-xl">
-          {items.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              className="block px-4 py-2 text-xs font-medium text-slate-300 hover:text-cyan-400 hover:bg-white/5 transition-colors"
-            >
-              {item.label}
-            </a>
-          ))}
+          {items.map((item) => {
+            const isExternal = item.href.startsWith("http://") || item.href.startsWith("https://");
+            return isExternal ? (
+              <a
+                key={item.label}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block px-4 py-2 text-xs font-medium text-slate-300 hover:text-cyan-400 hover:bg-white/5 transition-colors"
+              >
+                {item.label}
+              </a>
+            ) : (
+              <Link
+                key={item.label}
+                to={item.href}
+                className="block px-4 py-2 text-xs font-medium text-slate-300 hover:text-cyan-400 hover:bg-white/5 transition-colors"
+              >
+                {item.label}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -77,7 +91,7 @@ const Navbar = ({ isDarkMode, isVisible = true }) => {
         }}
       >
         {/* Left: Brand Logo */}
-        <a href="/home" className="flex items-center gap-2 z-20">
+        <Link to="/home" className="flex items-center gap-2 z-20">
           <img
             src="https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203296/udghosh-23/images/logo.png"
             alt="Udghosh logo"
@@ -86,13 +100,15 @@ const Navbar = ({ isDarkMode, isVisible = true }) => {
           <span className="font-bold text-lg sm:text-xl text-white tracking-wide">
             UDGHOSH<span className="text-cyan-400">.</span>
           </span>
-        </a>
+        </Link>
 
         {/* Center: Navigation Links (Desktop) */}
         <ul className="hidden md:flex items-center gap-7 lg:gap-8 z-20">
           <li>
             <a
               href="https://events.udghosh.org.in/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-sm font-medium text-slate-200 hover:text-cyan-400 transition-colors"
             >
               Competitions
@@ -103,7 +119,7 @@ const Navbar = ({ isDarkMode, isVisible = true }) => {
               label="Websites"
               items={[
                 { label: "UNOSQ", href: "https://unosq.udghosh.org.in/" },
-                { label: "Esports", href: "http://esports.udghosh.org.in" },
+                { label: "Esports", href: "https://esports.udghosh.org.in/" },
                 { label: "CA", href: "https://ca.udghosh.org.in/" },
                 { label: "Sponsors", href: "/sponsors" },
                 { label: "Antique", href: "/antique" },
@@ -113,36 +129,36 @@ const Navbar = ({ isDarkMode, isVisible = true }) => {
             />
           </li>
           <li>
-            <a
-              href="/gallery"
+            <Link
+              to="/gallery"
               className="text-sm font-medium text-slate-200 hover:text-cyan-400 transition-colors"
             >
               Gallery
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              href="/teams"
+            <Link
+              to="/teams"
               className="text-sm font-medium text-slate-200 hover:text-cyan-400 transition-colors"
             >
               Team
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              href="/past-events"
+            <Link
+              to="/past-events"
               className="text-sm font-medium text-slate-200 hover:text-cyan-400 transition-colors"
             >
               Proshows
-            </a>
+            </Link>
           </li>
           <li>
-            <a
-              href="/merch"
+            <Link
+              to="/merch"
               className="text-sm font-medium text-slate-200 hover:text-cyan-400 transition-colors"
             >
               Merchandise
-            </a>
+            </Link>
           </li>
         </ul>
 
@@ -211,45 +227,47 @@ const Navbar = ({ isDarkMode, isVisible = true }) => {
               className="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-200 hover:text-cyan-400 hover:bg-white/5 transition-colors"
               onClick={closeMenu}
               href="https://events.udghosh.org.in/"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Competitions
             </a>
           </li>
           <li>
-            <a
+            <Link
               className="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-200 hover:text-cyan-400 hover:bg-white/5 transition-colors"
               onClick={closeMenu}
-              href="/teams"
+              to="/teams"
             >
               Team
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
               className="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-200 hover:text-cyan-400 hover:bg-white/5 transition-colors"
               onClick={closeMenu}
-              href="/gallery"
+              to="/gallery"
             >
               Gallery
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
               className="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-200 hover:text-cyan-400 hover:bg-white/5 transition-colors"
               onClick={closeMenu}
-              href="/past-events"
+              to="/past-events"
             >
               Proshows
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
               className="block px-3 py-2.5 rounded-lg text-sm font-medium text-slate-200 hover:text-cyan-400 hover:bg-white/5 transition-colors"
               onClick={closeMenu}
-              href="/merch"
+              to="/merch"
             >
               Merchandise
-            </a>
+            </Link>
           </li>
           <li className="pt-2 pb-1">
             <div className="h-px bg-white/10 mx-3" />
@@ -258,7 +276,9 @@ const Navbar = ({ isDarkMode, isVisible = true }) => {
             <a
               className="block px-3 py-2 text-xs font-medium text-slate-400 hover:text-cyan-400 hover:bg-white/5 transition-colors"
               onClick={closeMenu}
-              href="http://esports.udghosh.org.in"
+              href="https://esports.udghosh.org.in/"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Esports Arena
             </a>
@@ -268,6 +288,8 @@ const Navbar = ({ isDarkMode, isVisible = true }) => {
               className="block px-3 py-2 text-xs font-medium text-slate-400 hover:text-cyan-400 hover:bg-white/5 transition-colors"
               onClick={closeMenu}
               href="https://unosq.udghosh.org.in/"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               UNOSQ Quest
             </a>
@@ -277,36 +299,38 @@ const Navbar = ({ isDarkMode, isVisible = true }) => {
               className="block px-3 py-2 text-xs font-medium text-slate-400 hover:text-cyan-400 hover:bg-white/5 transition-colors"
               onClick={closeMenu}
               href="https://ca.udghosh.org.in/"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Campus Ambassador
             </a>
           </li>
           <li>
-            <a
+            <Link
               className="block px-3 py-2 text-xs font-medium text-slate-400 hover:text-cyan-400 hover:bg-white/5 transition-colors"
               onClick={closeMenu}
-              href="/antique"
+              to="/antique"
             >
               Antique & Legacy
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
               className="block px-3 py-2 text-xs font-medium text-slate-400 hover:text-cyan-400 hover:bg-white/5 transition-colors"
               onClick={closeMenu}
-              href="/social"
+              to="/social"
             >
               Social Initiatives
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
               className="block px-3 py-2 text-xs font-medium text-slate-400 hover:text-cyan-400 hover:bg-white/5 transition-colors"
               onClick={closeMenu}
-              href="/vision"
+              to="/vision"
             >
               Vision & Impact
-            </a>
+            </Link>
           </li>
         </ul>
 
@@ -326,4 +350,4 @@ const Navbar = ({ isDarkMode, isVisible = true }) => {
   );
 };
 
-export default Navbar
+export default Navbar;
