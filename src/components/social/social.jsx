@@ -283,14 +283,13 @@ const Social = () => {
       <div
         className="social-bg"
         style={{
-          backgroundImage:
-            "url('https://res.cloudinary.com/mxuy06ca/image/upload/w_1920,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/assets/background')",
+          backgroundImage: "url('/images/social_bg.jpg')",
           backgroundAttachment: "fixed",
           backgroundSize: "cover",
           backgroundPosition: "center",
           position: "fixed",
           inset: 0,
-          zIndex: -2,
+          zIndex: 0,
         }}
       />
       <div className="social-vignette" />
