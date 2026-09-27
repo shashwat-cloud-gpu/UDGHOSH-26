@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import GateAtmosphere from "./GateAtmosphere";
+
 import { GATES, TORCHES } from "./SectionGate";
 
 // Same hall art used on desktop — reused here instead of a separate mobile
@@ -51,19 +51,40 @@ export default function MobileHallGate({ dwellProgress = 0 }) {
   }, []);
 
   // On first measure, center the view on the primary gate (Competitions)
-  // so mobile users land on the most important gate first, same as how
-  // it's the biggest/centered arch on desktop.
   const didCenter = useRef(false);
   useEffect(() => {
-    if (!scrollRef.current || !imgWidth || didCenter.current) return;
-    didCenter.current = true;
-    const primary = GATES.find((g) => g.isPrimary) || GATES[0];
-    const centerPct =
-      (parseFloat(primary.left) + parseFloat(primary.width) / 2) / 100;
-    const target =
-      centerPct * imgWidth - scrollRef.current.clientWidth / 2;
-    scrollRef.current.scrollLeft = Math.max(0, target);
-    setIsCentered(true);
+    if (!scrollRef.current || didCenter.current) return;
+
+    let frameId;
+    const tryCenter = () => {
+      const el = scrollRef.current;
+      if (!el || didCenter.current) return;
+
+      // Ensure the image has actually stretched the container bounds beyond the screen width
+      if (el.scrollWidth > el.clientWidth + 100) {
+        didCenter.current = true;
+        const primary = GATES.find((g) => g.isPrimary) || GATES[0];
+        const centerPct =
+          (parseFloat(primary.left) + parseFloat(primary.width) / 2) / 100;
+        const target = centerPct * el.scrollWidth - el.clientWidth / 2;
+
+        el.scrollLeft = Math.max(0, target);
+        // Secondary attempt to combat iOS snap-back
+        requestAnimationFrame(() => {
+          if (scrollRef.current) scrollRef.current.scrollLeft = Math.max(0, target);
+          setIsCentered(true);
+          // Wait one more frame for DOM layout to settle before active update
+          requestAnimationFrame(() => updateActiveGate());
+        });
+      } else {
+        frameId = requestAnimationFrame(tryCenter);
+      }
+    };
+
+    tryCenter();
+    return () => {
+      if (frameId) cancelAnimationFrame(frameId);
+    };
   }, [imgWidth]);
 
   // Keep opacity 0 until the initial centering finishes to avoid a leftmost flash
@@ -72,6 +93,20 @@ export default function MobileHallGate({ dwellProgress = 0 }) {
   const updateActiveGate = useCallback(() => {
     if (!scrollRef.current || !imgWidth) return;
     const el = scrollRef.current;
+    
+    // Check if scrolled fully to boundaries (with 10px forgiveness)
+    const isAtStart = el.scrollLeft <= 10;
+    const isAtEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 10;
+    
+    if (isAtStart) {
+      setActiveId(GATES[0].id);
+      return;
+    }
+    if (isAtEnd) {
+      setActiveId(GATES[GATES.length - 1].id);
+      return;
+    }
+
     const viewCenterPx = el.scrollLeft + el.clientWidth / 2;
     let closest = GATES[0];
     let closestDist = Infinity;
@@ -150,7 +185,7 @@ export default function MobileHallGate({ dwellProgress = 0 }) {
             }}
           />
 
-          <GateAtmosphere opacity={0.7} />
+
 
           {/* Torch ambient glows, reused from the desktop layout */}
           {TORCHES.map((t, i) => (

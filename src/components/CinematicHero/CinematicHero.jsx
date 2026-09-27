@@ -59,7 +59,7 @@ export default function CinematicHero() {
         >
           {(dwellProgress) => (
             <>
-              <CastleAtmosphere opacity={1} />
+              <CastleAtmosphere opacity={Math.max(0, 1 - dwellProgress / 0.35)} />
               <SectionAbout dwellProgress={dwellProgress} />
             </>
           )}

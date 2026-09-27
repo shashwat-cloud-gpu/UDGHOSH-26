@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import GateAtmosphere from "./GateAtmosphere";
+
 import MobileDeskGate from "./MobileDeskGate";
 
 export const GATES = [
@@ -293,8 +293,7 @@ function DesktopCastleGate({ dwellProgress = 0 }) {
           />
         )}
 
-        {/* Atmospheric rain, horror bats & lightning */}
-        <GateAtmosphere opacity={1} />
+        {/* Atmospheric effects removed by request */}
 
         {/* Torch ambient glows */}
         {TORCHES.map((t, i) => (
