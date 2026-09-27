@@ -540,10 +540,11 @@ export default function CastleAtmosphere({ opacity = 1 }) {
         ctx.scale(facing, 1);
         ctx.rotate(bat.bank);
 
+        const isMobile = window.innerWidth < 768;
         bat.zPhase += bat.zSpeed;
         const flap = bat.isGliding ? 0.15 : Math.sin(bat.wingAngle);
-        const zScale = 1 + Math.sin(bat.zPhase) * 0.45;
-        const s = bat.size * zScale;
+        const zScale = isMobile ? 1 : 1 + Math.sin(bat.zPhase) * 0.45;
+        const s = bat.size * zScale * (isMobile ? 0.4 : 1);
 
         const isIlluminated = fi > 0.2;
         const shade = 22 + bat.tone * 14;
