@@ -116,8 +116,8 @@ export default function Gallery() {
 
       {/* Big gothic background text - Shortened as requested */}
       <div className="gb-bg-type" aria-hidden="true">
-        <span>Lost</span>
-        <span>Lore</span>
+        <span>Lost Lore</span>
+        <span>Gallery</span>
       </div>
 
       <div className="gb-vignette" />

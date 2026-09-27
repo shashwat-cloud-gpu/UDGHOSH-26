@@ -102,7 +102,7 @@
   pointer-events: none;
   z-index: 3;
   mix-blend-mode: exclusion;
-  font-size: clamp(3rem, 18vw, 18rem);
+  font-size: clamp(2rem, 9.5vw, 12rem);
   font-weight: 800;
   line-height: 0.85;
   color: rgba(200, 150, 40, 0.12);
