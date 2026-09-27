@@ -207,19 +207,6 @@ function DesktopCastleGate({ dwellProgress = 0 }) {
     return () => cancelAnimationFrame(fireRafRef.current);
   }, []);
 
-  // eslint-disable-next-line no-unused-vars
-  const [cursorPos, setCursorPos] = useState({ x: 50, y: 50 });
-
-  const handleMouseMove = (e) => {
-    // Only track if not entering a gate
-    if (enteringGate) return;
-    const { clientX, clientY, currentTarget } = e;
-    const { left, top, width, height } = currentTarget.getBoundingClientRect();
-    const x = ((clientX - left) / width) * 100;
-    const y = ((clientY - top) / height) * 100;
-    setCursorPos({ x, y });
-  };
-
   const handleClick = (gate) => {
     if (enteringGate) return;
 
@@ -249,7 +236,6 @@ function DesktopCastleGate({ dwellProgress = 0 }) {
 
   return (
     <div
-      onMouseMove={handleMouseMove}
       style={{
         position: "absolute", inset: 0,
         opacity,

@@ -4,6 +4,11 @@ export default function CastleAtmosphere({ opacity = 1 }) {
   const canvasRef = useRef(null);
   const animRef = useRef(null);
 
+  const opacityRef = useRef(opacity);
+  useEffect(() => {
+    opacityRef.current = opacity;
+  }, [opacity]);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -37,9 +42,6 @@ export default function CastleAtmosphere({ opacity = 1 }) {
         0.15 * Math.sin(gustPhase * 2.7 + 1.3)
       );
     }
-
-    // ── Fog removed ──
-    const fogBlobs = [];
 
     // ── Rain Engine ──
     const rainCount = 130;
@@ -321,6 +323,11 @@ export default function CastleAtmosphere({ opacity = 1 }) {
 
     // ── Render Loop ──
     function render() {
+      if (opacityRef.current <= 0.001) {
+        animRef.current = requestAnimationFrame(render);
+        return;
+      }
+
       ctx.save();
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, width, height);
