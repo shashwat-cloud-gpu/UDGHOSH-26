@@ -71,6 +71,7 @@ const Navbar = ({ isDarkMode, isVisible = true }) => {
       <nav
         className="w-full fixed top-0 left-0 z-50 px-4 sm:px-6 lg:px-12 xl:px-[7%] py-2.5 sm:py-4 flex items-center justify-between transition-opacity duration-300 bg-transparent"
         style={{
+          fontFamily: "'Cinzel', 'Palatino Linotype', serif",
           opacity: isVisible ? 1 : 0,
           pointerEvents: isVisible ? "auto" : "none",
         }}
@@ -82,7 +83,7 @@ const Navbar = ({ isDarkMode, isVisible = true }) => {
             alt="Udghosh logo"
             className="w-8 h-8 sm:w-10 sm:h-10 object-contain drop-shadow-[0_0_8px_rgba(56,189,248,0.4)]"
           />
-          <span className="font-bold font-poppins text-lg sm:text-xl text-white tracking-wide">
+          <span className="font-bold text-lg sm:text-xl text-white tracking-wide">
             UDGHOSH<span className="text-cyan-400">.</span>
           </span>
         </a>
@@ -183,11 +184,12 @@ const Navbar = ({ isDarkMode, isVisible = true }) => {
         className={`flex md:hidden flex-col fixed right-0 top-0 bottom-0 w-72 max-w-[80vw] z-50 h-screen transition-transform duration-300 ease-in-out text-white bg-[#0b1120]/95 backdrop-blur-xl border-l border-white/10 shadow-2xl ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
+        style={{ fontFamily: "'Cinzel', 'Palatino Linotype', serif" }}
       >
         <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
           <div className="flex items-center gap-2">
             <img src="https://res.cloudinary.com/u5qztegz/image/upload/q_auto,f_auto/v1790203296/udghosh-23/images/logo.png" alt="Udghosh" className="w-7 h-7 object-contain" />
-            <span className="font-bold font-poppins text-base text-white tracking-wide">
+            <span className="font-bold text-base text-white tracking-wide">
               UDGHOSH<span className="text-cyan-400">.</span>
             </span>
           </div>
