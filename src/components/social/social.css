@@ -13,9 +13,9 @@
   --color-link: #cbd5e1;
   --color-link-hover: #38bdf8;
   --color-description: #94a3b8;
-  --font-title: 'Cinzel', "Righteous", cursive;
-  --font-weight-title: 700;
-  --size-title: clamp(2rem, 6vw, 4rem);
+  --font-title: "Dancing Script", serif;
+  --font-weight-title: 600;
+  --size-title: clamp(2.5rem, 6vw, 4.5rem);
   --imgwidthmax: 600px;
 }
 
@@ -69,9 +69,9 @@ a:focus {
 .page__title {
   grid-area: header;
   margin: 10vh 0 8vh;
-  font-family: var(--font-title);
-  font-size: var(--size-title);
-  font-weight: 600;
+  font-family: "Righteous", cursive;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 400;
   color: #fff;
   text-align: center;
   text-shadow: 0 4px 20px rgba(0,0,0,0.8);
@@ -155,9 +155,9 @@ a:focus {
 
 .content__item-title {
   position: relative;
-  font-size: clamp(1.75rem, 4vw, 3rem);
+  font-size: var(--size-title);
   padding: 0 3vw;
-  margin: calc(clamp(1.75rem, 4vw, 3rem) * -1 / 2) 0 0 0;
+  margin: calc(var(--size-title) * -1 / 2) 0 0 0;
   align-self: start;
   line-height: 1.2;
   font-family: var(--font-title);
