@@ -96,6 +96,8 @@ export default function GateAtmosphere({ opacity = 1 }) {
         baseY: startY,
         depth,
         size: (Math.random() * 7 + 11) * depth,
+        zPhase: Math.random() * Math.PI * 2,
+        zSpeed: Math.random() * 0.015 + 0.005,
         wingAngle: 0,
         wingSpeed: Math.random() * 0.10 + 0.18,
         isGliding: false,
@@ -513,8 +515,10 @@ export default function GateAtmosphere({ opacity = 1 }) {
         ctx.scale(facing, 1);
         ctx.rotate(bat.bank);
 
+        bat.zPhase += bat.zSpeed;
         const flap = bat.isGliding ? 0.2 : Math.sin(bat.wingAngle);
-        const s = bat.size;
+        const zScale = 1 + Math.sin(bat.zPhase) * 0.45; // Oscillates size by +/- 45%
+        const s = bat.size * zScale;
 
         const isIlluminated = fi > 0.2;
         const shade = 24 + bat.tone * 16;
