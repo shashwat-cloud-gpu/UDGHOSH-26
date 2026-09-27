@@ -15,7 +15,7 @@
   --color-description: #94a3b8;
   --font-title: 'Cinzel', "Righteous", cursive;
   --font-weight-title: 700;
-  --size-title: clamp(3rem, 6vw, 6rem);
+  --size-title: clamp(2rem, 6vw, 4rem);
   --imgwidthmax: 600px;
 }
 
@@ -68,14 +68,14 @@ a:focus {
 
 .page__title {
   grid-area: header;
-  margin: 10vh 0 0.5rem;
+  margin: 10vh 0 8vh;
   font-family: var(--font-title);
   font-size: var(--size-title);
-  font-weight: var(--font-weight-title);
+  font-weight: 600;
   color: #fff;
   text-align: center;
   text-shadow: 0 4px 20px rgba(0,0,0,0.8);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
 }
 
 .content {
@@ -155,17 +155,18 @@ a:focus {
 
 .content__item-title {
   position: relative;
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-size: clamp(1.75rem, 4vw, 3rem);
   padding: 0 3vw;
-  margin: calc(clamp(2.5rem, 5vw, 4.5rem) * -1 / 2) 0 0 0;
+  margin: calc(clamp(1.75rem, 4vw, 3rem) * -1 / 2) 0 0 0;
   align-self: start;
-  line-height: 1;
+  line-height: 1.2;
   font-family: var(--font-title);
-  font-weight: var(--font-weight-title);
-  color: #fff;
+  font-weight: 600;
+  color: #f1f5f9;
   text-shadow: 0 4px 15px rgba(0,0,0,0.9);
   will-change: transform;
   z-index: 10;
+  letter-spacing: 0.05em;
 }
 
 .content--alternate .content__item-title {
@@ -214,23 +215,31 @@ a:focus {
 }
 
 @media screen and (max-width: 40em) {
+  .content__item {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    margin-bottom: 20vh;
+  }
   .content__item--expand .content__item-imgwrap,
   .content__item--expand:nth-child(even) .content__item-imgwrap {
-    grid-area: 1 / 1 / 3 / 3;
-  }
-  .content__item--expand .content__item-description,
-  .content__item--expand:nth-child(even) .content__item-description {
-    grid-area: 3 / 1 / 4 / 3;
-    padding: 2rem 0;
-    width: 100%;
-    text-align: left;
+    grid-area: 1 / 1 / 2 / 2;
   }
   .content--alternate .content__item-title,
   .content--alternate .content__item:nth-child(even) .content__item-title {
-    grid-area: 1 / 1 / 4 / 2;
-    margin-top: -2rem;
+    grid-area: 2 / 1 / 3 / 2;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    justify-self: center;
+  }
+  .content__item--expand .content__item-description,
+  .content__item--expand:nth-child(even) .content__item-description {
+    grid-area: 3 / 1 / 4 / 2;
+    padding: 0;
+    width: 100%;
+    text-align: center;
   }
   .page__title {
-    margin: 15vh 0 0.5rem;
+    margin: 12vh 0 10vh;
   }
 }
