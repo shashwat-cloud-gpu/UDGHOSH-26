@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useRef } from "react";
 import Navbar2 from "../navbar/Navbar2.jsx";
 import Footer2 from "../Footer2/Footer2.jsx";
 import "./social.css";
@@ -7,258 +6,325 @@ import "./social.css";
 const initiativesData = [
   {
     id: "udaan",
-    title: "UDAAN",
+    title: "Udaan",
     image: "https://live.staticflickr.com/65535/53225579402_da49bc827c_b.jpg",
     description:
       "UDAAN is a social initiative by UDGHOSH, to celebrate the differently-abled children of god. UDGHOSH reveres the spirit of the children by organizing various activities, talks, games and friendly sports competitions wherein the children can enjoy themselves and savor sportsmanship.",
+    aspectRatio: "700/525",
   },
   {
     id: "marathon",
-    title: "MARATHON",
+    title: "Marathon",
     image: "https://live.staticflickr.com/65535/52398183996_f8cb83a0c5_b.jpg",
     description:
       "The Udghosh family's marathon unites Kanpur residents and locals, spreading awareness about women's empowerment and girl child education, engaging both the community and city in these vital causes.",
+    aspectRatio: "700/460",
   },
   {
     id: "blood-donation",
-    title: "BLOOD DONATION CAMP",
+    title: "Blood Donation",
     image: "https://live.staticflickr.com/65535/52397672797_2a584fc67e_b.jpg",
     description:
-      "This Gandhi Jayanti, Udghosh stands proud to organize “ Blood Donation Camp”, in collaboration with Raktarpan. Make a difference on this day to become the hero society needs. Battle fears, take a leap, and give someone a chance at life by voluntarily donating blood.",
+      "This Gandhi Jayanti, Udghosh stands proud to organize a Blood Donation Camp, in collaboration with Raktarpan. Make a difference on this day to become the hero society needs. Battle fears, take a leap, and give someone a chance at life.",
+    aspectRatio: "600/450",
   },
   {
     id: "plantation",
-    title: "PLANTATION FOR DONATION",
+    title: "Plantation",
     image: "https://live.staticflickr.com/65535/52398183966_610f96d4e1_b.jpg",
     description:
-      "We are continuing the legacy of Udghosh's renowned social efforts. Udghosh, IIT Kanpur is hosting a tree-planting event on campus titled \"Plantation for Donation\" to battle challenges such as deforestation and global warming while improving the area's aesthetic appeal and ecological stability.",
+      "We are continuing the legacy of Udghosh's renowned social efforts. Udghosh, IIT Kanpur is hosting a tree-planting event on campus titled 'Plantation for Donation' to battle challenges such as deforestation and global warming.",
+    aspectRatio: "600/500",
   },
 ];
 
 const Social = () => {
-  const [transitionState, setTransitionState] = useState("entering"); // "entering" | "entered" | "exiting"
-  const [deckOffsets, setDeckOffsets] = useState([]);
-  const [dealtIndices, setDealtIndices] = useState(new Set());
-  const [isDeckReady, setIsDeckReady] = useState(false);
-
-  const gridRef = useRef(null);
-  const cardRefs = useRef([]);
-  const timersRef = useRef([]);
-  const navigate = useNavigate();
-
-  // Clean all dealing timers
-  const clearDealTimers = () => {
-    timersRef.current.forEach((t) => clearTimeout(t));
-    timersRef.current = [];
-  };
-
-  // Measure deck positions and deal cards 1 by 1
-  const dealCardsOneByOne = useCallback(() => {
-    clearDealTimers();
-    if (!gridRef.current) return;
-
-    const gridRect = gridRef.current.getBoundingClientRect();
-    const centerX = gridRect.left + gridRect.width / 2;
-    const centerY = gridRect.top + gridRect.height / 2;
-
-    const newOffsets = cardRefs.current.map((el, i) => {
-      if (!el) return { dx: 0, dy: 0, rot: 0 };
-      const r = el.getBoundingClientRect();
-      const elCenterX = r.left + r.width / 2;
-      const elCenterY = r.top + r.height / 2;
-      return {
-        dx: centerX - elCenterX,
-        dy: centerY - elCenterY,
-        rot: (i - 1.5) * 2.8,
-      };
-    });
-
-    setDeckOffsets(newOffsets);
-    setDealtIndices(new Set());
-    setIsDeckReady(true);
-
-    // Stagger slide out from deck 1 by 1
-    const delays = [400, 800, 1200, 1600];
-    delays.forEach((delay, idx) => {
-      const timer = setTimeout(() => {
-        setDealtIndices((prev) => new Set([...prev, idx]));
-      }, delay);
-      timersRef.current.push(timer);
-    });
-  }, []);
+  const containerRef = useRef(null);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-
-    // Trigger illumination transition
-    const enterTimer = setTimeout(() => {
-      setTransitionState("entered");
-    }, 60);
-
-    // Initial deck deal animation when site opens
-    const dealInitTimer = setTimeout(() => {
-      dealCardsOneByOne();
-    }, 220);
-
-    return () => {
-      clearTimeout(enterTimer);
-      clearTimeout(dealInitTimer);
-      clearDealTimers();
+    // Math helpers
+    const MathUtils = {
+      map: (x, a, b, c, d) => ((x - a) * (d - c)) / (b - a) + c,
+      lerp: (a, b, n) => (1 - n) * a + n * b,
+      getRandomFloat: (min, max) => (Math.random() * (max - min) + min).toFixed(2),
     };
-  }, [dealCardsOneByOne]);
 
-  // Lit to dark transition before navigating
-  const handleNavigateAway = (targetUrl) => {
-    if (transitionState === "exiting") return;
-    setTransitionState("exiting");
-    setTimeout(() => {
-      navigate(targetUrl);
-    }, 750);
-  };
+    let winsize = { width: window.innerWidth, height: window.innerHeight };
+    const calcWinsize = () => (winsize = { width: window.innerWidth, height: window.innerHeight });
+    window.addEventListener("resize", calcWinsize);
 
-  // Intercept internal link click
-  const handleRootClick = (e) => {
-    const anchor = e.target.closest("a");
-    if (anchor && anchor.getAttribute("href")) {
-      const href = anchor.getAttribute("href");
-      if (
-        href &&
-        (href.startsWith("/") || href.startsWith("#")) &&
-        !href.startsWith("//") &&
-        !anchor.getAttribute("target")
-      ) {
-        e.preventDefault();
-        handleNavigateAway(href === "/home" ? "/" : href);
+    let docScroll = window.pageYOffset || document.documentElement.scrollTop;
+    let lastScroll = docScroll;
+    let scrollingSpeed = 0;
+    
+    const getPageYScroll = () => {
+      docScroll = window.pageYOffset || document.documentElement.scrollTop;
+    };
+    window.addEventListener("scroll", getPageYScroll);
+
+    class Item {
+      constructor(el) {
+        this.DOM = { el: el };
+        this.DOM.image = this.DOM.el.querySelector(".content__item-img");
+        this.DOM.imageWrapper = this.DOM.image.parentNode;
+        this.DOM.el.style.perspective = "1000px";
+        this.DOM.imageWrapper.style.transformOrigin = "50% 100%";
+        this.ry = MathUtils.getRandomFloat(-0.5, 0.5);
+        this.rz = MathUtils.getRandomFloat(-0.5, 0.5);
+        this.DOM.title = this.DOM.el.querySelector(".content__item-title");
+        this.DOM.title.style.transform = "translate3d(0,0,200px)";
+        
+        this.renderedStyles = {
+          innerTranslationY: {
+            previous: 0,
+            current: 0,
+            ease: 0.1,
+            setValue: () => {
+              const toValue = parseInt(getComputedStyle(this.DOM.image).getPropertyValue("--overflow"), 10) || 40;
+              const fromValue = -1 * toValue;
+              return Math.max(
+                Math.min(
+                  MathUtils.map(this.props.top - docScroll, winsize.height, -1 * this.props.height, fromValue, toValue),
+                  toValue
+                ),
+                fromValue
+              );
+            },
+          },
+          itemRotation: {
+            previous: 0,
+            current: 0,
+            ease: 0.1,
+            toValue: Number(MathUtils.getRandomFloat(-70, -50)),
+            setValue: () => {
+              const toValue = this.renderedStyles.itemRotation.toValue;
+              const fromValue = toValue * -1;
+              const val = MathUtils.map(
+                this.props.top - docScroll,
+                winsize.height * 1.5,
+                -1 * this.props.height,
+                fromValue,
+                toValue
+              );
+              return Math.min(Math.max(val, toValue), fromValue);
+            },
+          },
+        };
+
+        this.getSize();
+        this.update();
+
+        this.observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => (this.isVisible = entry.intersectionRatio > 0));
+        });
+        this.observer.observe(this.DOM.el);
+      }
+
+      update() {
+        for (const key in this.renderedStyles) {
+          this.renderedStyles[key].current = this.renderedStyles[key].previous = this.renderedStyles[key].setValue();
+        }
+        this.layout();
+      }
+
+      getSize() {
+        const rect = this.DOM.el.getBoundingClientRect();
+        this.props = {
+          height: rect.height,
+          top: docScroll + rect.top,
+        };
+      }
+
+      resize() {
+        this.getSize();
+        this.update();
+      }
+
+      render() {
+        for (const key in this.renderedStyles) {
+          this.renderedStyles[key].current = this.renderedStyles[key].setValue();
+          this.renderedStyles[key].previous = MathUtils.lerp(
+            this.renderedStyles[key].previous,
+            this.renderedStyles[key].current,
+            this.renderedStyles[key].ease
+          );
+        }
+        this.layout();
+      }
+
+      layout() {
+        this.DOM.image.style.transform = `translate3d(0,${this.renderedStyles.innerTranslationY.previous}px,0)`;
+        this.DOM.imageWrapper.style.transform = `rotate3d(1,${this.ry},${this.rz},${this.renderedStyles.itemRotation.previous}deg)`;
       }
     }
-  };
 
-  const isEntered = transitionState === "entered";
-  const isExiting = transitionState === "exiting";
+    class SmoothScroll {
+      constructor(container) {
+        this.DOM = { main: container };
+        this.DOM.scrollable = this.DOM.main.querySelector("div[data-scroll]");
+        this.items = [];
+        this.DOM.content = this.DOM.main.querySelector(".content");
+        if (this.DOM.content) {
+          [...this.DOM.content.querySelectorAll(".content__item")].forEach((item) =>
+            this.items.push(new Item(item))
+          );
+        }
+
+        this.renderedStyles = {
+          translationY: {
+            previous: 0,
+            current: 0,
+            ease: 0.1,
+            setValue: () => docScroll,
+          },
+        };
+
+        this.setSize();
+        this.update();
+        this.style();
+        this.initEvents();
+        this.rAF = requestAnimationFrame(() => this.render());
+      }
+
+      update() {
+        for (const key in this.renderedStyles) {
+          this.renderedStyles[key].current = this.renderedStyles[key].previous = this.renderedStyles[key].setValue();
+        }
+        this.layout();
+      }
+
+      layout() {
+        this.DOM.scrollable.style.transform = `translate3d(0,${-1 * this.renderedStyles.translationY.previous}px,0)`;
+      }
+
+      setSize() {
+        if (this.DOM.scrollable) {
+           document.body.style.height = `${this.DOM.scrollable.scrollHeight}px`;
+        }
+      }
+
+      style() {
+        this.DOM.main.style.position = "fixed";
+        this.DOM.main.style.width = "100%";
+        this.DOM.main.style.height = "100%";
+        this.DOM.main.style.top = "0";
+        this.DOM.main.style.left = "0";
+        this.DOM.main.style.overflow = "hidden";
+        // To allow the background image to remain behind, make main transparent
+        this.DOM.main.style.background = "transparent";
+      }
+
+      initEvents() {
+        this.onResize = () => this.setSize();
+        window.addEventListener("resize", this.onResize);
+      }
+
+      render() {
+        scrollingSpeed = Math.abs(docScroll - lastScroll);
+        lastScroll = docScroll;
+
+        for (const key in this.renderedStyles) {
+          this.renderedStyles[key].current = this.renderedStyles[key].setValue();
+          this.renderedStyles[key].previous = MathUtils.lerp(
+            this.renderedStyles[key].previous,
+            this.renderedStyles[key].current,
+            this.renderedStyles[key].ease
+          );
+        }
+
+        this.layout();
+
+        for (const item of this.items) {
+          if (item.isVisible) {
+            if (item.insideViewport) {
+              item.render();
+            } else {
+              item.insideViewport = true;
+              item.update();
+            }
+          } else {
+            item.insideViewport = false;
+          }
+        }
+
+        this.rAF = requestAnimationFrame(() => this.render());
+      }
+      
+      destroy() {
+        window.removeEventListener("resize", this.onResize);
+        cancelAnimationFrame(this.rAF);
+        this.items.forEach(item => {
+           if (item.observer) item.observer.disconnect();
+        });
+      }
+    }
+
+    let scrollInstance = null;
+    
+    // Slight delay to allow DOM/images to paint before calculating heights
+    const initTimer = setTimeout(() => {
+       scrollInstance = new SmoothScroll(containerRef.current);
+    }, 100);
+
+    return () => {
+      clearTimeout(initTimer);
+      if (scrollInstance) scrollInstance.destroy();
+      window.removeEventListener("resize", calcWinsize);
+      window.removeEventListener("scroll", getPageYScroll);
+      document.body.style.height = "";
+    };
+  }, []);
 
   return (
-    <div onClick={handleRootClick} className="social-page">
-      {/* 1. Castle Floral Garden Background with Wholesome Sunlight & Lamps */}
+    <>
+      <Navbar2 />
+      
+      {/* Background Image preserved */}
       <div
         className="social-bg"
         style={{
-          backgroundImage: "url('/images/social_bg.jpg')",
-          filter:
-            transitionState === "entering"
-              ? "contrast(1.1) brightness(0.15) saturate(0.6) blur(6px)"
-              : isExiting
-              ? "contrast(1.1) brightness(0.12) saturate(0.5) blur(6px)"
-              : "contrast(1.04) brightness(1.02) saturate(1.14) blur(0px)",
-          transform:
-            transitionState === "entering" || isExiting ? "scale(1.04)" : "scale(1.01)",
-          transition: isExiting
-            ? "filter 0.75s ease-in, transform 0.75s ease-in"
-            : "filter 1.3s cubic-bezier(0.16, 1, 0.3, 1), transform 1.3s cubic-bezier(0.16, 1, 0.3, 1)",
+          backgroundImage:
+            "url('https://res.cloudinary.com/mxuy06ca/image/upload/w_1920,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/assets/background')",
+          backgroundAttachment: "fixed",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          position: "fixed",
+          inset: 0,
+          zIndex: -2,
         }}
       />
+      <div className="social-vignette" />
 
-      {/* 2. Warm Golden Sunlight & Lantern Light Flare Burst */}
-      <div
-        className="social-lantern-bloom"
-        style={{
-          background:
-            "radial-gradient(ellipse 1100px 750px at 45% 30%, rgba(254, 240, 138, 0.32) 0%, rgba(251, 191, 36, 0.18) 32%, rgba(245, 158, 11, 0.06) 65%, transparent 80%)",
-          opacity: isEntered ? 0.38 : 0,
-          transition: "opacity 1.4s ease-out",
-        }}
-      />
+      {/* Main scrolling container */}
+      <main ref={containerRef} className="social-main">
+        <div data-scroll className="page page--layout-2">
+          <h1 className="page__title">Social Initiatives</h1>
 
-      {/* 3. Dark Portal Transition Curtain: dark -> lit when entering, lit -> dark when exiting */}
-      <div
-        className="social-curtain"
-        style={{
-          opacity: isEntered ? 0 : 1,
-          transition: isExiting
-            ? "opacity 0.75s ease-in"
-            : "opacity 1.25s cubic-bezier(0.16, 1, 0.3, 1)",
-        }}
-      />
-
-      {/* 4. Atmospheric Warm Vignette for Content Legibility */}
-      <div
-        className="social-vignette"
-        style={{
-          background:
-            "radial-gradient(circle at 50% 45%, transparent 35%, rgba(18, 14, 10, 0.65) 100%)",
-        }}
-      />
-
-      {/* Navigation */}
-      <Navbar2 />
-
-      {/* Main Container */}
-      <div className="social-container">
-        {/* Header Section */}
-        <div className="social-header-box">
-          <h1 className="social-main-title">Social Initiatives</h1>
-          <div className="social-divider" />
-        </div>
-
-        {/* Deck Stage & Cards Grid */}
-        <div className="social-deck-stage">
-          <div className="social-cards-grid" ref={gridRef}>
-            {initiativesData.map((item, index) => {
-              const isDealt = dealtIndices.has(index);
-              const offset = deckOffsets[index] || { dx: 0, dy: 0, rot: 0 };
-
-              const cardStyle = !isDeckReady
-                ? { opacity: 0 }
-                : !isDealt
-                ? {
-                    transform: `translate3d(${offset.dx}px, ${offset.dy}px, 0) rotate(${offset.rot}deg) scale(0.96)`,
-                    zIndex: 20 + (4 - index),
-                    boxShadow: "0 18px 45px rgba(0, 0, 0, 0.9), 0 0 25px rgba(245, 158, 11, 0.2)",
-                    transition: "transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.85s ease",
-                  }
-                : {
-                    transform: "translate3d(0, 0, 0) rotate(0deg) scale(1)",
-                    zIndex: 1,
-                    transition: "transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.85s ease",
-                  };
-
-              return (
-                <div
-                  key={item.id}
-                  ref={(el) => (cardRefs.current[index] = el)}
-                  className={`social-card ${isDealt ? "is-dealt" : "in-deck"}`}
-                  style={cardStyle}
-                  onClick={() => {
-                    if (!isDealt) {
-                      setDealtIndices((prev) => new Set([...prev, index]));
-                    }
-                  }}
-                >
-                  <div className="social-card-img-wrap">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      loading="lazy"
-                      onError={(e) => {
-                        e.currentTarget.onerror = null;
-                        e.currentTarget.src =
-                          "https://res.cloudinary.com/mxuy06ca/image/upload/w_3840,c_scale,q_auto:best,f_auto/v1/udghosh-23/public/images/2024/photo1?_a=BAMAPqcg0";
-                      }}
-                    />
-                  </div>
-                  <div className="social-card-body">
-                    <h3 className="social-card-title">{item.title}</h3>
-                    <p className="social-card-desc">{item.description}</p>
-                  </div>
+          <div className="content content--alternate content--padded">
+            {initiativesData.map((item, index) => (
+              <div
+                key={item.id}
+                className="content__item content__item--expand"
+                style={{ "--aspect-ratio": item.aspectRatio }}
+              >
+                <div className="content__item-imgwrap">
+                  <div
+                    className="content__item-img"
+                    style={{ backgroundImage: `url(${item.image})` }}
+                  />
                 </div>
-              );
-            })}
+                <h2 className="content__item-title">{item.title}</h2>
+                <p className="content__item-description">{item.description}</p>
+              </div>
+            ))}
           </div>
+          
+          <div style={{ height: "100px" }}></div>
         </div>
-      </div>
+      </main>
 
-      {/* Footer */}
-      <Footer2 />
-    </div>
+      {/* Keep Footer out of the smooth scroll so it can be handled properly, or just add some space */}
+    </>
   );
 };
 
