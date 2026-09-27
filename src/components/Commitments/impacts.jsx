@@ -1,12 +1,11 @@
-import React from 'react'
-import Footer2 from "../Footer2/Footer2.jsx";
-function impacts() {
-  return (
-    <>
-    <div>impacts</div>
-    <Footer2/>
-    </>
-  )
-}
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export default impacts
+// This route is deprecated. Redirects to the Vision & Impact page.
+export default function Impacts() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    navigate('/vision', { replace: true });
+  }, [navigate]);
+  return null;
+}
