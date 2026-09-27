@@ -79,41 +79,39 @@ export default function MatchDashboard() {
 
 
 
-  // Scrollbar drag-to-scroll feature (optional)
+  // Scrollbar drag-to-scroll feature
   useEffect(() => {
     const el = document.querySelector('.sport-scroll');
-    let isDown = false, startX, scrollLeft;
     if (!el) return;
-    el.addEventListener('mousedown', (e) => {
-      isDown = true; el.classList.add('dragging');
+    let isDown = false, startX, scrollLeft;
+
+    const onMouseDown = (e) => {
+      isDown = true;
+      el.classList.add('dragging');
       startX = e.pageX - el.offsetLeft;
       scrollLeft = el.scrollLeft;
-    });
-    el.addEventListener('mouseleave', () => { isDown = false; el.classList.remove('dragging'); });
-    el.addEventListener('mouseup', () => { isDown = false; el.classList.remove('dragging'); });
-    el.addEventListener('mousemove', (e) => {
+    };
+    const onMouseLeave = () => { isDown = false; el.classList.remove('dragging'); };
+    const onMouseUp = () => { isDown = false; el.classList.remove('dragging'); };
+    const onMouseMove = (e) => {
       if (!isDown) return;
       e.preventDefault();
       const x = e.pageX - el.offsetLeft;
       const walk = (x - startX) * 2;
       el.scrollLeft = scrollLeft - walk;
-    });
-    return () => {};
-  }, []);
+    };
 
+    el.addEventListener('mousedown', onMouseDown);
+    el.addEventListener('mouseleave', onMouseLeave);
+    el.addEventListener('mouseup', onMouseUp);
+    el.addEventListener('mousemove', onMouseMove);
 
-
-  // Pointer background glow effect
-  useEffect(() => {
-    const glow = document.getElementById('pointer-bg-glow');
-    function moveBgGlow(e) {
-      if (glow) {
-        glow.style.left = `${e.clientX}px`;
-        glow.style.top = `${e.clientY}px`;
-      }
-    }
-    window.addEventListener('mousemove', moveBgGlow);
-    return () => window.removeEventListener('mousemove', moveBgGlow);
+    return () => {
+      el.removeEventListener('mousedown', onMouseDown);
+      el.removeEventListener('mouseleave', onMouseLeave);
+      el.removeEventListener('mouseup', onMouseUp);
+      el.removeEventListener('mousemove', onMouseMove);
+    };
   }, []);
 
 

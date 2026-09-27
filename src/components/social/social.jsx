@@ -194,23 +194,14 @@ const Social = () => {
       }
 
       layout() {
-        this.DOM.scrollable.style.transform = `translate3d(0,${-1 * this.renderedStyles.translationY.previous}px,0)`;
+        // Lenis handles window scroll smoothly
       }
 
       setSize() {
-        if (this.DOM.scrollable) {
-           document.body.style.height = `${this.DOM.scrollable.scrollHeight}px`;
-        }
+        // Standard document layout
       }
 
       style() {
-        this.DOM.main.style.position = "fixed";
-        this.DOM.main.style.width = "100%";
-        this.DOM.main.style.height = "100%";
-        this.DOM.main.style.top = "0";
-        this.DOM.main.style.left = "0";
-        this.DOM.main.style.overflow = "hidden";
-        // To allow the background image to remain behind, make main transparent
         this.DOM.main.style.background = "transparent";
       }
 
@@ -231,8 +222,6 @@ const Social = () => {
             this.renderedStyles[key].ease
           );
         }
-
-        this.layout();
 
         for (const item of this.items) {
           if (item.isVisible) {
@@ -261,7 +250,7 @@ const Social = () => {
 
     let scrollInstance = null;
     
-    // Slight delay to allow DOM/images to paint before calculating heights
+    // Slight delay to allow DOM/images to paint before initializing
     const initTimer = setTimeout(() => {
        scrollInstance = new SmoothScroll(containerRef.current);
     }, 100);
@@ -271,7 +260,6 @@ const Social = () => {
       if (scrollInstance) scrollInstance.destroy();
       window.removeEventListener("resize", calcWinsize);
       window.removeEventListener("scroll", getPageYScroll);
-      document.body.style.height = "";
     };
   }, []);
 
@@ -295,7 +283,7 @@ const Social = () => {
       <div className="social-vignette" />
 
       {/* Main scrolling container */}
-      <main ref={containerRef} className="social-main">
+      <main ref={containerRef} className="social-main relative z-10">
         <div data-scroll className="page page--layout-2">
           <h1 className="page__title">Social Initiatives</h1>
 
@@ -317,12 +305,12 @@ const Social = () => {
               </div>
             ))}
           </div>
-          
-          <div style={{ height: "100px" }}></div>
         </div>
       </main>
 
-      {/* Keep Footer out of the smooth scroll so it can be handled properly, or just add some space */}
+      <div className="relative z-10">
+        <Footer2 />
+      </div>
     </>
   );
 };
