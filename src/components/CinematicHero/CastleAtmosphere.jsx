@@ -97,7 +97,7 @@ export default function CastleAtmosphere({ opacity = 1 }) {
         vy: (Math.random() - 0.5) * 0.6 * depth,
         baseY: startY,
         depth,
-        size: (Math.random() * 6 + 10) * depth,
+        size: (Math.random() * 12 + 20) * depth,
         zPhase: Math.random() * Math.PI * 2,
         zSpeed: Math.random() * 0.015 + 0.005,
         wingAngle: 0,

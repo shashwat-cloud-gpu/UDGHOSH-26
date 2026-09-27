@@ -1,0 +1,247 @@
+/* ── Gallery Root ─────────────────────────────────────────────────────────── */
+.gallery-root {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background-color: #080608;
+  background-image:
+    /* Stone brick pattern — subtle repeating gradient */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 39px,
+      rgba(255,255,255,0.018) 39px,
+      rgba(255,255,255,0.018) 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent,
+      transparent 59px,
+      rgba(255,255,255,0.012) 59px,
+      rgba(255,255,255,0.012) 60px
+    ),
+    radial-gradient(ellipse at 50% 40%, #1a0d00 0%, #08060a 70%);
+  font-family: 'Cinzel', 'Palatino Linotype', serif;
+  cursor: crosshair;
+}
+
+/* ── Vignette ─────────────────────────────────────────────────────────────── */
+.gallery-vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 30%,
+    rgba(4, 2, 8, 0.65) 75%,
+    rgba(2, 1, 5, 0.92) 100%
+  );
+}
+
+/* ── Torchlight Glow Orbs ─────────────────────────────────────────────────── */
+.torch-glow {
+  position: fixed;
+  top: 35%;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2;
+  animation: torchFlicker 5s ease-in-out infinite alternate;
+}
+.torch-glow--left {
+  left: -60px;
+  background: radial-gradient(circle, rgba(255,140,20,0.18) 0%, transparent 70%);
+}
+.torch-glow--right {
+  right: -60px;
+  background: radial-gradient(circle, rgba(255,110,10,0.15) 0%, transparent 70%);
+  animation-delay: -2.5s;
+}
+@keyframes torchFlicker {
+  0%   { opacity: 0.7; transform: scale(1.0); }
+  30%  { opacity: 1.0; transform: scale(1.08); }
+  60%  { opacity: 0.8; transform: scale(0.95); }
+  100% { opacity: 1.0; transform: scale(1.05); }
+}
+
+/* ── Pannable Canvas ──────────────────────────────────────────────────────── */
+.gallery-canvas {
+  position: absolute;
+  height: 140vmax;
+  width: 140vmax;
+  /* will-change added by browser via animation API */
+}
+
+/* ── Each Tile ────────────────────────────────────────────────────────────── */
+.gallery-tile {
+  position: absolute;
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
+              filter 700ms ease;
+  filter: drop-shadow(0 4px 18px rgba(0,0,0,0.85));
+}
+.gallery-tile:hover {
+  transform: scale(1.06) translateY(-4px);
+  filter: drop-shadow(0 10px 36px rgba(180,100,20,0.45))
+          drop-shadow(0 0 24px rgba(255,160,40,0.2));
+  z-index: 5;
+}
+
+/* ── Gothic Arch Cutout ───────────────────────────────────────────────────── */
+.tile-arch {
+  position: absolute;
+  top: -8%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40%;
+  height: 12%;
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+  background: transparent;
+  /* This creates the arch shadow peak above the tile */
+  box-shadow: 0 -6px 16px rgba(200,140,20,0.25);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── Outer Ornate Frame ───────────────────────────────────────────────────── */
+.tile-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  /* Double gold border — outer thick, inner thin */
+  border: 3px solid rgba(190,140,40,0.85);
+  box-shadow:
+    inset 0 0 0 4px rgba(10,6,2,0.95),
+    inset 0 0 0 5px rgba(160,110,20,0.6),
+    0 0 0 1px rgba(80,50,5,0.5),
+    0 2px 12px rgba(0,0,0,0.8);
+  border-radius: 3px 3px 0 0;
+  box-sizing: border-box;
+  background: #0a0604;
+}
+
+/* ── Corner Boss Flourishes ───────────────────────────────────────────────── */
+.corner {
+  position: absolute;
+  font-size: clamp(7px, 1vmax, 13px);
+  color: rgba(200,155,40,0.9);
+  line-height: 1;
+  z-index: 3;
+  text-shadow: 0 0 6px rgba(255,180,30,0.5);
+}
+.corner--tl { top: 2px;  left: 3px;  }
+.corner--tr { top: 2px;  right: 3px; }
+.corner--bl { bottom: 2px; left: 3px;  }
+.corner--br { bottom: 2px; right: 3px; }
+
+/* ── Inner Frame Line ─────────────────────────────────────────────────────── */
+.tile-frame-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+/* ── Photo ────────────────────────────────────────────────────────────────── */
+.tile-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0;
+  transition: opacity 900ms ease, transform 700ms ease;
+}
+.gallery-tile:hover .tile-img {
+  opacity: 1;
+  transform: scale(1.03);
+}
+/* Fade in lazily even without hover via JS — but show color bg while loading */
+.tile-img.loaded {
+  opacity: 0.88;
+}
+
+/* ── Sepia Vintage Overlay ────────────────────────────────────────────────── */
+.tile-sepia {
+  position: absolute;
+  inset: 0;
+  /* Sepia tint */
+  background: rgba(80,40,5,0.28);
+  /* Aged vignette inside the photo */
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.6);
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  transition: opacity 700ms ease;
+}
+.gallery-tile:hover .tile-sepia {
+  opacity: 0;
+}
+
+/* ── Museum Plaque ────────────────────────────────────────────────────────── */
+.tile-plaque {
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(12,8,2,0.9);
+  border: 1px solid rgba(160,110,20,0.5);
+  border-top: none;
+  padding: 3px 10px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.7);
+}
+.tile-plaque-year {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(6px, 0.7vmax, 10px);
+  font-weight: 700;
+  color: rgba(210,165,50,0.9);
+  letter-spacing: 0.12em;
+}
+.tile-plaque-divider {
+  color: rgba(150,100,20,0.6);
+  font-size: 0.6vmax;
+}
+.tile-plaque-alt {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(5px, 0.6vmax, 9px);
+  color: rgba(180,140,70,0.75);
+  letter-spacing: 0.08em;
+}
+
+/* ── Header ───────────────────────────────────────────────────────────────── */
+.gallery-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  text-align: center;
+  padding: 72px 20px 16px; /* below navbar */
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(4,2,8,0.85) 60%, transparent 100%);
+}
+.gallery-title {
+  margin: 0;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.2rem, 2.5vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  color: transparent;
+  background: linear-gradient(135deg, #c8860a 0%, #f5d080 40%, #c8860a 70%, #8b5a00 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow: none;
+  filter: drop-shadow(0 0 12px rgba(200,134,10,0.5));
+}
+.gallery-subtitle {
+  margin: 4px 0 0;
+  font-family: 'Cinzel', serif;
+  font-size: clamp(0.6rem, 1vw, 0.85rem);
+  letter-spacing: 0.4em;
+  color: rgba(180,130,40,0.65);
+  text-transform: uppercase;
+}

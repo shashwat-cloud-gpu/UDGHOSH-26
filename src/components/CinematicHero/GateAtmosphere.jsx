@@ -95,7 +95,7 @@ export default function GateAtmosphere({ opacity = 1 }) {
         vy: (Math.random() - 0.5) * 0.8 * depth,
         baseY: startY,
         depth,
-        size: (Math.random() * 7 + 11) * depth,
+        size: (Math.random() * 14 + 22) * depth,
         zPhase: Math.random() * Math.PI * 2,
         zSpeed: Math.random() * 0.015 + 0.005,
         wingAngle: 0,
