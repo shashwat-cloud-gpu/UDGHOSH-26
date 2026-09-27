@@ -1,8 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 // --- SVG Icon Components ---
-// Updated with outline-style icons that more closely match the reference design.
-
 const InstagramIcon = () => (
     <svg stroke="currentColor" fill="none" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" height="1.75em" width="1.75em" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
 );
@@ -39,20 +38,37 @@ const FacebookIcon = () => (
 );
 
 const SocialLink = ({ href, icon: Icon, label }) => (
-    <a href={href} className="text-gray-400 hover:text-white transform hover:-translate-y-1 transition-all duration-300" aria-label={label}>
+    <a href={href} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transform hover:-translate-y-1 transition-all duration-300" aria-label={label}>
         <Icon />
     </a>
 );
 
-const FooterNavLink = ({ href, children }) => (
-     <li>
-        <a href={href} className="inline-block text-lg transform hover:scale-105 hover:text-white transition-all duration-300">
-            {children}
+const FooterNavLink = ({ href, children }) => {
+  const isExternal = href.startsWith('http://') || href.startsWith('https://');
+  return (
+    <li>
+      {isExternal ? (
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block text-lg transform hover:scale-105 hover:text-white transition-all duration-300"
+        >
+          {children}
         </a>
+      ) : (
+        <Link
+          to={href}
+          className="inline-block text-lg transform hover:scale-105 hover:text-white transition-all duration-300"
+        >
+          {children}
+        </Link>
+      )}
     </li>
-);
+  );
+};
 
-const App = () => {
+const Footer2 = () => {
   return (
     <>
       <style>{`
@@ -81,9 +97,9 @@ const App = () => {
 
                 {/* Middle Column (Image) */}
                 <div className="md:col-span-4 flex justify-center order-first md:order-none">
-                     <a href="/">
+                     <Link to="/">
                         <img src="https://res.cloudinary.com/u5qztegz/image/upload/w_3840,c_limit,q_auto:best,f_auto/v1790203296/udghosh-23/images/logo.png" alt="Udghosh Logo" className="mx-auto h-auto w-full max-w-[10rem] sm:max-w-[12rem] object-contain" />
-                     </a>
+                     </Link>
                 </div>
 
                 {/* Right Column */}
@@ -117,5 +133,4 @@ const App = () => {
   );
 }
 
-export default App;
-
+export default Footer2;
