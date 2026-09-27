@@ -516,48 +516,111 @@ export default function GateAtmosphere({ opacity = 1 }) {
         ctx.rotate(bat.bank);
 
         bat.zPhase += bat.zSpeed;
-        const flap = bat.isGliding ? 0.2 : Math.sin(bat.wingAngle);
-        const zScale = 1 + Math.sin(bat.zPhase) * 0.45; // Oscillates size by +/- 45%
+        const flap = bat.isGliding ? 0.15 : Math.sin(bat.wingAngle);
+        const zScale = 1 + Math.sin(bat.zPhase) * 0.45;
         const s = bat.size * zScale;
 
         const isIlluminated = fi > 0.2;
         const shade = 24 + bat.tone * 16;
-        ctx.fillStyle = isIlluminated
-          ? `rgba(${Math.round(shade + 8)}, ${Math.round(shade + 12)}, ${Math.round(shade + 28)}, ${bat.opacity})`
-          : `rgba(${Math.round(shade)}, ${Math.round(shade + 2)}, ${Math.round(shade + 7)}, ${bat.opacity})`;
+        const baseColor = isIlluminated
+          ? `${Math.round(shade + 8)}, ${Math.round(shade + 12)}, ${Math.round(shade + 28)}`
+          : `${Math.round(shade)}, ${Math.round(shade + 2)}, ${Math.round(shade + 7)}`;
 
+        const flapAmt = flap * s * 0.7;
+        const w1Y = -s * 0.05 + flapAmt * 0.3;
+        const w2Y = -s * 0.1  + flapAmt * 0.6;
+        const tipY = -s * 0.05 + flapAmt;
+        const w1X = s * 0.65, w2X = s * 1.1, tipX = s * 1.6;
+
+        const drawWing = (sign) => {
+          ctx.beginPath();
+          ctx.moveTo(sign * s * 0.08, s * 0.12);
+          ctx.bezierCurveTo(
+            sign * s * 0.3,  s * 0.25,
+            sign * w1X,      w1Y + s * 0.3,
+            sign * w2X,      w2Y + s * 0.15
+          );
+          ctx.bezierCurveTo(
+            sign * (w2X + s * 0.3), w2Y,
+            sign * (tipX - s * 0.1), tipY + s * 0.08,
+            sign * tipX, tipY
+          );
+          ctx.bezierCurveTo(
+            sign * (tipX - s * 0.05), tipY - s * 0.12,
+            sign * w2X,               w2Y - s * 0.18,
+            sign * w1X,               w1Y - s * 0.18
+          );
+          ctx.bezierCurveTo(
+            sign * s * 0.55, -s * 0.18,
+            sign * s * 0.2,  -s * 0.12,
+            sign * s * 0.06, -s * 0.08
+          );
+          ctx.closePath();
+        };
+
+        ctx.fillStyle = `rgba(${baseColor}, ${bat.opacity * 0.82})`;
+        drawWing(-1); ctx.fill();
+        drawWing(1);  ctx.fill();
+
+        ctx.strokeStyle = `rgba(${baseColor}, ${bat.opacity * 0.45})`;
+        ctx.lineWidth = s * 0.022;
+        [-1, 1].forEach(sign => {
+          ctx.beginPath();
+          ctx.moveTo(sign * s * 0.06, -s * 0.05);
+          ctx.quadraticCurveTo(sign * w1X * 0.5, w1Y * 0.5, sign * w1X, w1Y);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(sign * s * 0.06, -s * 0.05);
+          ctx.quadraticCurveTo(sign * w2X * 0.5, w2Y * 0.5, sign * w2X, w2Y);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(sign * s * 0.06, -s * 0.05);
+          ctx.quadraticCurveTo(sign * tipX * 0.55, tipY * 0.5, sign * tipX, tipY);
+          ctx.stroke();
+        });
+
+        ctx.fillStyle = `rgba(${baseColor}, ${bat.opacity})`;
         ctx.beginPath();
-        ctx.ellipse(0, 0, s * 0.18, s * 0.38, 0, 0, Math.PI * 2);
+        ctx.ellipse(0, s * 0.04, s * 0.22, s * 0.38, 0, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.beginPath();
-        ctx.arc(s * 0.08, -s * 0.32, s * 0.14, 0, Math.PI * 2);
-        ctx.moveTo(-s * 0.05, -s * 0.38);
-        ctx.lineTo(-s * 0.12, -s * 0.58);
-        ctx.lineTo(0, -s * 0.44);
-        ctx.moveTo(s * 0.15, -s * 0.38);
-        ctx.lineTo(s * 0.25, -s * 0.58);
-        ctx.lineTo(s * 0.18, -s * 0.44);
+        ctx.ellipse(0, -s * 0.28, s * 0.18, s * 0.2, 0, 0, Math.PI * 2);
         ctx.fill();
 
-        const tipY = -s * 0.35 + flap * (s * 0.65);
-        const midY = -s * 0.10 + flap * (s * 0.35);
-
         ctx.beginPath();
-        ctx.moveTo(-s * 0.1, -s * 0.1);
-        ctx.quadraticCurveTo(-s * 0.6, midY - s * 0.2, -s * 1.35, tipY);
-        ctx.lineTo(-s * 1.22, tipY + s * 0.12);
-        ctx.quadraticCurveTo(-s * 0.95, tipY + s * 0.45, -s * 0.65, midY + s * 0.3);
-        ctx.quadraticCurveTo(-s * 0.4, midY + s * 0.35, -s * 0.05, s * 0.2);
+        ctx.moveTo(-s * 0.06, -s * 0.38);
+        ctx.bezierCurveTo(-s * 0.18, -s * 0.52, -s * 0.2, -s * 0.72, -s * 0.09, -s * 0.75);
+        ctx.bezierCurveTo(-s * 0.02, -s * 0.65, -s * 0.01, -s * 0.48, s * 0.00, -s * 0.38);
+        ctx.closePath();
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(s * 0.06, -s * 0.38);
+        ctx.bezierCurveTo(s * 0.18, -s * 0.52, s * 0.2, -s * 0.72, s * 0.09, -s * 0.75);
+        ctx.bezierCurveTo(s * 0.02, -s * 0.65, s * 0.01, -s * 0.48, s * 0.00, -s * 0.38);
         ctx.closePath();
         ctx.fill();
 
+        ctx.fillStyle = `rgba(${baseColor}, ${bat.opacity * 0.55})`;
+        [-1, 1].forEach(sign => {
+          ctx.beginPath();
+          ctx.moveTo(sign * 0.01 * s, -s * 0.40);
+          ctx.lineTo(sign * 0.07 * s, -s * 0.57);
+          ctx.lineTo(sign * 0.02 * s, -s * 0.43);
+          ctx.closePath();
+          ctx.fill();
+        });
+
+        ctx.fillStyle = `rgba(${baseColor}, ${bat.opacity})`;
         ctx.beginPath();
-        ctx.moveTo(s * 0.1, -s * 0.1);
-        ctx.quadraticCurveTo(s * 0.6, midY - s * 0.2, s * 1.35, tipY);
-        ctx.lineTo(s * 1.22, tipY + s * 0.12);
-        ctx.quadraticCurveTo(s * 0.95, tipY + s * 0.45, s * 0.65, midY + s * 0.3);
-        ctx.quadraticCurveTo(s * 0.4, midY + s * 0.35, s * 0.05, s * 0.2);
+        ctx.ellipse(0, -s * 0.46, s * 0.055, s * 0.045, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = `rgba(${baseColor}, ${bat.opacity * 0.55})`;
+        ctx.beginPath();
+        ctx.moveTo(-s * 0.12, s * 0.3);
+        ctx.bezierCurveTo(-s * 0.25, s * 0.55, -s * 0.15, s * 0.75, 0, s * 0.72);
+        ctx.bezierCurveTo(s * 0.15, s * 0.75, s * 0.25, s * 0.55, s * 0.12, s * 0.3);
         ctx.closePath();
         ctx.fill();
 
