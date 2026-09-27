@@ -100,7 +100,7 @@ const App = () => {
                             <ul className="space-y-4 text-left">
                                 <FooterNavLink href="https://events.udghosh.org.in/">Competitions</FooterNavLink>
                                 <FooterNavLink href="/sponsors">Sponsors</FooterNavLink>
-                                <FooterNavLink href="/commitments/initiatives">Social Initiatives</FooterNavLink>
+                                <FooterNavLink href="/social">Social Initiatives</FooterNavLink>
                             </ul>
                         </div>
                     </div>
