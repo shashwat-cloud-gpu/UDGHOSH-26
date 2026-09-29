@@ -6,6 +6,30 @@ import "./antique.css";
 // Official historical records sourced exclusively from udghosh.org.in/antique
 const EDITIONS = [
   {
+    id: "edition-2025",
+    year: "2025",
+    date: "October, 2025",
+    roman: "XXI",
+    edition: "21st Edition",
+    theme: "The Patronus Pursuit",
+    title: "The Patronus Pursuit, 21st Edition",
+    description:
+      'Udghosh\'25, themed "THE PATRONUS PURSUIT", carried the legacy forward as the flag bearer of intercollegiate sports. Inspired by phoenixes rising from ashes and unicorns symbolizing purity, this edition celebrated rebirth and the magic of resilience. It commenced on October 3 amidst an electrifying buzz among the college community across the country.',
+    accentColor: "#38bdf8",
+  },
+  {
+    id: "edition-2024",
+    year: "2024",
+    date: "October, 2024",
+    roman: "XX",
+    edition: "20th Edition",
+    theme: "Dhairyasya Vardhanam",
+    title: "Dhairyasya Vardhanam, 20th Edition",
+    description:
+      'Udghosh\'24, themed "DHAIRYASYA VARDHANAM", took forward the legacy as the flag bearer of intercollegiate sports. A celebration of courage, resilience, and unyielding spirit, it commenced on October 4 amidst an electrifying buzz among the college community across the country.',
+    accentColor: "#f59e0b",
+  },
+  {
     id: "edition-2023",
     year: "2023",
     date: "October, 2023",
@@ -213,7 +237,7 @@ function AmbientEmbersCanvas() {
 
 export default function Antique() {
   const [revealedIds, setRevealedIds] = useState(new Set());
-  const [activeEditionId, setActiveEditionId] = useState("edition-2023");
+  const [activeEditionId, setActiveEditionId] = useState(EDITIONS[0]?.id || "edition-2025");
   const [scrollProgress, setScrollProgress] = useState(0);
   const timelineRef = useRef(null);
 
